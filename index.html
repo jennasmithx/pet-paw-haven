@@ -1,424 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pet Paw Haven - Checkout</title>
-<link rel="icon" type="image/png" href="images/logo.png">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Paw Haven - Checkout</title>
+  <link rel="icon" type="image/png" href="images/logo.png">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Jost:wght@300;400;500;600&display=swap');
 
-  :root{
-    --ink:#151311;
-    --bone:#f5f5f5;
-    --champagne:#63768b;
-    --champagne-dim:#63768b;
-    --line: rgba(21,19,17,0.14);
-    --error:#9c3b2e;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:var(--bone);
-    color:var(--ink);
-    font-family:'Jost',sans-serif;
-    font-weight:300;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    padding:56px 20px 80px;
-  }
-  .wrap{width:100%;max-width:920px;}
+    :root {
+      --ink: #151311;
+      --bone: #f5f5f5;
+      --champagne: #63768b;
+      --champagne-dim: #63768b;
+      --line: rgba(21, 19, 17, 0.14);
+      --error: #9c3b2e;
+    }
 
-  .eyebrow{
-    font-family:'Jost',sans-serif;
-    font-size:11px;
-    letter-spacing:.32em;
-    text-transform:uppercase;
-    color:var(--champagne-dim);
-    text-align:center;
-    margin-bottom:10px;
-  }
-  h1{
-    font-family:'Cormorant Garamond',serif;
-    font-weight:500;
-    font-size:clamp(32px,5vw,44px);
-    text-align:center;
-    margin:0 0 46px;
-    letter-spacing:.01em;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  .layout{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:0;
-    border:1px solid var(--line);
-    background:#fff;
-  }
-  @media(max-width:760px){
-    .layout{grid-template-columns:1fr;}
-  }
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-  /* ---- product panel ---- */
-  .product-panel{
-    padding:44px 40px;
-    background:var(--ink);
-    color:var(--bone);
-    display:flex;
-    flex-direction:column;
-  }
-  .product-image{
-    width:100%;
-    aspect-ratio:1/1;
-    background:#221f1c;
-    border:1px solid rgba(255, 255, 255, 0.35);
-    margin-bottom:28px;
-    overflow:hidden;
-  }
-  .product-image img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .product-name{
-    font-family:'Cormorant Garamond',serif;
-    font-size:26px;
-    font-style:italic;
-    font-weight:500;
-    margin:0 0 6px;
-    line-height:1.25;
-  }
-  .product-sku{
-    font-size:11px;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:rgba(246,242,234,0.5);
-    margin:0 0 26px;
-  }
-  .divider{
-    height:1px;
-    background:linear-gradient(90deg,var(--champagne),transparent);
-    margin:0 0 24px;
-  }
-  .price-row{
-    display:flex;
-    justify-content:space-between;
-    align-items:baseline;
-    font-size:14px;
-    margin-bottom:10px;
-    color:rgba(246,242,234,0.75);
-  }
-  .price-row.total{
-    color:var(--bone);
-    font-size:15px;
-    margin-top:16px;
-    padding-top:16px;
-    border-top:1px solid rgba(138, 111, 58, 0.18);
-  }
-  .price-row.total .amount{
-    font-family:'Cormorant Garamond',serif;
-    font-size:28px;
-    color:var(--champagne);
-  }
-  .qty-control{
-    display:flex;align-items:center;gap:14px;margin-top:auto;padding-top:28px;
-  }
-  .qty-control span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(246,242,234,0.6);}
-  .qty-btns{display:flex;align-items:center;border:1px solid rgba(192, 192, 192, 0.4);}
-  .qty-btns button{
-    background:none;border:none;color:var(--champagne);width:32px;height:32px;font-size:16px;cursor:pointer;
-  }
-  .qty-btns input{
-    width:36px;text-align:center;background:none;border:none;border-left:1px solid rgba(192,192,192,0.4);border-right:1px solid rgba(201,169,98,0.4);color:var(--bone);font-family:'Jost';font-size:14px;height:32px;
-  }
+    body {
+      background: var(--bone);
+      color: var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 56px 20px 80px;
+    }
 
-  /* ---- form panel ---- */
-  .form-panel{padding:44px 40px;}
-  .section-label{
-    font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--champagne-dim);margin:0 0 20px;
-  }
-  .section-label.second{margin-top:34px;}
-  .field{margin-bottom:16px;}
-  .field label{
-    display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(21,19,17,0.55);margin-bottom:7px;
-  }
-  .field input,.field select{
-    width:100%;
-    border:none;
-    border-bottom:1px solid var(--line);
-    background:transparent;
-    padding:10px 2px;
-    font-family:'Jost',sans-serif;
-    font-size:15px;
-    font-weight:400;
-    color:var(--ink);
-    outline:none;
-    transition:border-color .2s;
-  }
-  .field input:focus,.field select:focus{border-bottom-color:var(--champagne);}
-  .field.invalid input{border-bottom-color:var(--error);}
-  .field .err{display:none;font-size:11px;color:var(--error);margin-top:5px;}
-  .field.invalid .err{display:block;}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  @media(max-width:480px){.row2{grid-template-columns:1fr;}}
+    .wrap {
+      width: 100%;
+      max-width: 920px;
+    }
 
-  .pay-btn{
-    width:100%;
-    margin-top:32px;
-    padding:17px;
-    background:var(--ink);
-    color:var(--champagne);
-    border:1px solid var(--ink);
-    font-family:'Jost',sans-serif;
-    font-size:12px;
-    letter-spacing:.28em;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition:background .25s,color .25s;
-  }
-  .pay-btn:hover{background:#000;}
-  .pay-btn:disabled{opacity:.5;cursor:not-allowed;}
+    .eyebrow {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--champagne-dim);
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-  .secure-note{
-    text-align:center;
-    font-size:11px;
-    letter-spacing:.05em;
-    color:rgba(21,19,17,0.45);
-    margin-top:16px;
-  }
-  .secure-note svg{vertical-align:-2px;margin-right:5px;}
-</style>
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 500;
+      font-size: clamp(32px, 5vw, 44px);
+      text-align: center;
+      margin: 0 0 46px;
+      letter-spacing: .01em;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    @media(max-width:760px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---- product panel ---- */
+    .product-panel {
+      padding: 44px 40px;
+      background: var(--ink);
+      color: var(--bone);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-image {
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: #221f1c;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .product-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-style: italic;
+      font-weight: 500;
+      margin: 0 0 6px;
+      line-height: 1.25;
+    }
+
+    .product-sku {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(246, 242, 234, 0.5);
+      margin: 0 0 26px;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, var(--champagne), transparent);
+      margin: 0 0 24px;
+    }
+
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: rgba(246, 242, 234, 0.75);
+    }
+
+    .price-row.total {
+      color: var(--bone);
+      font-size: 15px;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(138, 111, 58, 0.18);
+    }
+
+    .price-row.total .amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      color: var(--champagne);
+    }
+
+    .qty-control {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-top: auto;
+      padding-top: 28px;
+    }
+
+    .qty-control span {
+      font-size: 11px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(246, 242, 234, 0.6);
+    }
+
+    .qty-btns {
+      display: flex;
+      align-items: center;
+      border: 1px solid rgba(192, 192, 192, 0.4);
+    }
+
+    .qty-btns button {
+      background: none;
+      border: none;
+      color: var(--champagne);
+      width: 32px;
+      height: 32px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .qty-btns input {
+      width: 36px;
+      text-align: center;
+      background: none;
+      border: none;
+      border-left: 1px solid rgba(192, 192, 192, 0.4);
+      border-right: 1px solid rgba(201, 169, 98, 0.4);
+      color: var(--bone);
+      font-family: 'Jost';
+      font-size: 14px;
+      height: 32px;
+    }
+
+    /* ---- form panel ---- */
+    .form-panel {
+      padding: 44px 40px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--champagne-dim);
+      margin: 0 0 20px;
+    }
+
+    .section-label.second {
+      margin-top: 34px;
+    }
+
+    .field {
+      margin-bottom: 16px;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(21, 19, 17, 0.55);
+      margin-bottom: 7px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 10px 2px;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-bottom-color: var(--champagne);
+    }
+
+    .field.invalid input {
+      border-bottom-color: var(--error);
+    }
+
+    .field .err {
+      display: none;
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 5px;
+    }
+
+    .field.invalid .err {
+      display: block;
+    }
+
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media(max-width:480px) {
+      .row2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .pay-btn {
+      width: 100%;
+      margin-top: 32px;
+      padding: 17px;
+      background: #dadada;
+      color: var(--champagne);
+      border: 1px solid var(--ink);
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .25s, color .25s;
+    }
+
+    .pay-btn:hover {
+      background: #000;
+    }
+
+    .pay-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .secure-note {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .05em;
+      color: rgba(21, 19, 17, 0.45);
+      margin-top: 16px;
+    }
+
+    .secure-note svg {
+      vertical-align: -2px;
+      margin-right: 5px;
+    }
+  </style>
 </head>
+
 <body>
 
-<div class="wrap">
-  <p class="eyebrow">Pet Paw Haven</p>
-  <h1>Complete Your Order</h1>
+  <div class="wrap">
+    <p class="eyebrow">Pet Paw Haven</p>
+    <h1>Complete Your Order</h1>
 
-  <form class="layout" id="checkoutForm" novalidate>
+    <form class="layout" id="checkoutForm" novalidate>
 
-    <div class="product-panel">
-      <div class="product-image">
-        <img src="images/catwaterf.png" alt="Product photo">
-      </div>
-      <p class="product-name" id="productName">Product name</p>
-      <p class="product-sku" id="productSku"></p>
-      <div class="divider"></div>
+      <div class="product-panel">
+        <div class="product-image">
+          <img src="images/catwaterf.png" alt="Product photo">
+        </div>
+        <p class="product-name" id="productName">Product name</p>
+        <p class="product-sku" id="productSku"></p>
+        <div class="divider"></div>
 
-      <div class="price-row">
-        <span>Item price</span>
-        <span id="unitPriceDisplay">R0.00</span>
-      </div>
-      <div class="price-row">
-        <span>Shipping</span>
-        <span id="shippingDisplay">Included</span>
-      </div>
-      <div class="price-row total">
-        <span>Total</span>
-        <span class="amount" id="totalDisplay">R0.00</span>
-      </div>
+        <div class="price-row">
+          <span>Item price</span>
+          <span id="unitPriceDisplay">R0.00</span>
+        </div>
+        <div class="price-row">
+          <span>Shipping</span>
+          <span id="shippingDisplay">Included</span>
+        </div>
+        <div class="price-row total">
+          <span>Total</span>
+          <span class="amount" id="totalDisplay">R0.00</span>
+        </div>
 
-      <div class="qty-control">
-        <span>Quantity</span>
-        <div class="qty-btns">
-          <button type="button" id="qtyMinus">&minus;</button>
-          <input type="text" id="qtyValue" value="1" readonly>
-          <button type="button" id="qtyPlus">&plus;</button>
+        <div class="qty-control">
+          <span>Quantity</span>
+          <div class="qty-btns">
+            <button type="button" id="qtyMinus">&minus;</button>
+            <input type="text" id="qtyValue" value="1" readonly>
+            <button type="button" id="qtyPlus">&plus;</button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-panel">
-      <p class="section-label">Contact</p>
-      <div class="row2">
-        <div class="field" data-field="firstName">
-          <label for="firstName">First name</label>
-          <input id="firstName" type="text" autocomplete="given-name">
-          <div class="err">Enter your first name</div>
+      <div class="form-panel">
+        <p class="section-label">Contact</p>
+        <div class="row2">
+          <div class="field" data-field="firstName">
+            <label for="firstName">First name</label>
+            <input id="firstName" type="text" autocomplete="given-name">
+            <div class="err">Enter your first name</div>
+          </div>
+          <div class="field" data-field="lastName">
+            <label for="lastName">Last name</label>
+            <input id="lastName" type="text" autocomplete="family-name">
+            <div class="err">Enter your last name</div>
+          </div>
         </div>
-        <div class="field" data-field="lastName">
-          <label for="lastName">Last name</label>
-          <input id="lastName" type="text" autocomplete="family-name">
-          <div class="err">Enter your last name</div>
+        <div class="field" data-field="email">
+          <label for="email">Email address</label>
+          <input id="email" type="email" autocomplete="email">
+          <div class="err">Enter a valid email</div>
         </div>
-      </div>
-      <div class="field" data-field="email">
-        <label for="email">Email address</label>
-        <input id="email" type="email" autocomplete="email">
-        <div class="err">Enter a valid email</div>
-      </div>
-      <div class="field" data-field="phone">
-        <label for="phone">Phone number</label>
-        <input id="phone" type="tel" autocomplete="tel">
-        <div class="err">Enter a valid phone number</div>
-      </div>
-
-      <p class="section-label second">Shipping Address</p>
-      <div class="field" data-field="address">
-        <label for="address">Street address</label>
-        <input id="address" type="text" autocomplete="address-line1">
-        <div class="err">Enter your street address</div>
-      </div>
-      <div class="row2">
-        <div class="field" data-field="city">
-          <label for="city">City</label>
-          <input id="city" type="text" autocomplete="address-level2">
-          <div class="err">Enter your city</div>
+        <div class="field" data-field="phone">
+          <label for="phone">Phone number</label>
+          <input id="phone" type="tel" autocomplete="tel">
+          <div class="err">Enter a valid phone number</div>
         </div>
-        <div class="field" data-field="postalCode">
-          <label for="postalCode">Postal code</label>
-          <input id="postalCode" type="text" autocomplete="postal-code">
-          <div class="err">Enter your postal code</div>
+
+        <p class="section-label second">Shipping Address</p>
+        <div class="field" data-field="address">
+          <label for="address">Street address</label>
+          <input id="address" type="text" autocomplete="address-line1">
+          <div class="err">Enter your street address</div>
         </div>
+        <div class="row2">
+          <div class="field" data-field="city">
+            <label for="city">City</label>
+            <input id="city" type="text" autocomplete="address-level2">
+            <div class="err">Enter your city</div>
+          </div>
+          <div class="field" data-field="postalCode">
+            <label for="postalCode">Postal code</label>
+            <input id="postalCode" type="text" autocomplete="postal-code">
+            <div class="err">Enter your postal code</div>
+          </div>
+        </div>
+        <div class="field" data-field="country">
+          <label for="country">Country</label>
+          <select id="country">
+            <option value="ZA">South Africa</option>
+            <option value="NA">Namibia</option>
+            <option value="BW">Botswana</option>
+            <option value="OTHER">Other</option>
+          </select>
+        </div>
+
+        <button type="submit" class="pay-btn" id="payBtn">Pay Now — R0.00</button>
+        <p class="secure-note">
+          <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
+            <path d="M1 6V3.5C1 1.84 2.84 1 5.5 1C8.16 1 10 1.84 10 3.5V6M1 6H10V12H1V6Z" stroke="#151311"
+              stroke-opacity="0.45" />
+          </svg>
+          Secure payment via PayFast
+        </p>
       </div>
-      <div class="field" data-field="country">
-        <label for="country">Country</label>
-        <select id="country">
-          <option value="ZA">South Africa</option>
-          <option value="NA">Namibia</option>
-          <option value="BW">Botswana</option>
-          <option value="OTHER">Other</option>
-        </select>
-      </div>
+    </form>
+  </div>
 
-      <button type="submit" class="pay-btn" id="payBtn">Pay Now — R0.00</button>
-      <p class="secure-note">
-        <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M1 6V3.5C1 1.84 2.84 1 5.5 1C8.16 1 10 1.84 10 3.5V6M1 6H10V12H1V6Z" stroke="#151311" stroke-opacity="0.45"/></svg>
-        Secure payment via PayFast
-      </p>
-    </div>
-  </form>
-</div>
+  <script type="module">
+    /* ============================================================
+       1. PRODUCT DATA — fixed for THIS page. This page = one
+          product at one price. To sell a second product, duplicate
+          this file and change PRODUCT_NAME / PRODUCT_PRICE / the
+          <img src> above, then link Beacons' image click straight
+          to the new file.
+       ============================================================ */
+    const PRODUCT_NAME = 'Cat Water Fountain';   // TODO: set the real name
+    const PRODUCT_SKU = '';                    // optional, e.g. 'CWF-001'
+    const PRODUCT_PRICE = 650.00;                // fixed price for this page
 
-<script>
-/* ============================================================
-   1. PRODUCT DATA — fixed for THIS page. This page = one
-      product at one price. To sell a second product, duplicate
-      this file and change PRODUCT_NAME / PRODUCT_PRICE / the
-      <img src> above, then link Beacons' image click straight
-      to the new file.
-   ============================================================ */
-  const PRODUCT_NAME = 'Cat Water Fountain';   // TODO: set the real name
-  const PRODUCT_SKU   = '';                    // optional, e.g. 'CWF-001'
-  const PRODUCT_PRICE = 650.00;                // fixed price for this page
+    document.getElementById('productName').textContent = PRODUCT_NAME;
+    document.getElementById('productSku').textContent = PRODUCT_SKU ? 'SKU ' + PRODUCT_SKU : '';
 
-  document.getElementById('productName').textContent = PRODUCT_NAME;
-  document.getElementById('productSku').textContent = PRODUCT_SKU ? 'SKU ' + PRODUCT_SKU : '';
+    const fmt = n => 'R' + n.toFixed(2);
+    let qty = 1;
 
-  const fmt = n => 'R' + n.toFixed(2);
-  let qty = 1;
-
-  function renderTotals(){
-    const total = PRODUCT_PRICE * qty;
-    document.getElementById('unitPriceDisplay').textContent = fmt(PRODUCT_PRICE);
-    document.getElementById('totalDisplay').textContent = fmt(total);
-    document.getElementById('payBtn').textContent = 'Pay Now — ' + fmt(total);
-  }
-  renderTotals();
-
-  document.getElementById('qtyMinus').onclick = () => { if(qty>1){qty--; document.getElementById('qtyValue').value=qty; renderTotals();} };
-  document.getElementById('qtyPlus').onclick  = () => { qty++; document.getElementById('qtyValue').value=qty; renderTotals(); };
-
-/* ============================================================
-   2. VALIDATION
-   ============================================================ */
-  const form = document.getElementById('checkoutForm');
-  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phoneRe = /^[0-9+ ()-]{7,}$/;
-
-  function validate(){
-    let ok = true;
-    const checks = {
-      firstName: v => v.trim().length > 0,
-      lastName:  v => v.trim().length > 0,
-      email:     v => emailRe.test(v.trim()),
-      phone:     v => phoneRe.test(v.trim()),
-      address:   v => v.trim().length > 3,
-      city:      v => v.trim().length > 0,
-      postalCode:v => v.trim().length > 2
-    };
-    for (const id in checks){
-      const input = document.getElementById(id);
-      const wrap = input.closest('.field');
-      const valid = checks[id](input.value);
-      wrap.classList.toggle('invalid', !valid);
-      if (!valid) ok = false;
+    function renderTotals() {
+      const total = PRODUCT_PRICE * qty;
+      document.getElementById('unitPriceDisplay').textContent = fmt(PRODUCT_PRICE);
+      document.getElementById('totalDisplay').textContent = fmt(total);
+      document.getElementById('payBtn').textContent = 'Pay Now — ' + fmt(total);
     }
-    return ok;
-  }
+    renderTotals();
 
-/* ============================================================
-   3. PAYFAST HANDOFF
-   --------------------------------------------------------------
-   Fill in your real values once your PayFast merchant account
-   is set up. Use the sandbox endpoint + sandbox credentials
-   (10000100 / 46f0cd694581a) while testing. 32406213 / ttmmiiuekpuus 
+    document.getElementById('qtyMinus').onclick = () => { if (qty > 1) { qty--; document.getElementById('qtyValue').value = qty; renderTotals(); } };
+    document.getElementById('qtyPlus').onclick = () => { qty++; document.getElementById('qtyValue').value = qty; renderTotals(); };
 
-   IMPORTANT: notify_url must be a live, public endpoint on your
-   server (not this static page) that receives PayFast's ITN
-   callback and confirms the order. This form only starts the
-   payment — it can't confirm it by itself.
-   ============================================================ */
-  const PAYFAST_CONFIG = {
-    sandbox: true,                        // false when you go live
-    merchant_id:  '10000100',             // TODO replace with your merchant_id
-    merchant_key: '46f0cd694581a',        // TODO replace with your merchant_key
-    return_url:   'https://YOURDOMAIN.com/thank-you.html',
-    cancel_url:   'https://YOURDOMAIN.com/checkout-cancelled.html',
-    notify_url:   'https://YOURDOMAIN.com/api/payfast-notify'
-  };
+    /* ============================================================
+       2. VALIDATION
+       ============================================================ */
+    const form = document.getElementById('checkoutForm');
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRe = /^[0-9+ ()-]{7,}$/;
 
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    if (!validate()) return;
-
-    const payBtn = document.getElementById('payBtn');
-    payBtn.disabled = true;
-    payBtn.textContent = 'Redirecting to PayFast…';
-
-    const total = (PRODUCT_PRICE * qty).toFixed(2);
-    const mPaymentId = 'ORD-' + Date.now();
-
-    const fields = {
-      merchant_id:  PAYFAST_CONFIG.merchant_id,
-      merchant_key: PAYFAST_CONFIG.merchant_key,
-      return_url:   PAYFAST_CONFIG.return_url,
-      cancel_url:   PAYFAST_CONFIG.cancel_url,
-      notify_url:   PAYFAST_CONFIG.notify_url,
-      name_first:   document.getElementById('firstName').value.trim(),
-      name_last:    document.getElementById('lastName').value.trim(),
-      email_address:document.getElementById('email').value.trim(),
-      m_payment_id: mPaymentId,
-      amount:       total,
-      item_name:    PRODUCT_NAME,
-      item_description: PRODUCT_SKU ? `SKU ${PRODUCT_SKU} x${qty}` : `Qty ${qty}`,
-      custom_str1:  document.getElementById('phone').value.trim(),
-      custom_str2:  document.getElementById('address').value.trim(),
-      custom_str3:  document.getElementById('city').value.trim(),
-      custom_str4:  document.getElementById('postalCode').value.trim(),
-      custom_str5:  document.getElementById('country').value
-    };
-
-    const actionUrl = PAYFAST_CONFIG.sandbox
-      ? 'https://sandbox.payfast.co.za/eng/process'
-      : 'https://www.payfast.co.za/eng/process';
-
-    const payfastForm = document.createElement('form');
-    payfastForm.method = 'POST';
-    payfastForm.action = actionUrl;
-
-    for (const key in fields){
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = fields[key];
-      payfastForm.appendChild(input);
+    function validate() {
+      let ok = true;
+      const checks = {
+        firstName: v => v.trim().length > 0,
+        lastName: v => v.trim().length > 0,
+        email: v => emailRe.test(v.trim()),
+        phone: v => phoneRe.test(v.trim()),
+        address: v => v.trim().length > 3,
+        city: v => v.trim().length > 0,
+        postalCode: v => v.trim().length > 2
+      };
+      for (const id in checks) {
+        const input = document.getElementById(id);
+        const wrap = input.closest('.field');
+        const valid = checks[id](input.value);
+        wrap.classList.toggle('invalid', !valid);
+        if (!valid) ok = false;
+      }
+      return ok;
     }
 
-    document.body.appendChild(payfastForm);
-    payfastForm.submit();
-  });
-</script>
+    /* ============================================================
+       3. PAYFAST HANDOFF
+       --------------------------------------------------------------
+       Fill in your real values once your PayFast merchant account
+       is set up. Use the sandbox endpoint + sandbox credentials
+       (10000100 / 46f0cd694581a) while testing. 32406213 / ttmmiiuekpuus 
+    
+       IMPORTANT: notify_url must be a live, public endpoint on your
+       server (not this static page) that receives PayFast's ITN
+       callback and confirms the order. This form only starts the
+       payment — it can't confirm it by itself.
+       ============================================================ */
+    const PAYFAST_CONFIG = {
+      sandbox: true,                        // false when you go live
+      merchant_id: '10000100',             // TODO replace with your merchant_id
+      merchant_key: '46f0cd694581a',        // TODO replace with your merchant_key
+      return_url: 'https://pet-paw-haven.vercel.app/thank-you.html',
+      cancel_url: 'https://pet-paw-haven.vercel.app/checkout-cancelled.html',
+      notify_url: 'https://pet-paw-haven.vercel.app/api/payfast-notify'
+    };
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      if (!validate()) return;
+
+      const payBtn = document.getElementById('payBtn');
+      payBtn.disabled = true;
+      payBtn.textContent = 'Redirecting to PayFast…';
+
+      const total = (PRODUCT_PRICE * qty).toFixed(2);
+      const mPaymentId = 'ORD-' + Date.now();
+
+      const { data, error } = await supabase
+        .from("orders")
+        .insert({
+          first_name: document.getElementById("firstName").value,
+          last_name: document.getElementById("lastName").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          address: document.getElementById("address").value,
+          city: document.getElementById("city").value,
+          postal_code: document.getElementById("postalCode").value,
+          country: document.getElementById("country").value,
+
+          product_name: PRODUCT_NAME,
+          product_sku: PRODUCT_SKU,
+          quantity: qty,
+          amount: total,
+          payment_status: "Pending",
+          payment_id: mPaymentId
+        })
+        .select()
+        .single();
+
+      const fields = {
+        merchant_id: PAYFAST_CONFIG.merchant_id,
+        merchant_key: PAYFAST_CONFIG.merchant_key,
+        return_url: PAYFAST_CONFIG.return_url,
+        cancel_url: PAYFAST_CONFIG.cancel_url,
+        notify_url: PAYFAST_CONFIG.notify_url,
+        name_first: document.getElementById('firstName').value.trim(),
+        name_last: document.getElementById('lastName').value.trim(),
+        email_address: document.getElementById('email').value.trim(),
+        m_payment_id: mPaymentId,
+        amount: total,
+        item_name: PRODUCT_NAME,
+        item_description: PRODUCT_SKU ? `SKU ${PRODUCT_SKU} x${qty}` : `Qty ${qty}`,
+        custom_str1: document.getElementById('phone').value.trim(),
+        custom_str2: document.getElementById('address').value.trim(),
+        custom_str3: document.getElementById('city').value.trim(),
+        custom_str4: document.getElementById('postalCode').value.trim(),
+        custom_str5: document.getElementById('country').value
+      };
+
+      const actionUrl = PAYFAST_CONFIG.sandbox
+        ? 'https://sandbox.payfast.co.za/eng/process'
+        : 'https://www.payfast.co.za/eng/process';
+
+      const payfastForm = document.createElement('form');
+      payfastForm.method = 'POST';
+      payfastForm.action = actionUrl;
+
+      for (const key in fields) {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = fields[key];
+        payfastForm.appendChild(input);
+      }
+
+      document.body.appendChild(payfastForm);
+      payfastForm.submit();
+    });
+
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const supabase = createClient(
+      'https://gtotwzfjjlptsqiwnwfq.supabase.co',
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b3R3emZqamxwdHNxaXdud2ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODUzMjY3MzUsImV4cCI6MjEwMDkwMjczNX0.65OMCDtnl_hJTVy4gUUley-w3PMqP4aURl3wiMAgbI0Y'
+    );
+  </script>
+
 </body>
+
 </html>
