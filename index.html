@@ -522,6 +522,14 @@
         })
         .select()
         .single();
+        if (error) {
+  console.error(error);
+  alert(error.message);
+
+  payBtn.disabled = false;
+  payBtn.textContent = 'Pay Now — ' + fmt(parseFloat(total));
+  return;
+}
 
       const fields = {
         merchant_id: PAYFAST_CONFIG.merchant_id,
