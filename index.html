@@ -73,10 +73,6 @@
       overflow: hidden;
     }
 
-    /* ---- product panel: compact order-summary strip ----
-       Base styles apply at ALL screen sizes now. Media queries below
-       only fine-tune sizing/spacing for narrower viewports so nothing
-       (like the price) gets cut off on desktop or mobile. */
     .product-panel {
       background: var(--ink);
       color: var(--bone);
@@ -217,7 +213,6 @@
     }
 
     @media(max-width:600px) {
-
       .product-panel {
         padding: 18px 22px;
         gap: 14px;
@@ -225,178 +220,181 @@
       }
 
       .product-image {
-        .product-image {
-          width: 120px;
-          height: 120px;
-          flex-shrink: 0;
-        }
+        width: 120px;
+        height: 120px;
+        flex-shrink: 0;
+      }
 
-        .product-image img {
-          width: 100%;
-          height: 100%;
-          object-fit: cover;
-        }
+      .product-details {
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 10px;
+        flex-wrap: nowrap;
+      }
 
-        .product-details {
-          width: 100%;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: flex-start;
-          gap: 10px;
-          flex-wrap: nowrap;
-        }
+      .product-side {
+        align-self: flex-start;
+        margin-left: 0;
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 8px;
+      }
 
-        .product-side {
-          align-self: flex-start;
-          margin-left: 0;
-          width: auto;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          justify-content: flex-start;
-          gap: 8px;
-        }
+      .amount-block {
+        width: 100%;
+        text-align: left;
+        align-self: flex-start;
+      }
 
-        .amount-block {
-          width: 100%;
-          text-align: left;
-          align-self: flex-start;
-        }
+      .amount-block .amount-label {
+        text-align: left;
+      }
 
-        .amount-block .amount-label {
-          text-align: left;
-        }
-
-        .amount-block .amount {
-          font-size: 22px;
-          text-align: left;
-        }
+      .amount-block .amount {
+        font-size: 22px;
+        text-align: left;
       }
     }
 
-      /* ---- form panel ---- */
-      .form-panel {
-        padding: 30px;
-      }
+    .form-panel {
+      padding: 30px;
+    }
 
-      .section-label {
-        font-size: 11px;
-        letter-spacing: .28em;
-        text-transform: uppercase;
-        color: var(--ink);
-        font-weight: 600;
-        margin: 0 0 20px;
-      }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      color: var(--ink);
+      font-weight: 600;
+      margin: 0 0 20px;
+    }
 
-      .section-label.second {
-        margin-top: 34px;
-      }
+    .section-label.second {
+      margin-top: 34px;
+    }
 
-      .field {
-        margin-bottom: 16px;
-      }
+    .field {
+      margin-bottom: 16px;
+    }
 
-      .field label {
-        display: block;
-        font-size: 11px;
-        letter-spacing: .12em;
-        text-transform: uppercase;
-        color: rgba(21, 19, 17, 0.55);
-        margin-bottom: 7px;
-      }
+    .field label {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(21, 19, 17, 0.55);
+      margin-bottom: 7px;
+    }
 
-      .field input,
-      .field select {
-        width: 100%;
-        border: none;
-        border-bottom: 1px solid var(--line);
-        background: transparent;
-        padding: 10px 2px;
-        font-family: 'Jost', sans-serif;
-        font-size: 15px;
-        font-weight: 400;
-        color: var(--ink);
-        outline: none;
-        transition: border-color .2s;
-      }
+    .field input,
+    .field select {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 10px 2px;
+      font-family: 'Jost', sans-serif;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s;
+    }
 
-      .field input:focus,
-      .field select:focus {
-        border-bottom-color: var(--champagne);
-      }
+    .field input:focus,
+    .field select:focus {
+      border-bottom-color: var(--champagne);
+    }
 
-      .field.invalid input {
-        border-bottom-color: var(--error);
-      }
+    .field.invalid input {
+      border-bottom-color: var(--error);
+    }
 
-      .field .err {
-        display: none;
-        font-size: 11px;
-        color: var(--error);
-        margin-top: 5px;
-      }
+    .field .err {
+      display: none;
+      font-size: 11px;
+      color: var(--error);
+      margin-top: 5px;
+    }
 
-      .field.invalid .err {
-        display: block;
-      }
+    .field.invalid .err {
+      display: block;
+    }
 
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media(max-width:480px) {
       .row2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        grid-template-columns: 1fr;
       }
+    }
 
-      @media(max-width:480px) {
-        .row2 {
-          grid-template-columns: 1fr;
-        }
-      }
+    .pay-btn {
+      width: 100%;
+      margin-top: 32px;
+      padding: 17px;
+      background: var(--ink);
+      color: var(--bone);
+      border: 1px solid var(--ink);
+      border-radius: 4px;
+      font-family: 'Jost', sans-serif;
+      font-size: 12px;
+      letter-spacing: .28em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .25s, color .25s;
+      white-space: normal;
+      line-height: 1.4;
+    }
 
-      .pay-btn {
-        width: 100%;
-        margin-top: 32px;
-        padding: 17px;
-        background: var(--ink);
-        color: var(--bone);
-        border: 1px solid var(--ink);
-        border-radius: 4px;
-        font-family: 'Jost', sans-serif;
-        font-size: 12px;
-        letter-spacing: .28em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: background .25s, color .25s;
-        white-space: normal;
-        line-height: 1.4;
-      }
+    .pay-btn:hover {
+      background: var(--champagne);
+      border-color: var(--champagne);
+    }
 
-      .pay-btn:hover {
-        background: var(--champagne);
-        border-color: var(--champagne);
-      }
+    .pay-btn:focus-visible {
+      outline: 2px solid var(--champagne);
+      outline-offset: 2px;
+    }
 
-      .pay-btn:focus-visible {
-        outline: 2px solid var(--champagne);
-        outline-offset: 2px;
-      }
+    .pay-btn:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
 
-      .pay-btn:disabled {
-        opacity: .5;
-        cursor: not-allowed;
-      }
+    .secure-note {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: .05em;
+      color: rgba(21, 19, 17, 0.45);
+      margin-top: 16px;
+    }
 
-      .secure-note {
-        text-align: center;
-        font-size: 11px;
-        letter-spacing: .05em;
-        color: rgba(21, 19, 17, 0.45);
-        margin-top: 16px;
-      }
+    .secure-note svg {
+      vertical-align: -2px;
+      margin-right: 5px;
+    }
 
-      .secure-note svg {
-        vertical-align: -2px;
-        margin-right: 5px;
-      }
+    .form-error {
+      display: none;
+      text-align: center;
+      font-size: 12px;
+      color: var(--error);
+      margin-top: 14px;
+    }
+
+    .form-error.show {
+      display: block;
+    }
   </style>
 </head>
 
@@ -488,6 +486,7 @@
         </div>
 
         <button type="submit" class="pay-btn" id="payBtn">Pay Now — R0.00</button>
+        <p class="form-error" id="formError"></p>
         <p class="secure-note">
           <svg width="11" height="13" viewBox="0 0 11 13" fill="none">
             <path d="M1 6V3.5C1 1.84 2.84 1 5.5 1C8.16 1 10 1.84 10 3.5V6M1 6H10V12H1V6Z" stroke="#151311"
@@ -501,15 +500,14 @@
 
   <script type="module">
     /* ============================================================
-       1. PRODUCT DATA — fixed for THIS page. This page = one
-          product at one price. To sell a second product, duplicate
-          this file and change PRODUCT_NAME / PRODUCT_PRICE / the
-          <img src> above, then link Beacons' image click straight
-          to the new file.
+       1. PRODUCT DATA — display only. The server (api/create-order.js)
+          has its OWN copy of the price and recalculates the total
+          itself. Nothing sent from this page is trusted for pricing.
+          If you change the price here, change it server-side too.
        ============================================================ */
     const PRODUCT_NAME = 'Premium Cat Water Fountain';
     const PRODUCT_SKU = 'PCWF-001';
-    const PRODUCT_PRICE = 650.00;
+    const PRODUCT_PRICE = 650.00; // display only — server is the source of truth
 
     document.getElementById('productName').textContent = PRODUCT_NAME;
     document.getElementById('productSku').textContent = PRODUCT_SKU ? 'SKU ' + PRODUCT_SKU : '';
@@ -528,7 +526,8 @@
     document.getElementById('qtyPlus').onclick = () => { qty++; document.getElementById('qtyValue').value = qty; renderTotals(); };
 
     /* ============================================================
-       2. VALIDATION
+       2. VALIDATION (client-side, for UX only — the server repeats
+          all of this and is what actually gets trusted)
        ============================================================ */
     const form = document.getElementById('checkoutForm');
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -556,113 +555,70 @@
     }
 
     /* ============================================================
-       3. PAYFAST HANDOFF
-       --------------------------------------------------------------
-       Fill in your real values once your PayFast merchant account
-       is set up. Use the sandbox endpoint + sandbox credentials
-       (10000100 / 46f0cd694581a) while testing.
-
-       IMPORTANT: notify_url must be a live, public endpoint on your
-       server (not this static page) that receives PayFast's ITN
-       callback and confirms the order. This form only starts the
-       payment — it can't confirm it by itself.
+       3. SUBMIT — ask OUR server to create the order and hand back
+          signed PayFast fields. We never build the PayFast form or
+          the signature in the browser, and we never insert the
+          order into Supabase from here — the server does both,
+          using the trusted server-side price.
        ============================================================ */
-    const PAYFAST_CONFIG = {
-      sandbox: true,                        // false when you go live
-      merchant_id: '36415645',             // TODO replace with your merchant_id
-      merchant_key: 'amipmrlcv9y4m',        // TODO replace with your merchant_key
-      return_url: 'https://pet-paw-haven.vercel.app/thank-you.html',
-      cancel_url: 'https://pet-paw-haven.vercel.app/checkout-cancelled.html',
-      notify_url: 'https://pet-paw-haven.vercel.app/api/payfast-notify'
-    };
+    const errorEl = document.getElementById('formError');
 
     form.addEventListener('submit', async function (e) {
       e.preventDefault();
+      errorEl.classList.remove('show');
       if (!validate()) return;
 
       const payBtn = document.getElementById('payBtn');
       payBtn.disabled = true;
       payBtn.textContent = 'Redirecting to PayFast…';
 
-      const total = (PRODUCT_PRICE * qty).toFixed(2);
-      const mPaymentId = 'ORD-' + Date.now();
+      try {
+        const response = await fetch('/api/create-order', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productSku: PRODUCT_SKU,
+            qty,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            phone: document.getElementById('phone').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            postalCode: document.getElementById('postalCode').value,
+            country: document.getElementById('country').value
+          })
+        });
 
-      const { data, error } = await supabase
-        .from("orders")
-        .insert({
-          first_name: document.getElementById("firstName").value,
-          last_name: document.getElementById("lastName").value,
-          email: document.getElementById("email").value,
-          phone: document.getElementById("phone").value,
-          address: document.getElementById("address").value,
-          city: document.getElementById("city").value,
-          postal_code: document.getElementById("postalCode").value,
-          country: document.getElementById("country").value,
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || 'Could not start payment. Please try again.');
+        }
 
-          product_name: PRODUCT_NAME,
-          product_sku: PRODUCT_SKU,
-          quantity: qty,
-          amount: total,
-          payment_status: "Pending",
-          payment_id: mPaymentId
-        })
-        .select()
-        .single();
-      if (error) {
-        console.error(error);
-        alert(error.message);
+        const { actionUrl, fields } = await response.json();
 
+        const payfastForm = document.createElement('form');
+        payfastForm.method = 'POST';
+        payfastForm.action = actionUrl;
+
+        for (const key in fields) {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = fields[key];
+          payfastForm.appendChild(input);
+        }
+
+        document.body.appendChild(payfastForm);
+        payfastForm.submit();
+
+      } catch (err) {
+        errorEl.textContent = err.message || 'Something went wrong. Please try again.';
+        errorEl.classList.add('show');
         payBtn.disabled = false;
-        payBtn.textContent = 'Pay Now — ' + fmt(parseFloat(total));
-        return;
+        renderTotals();
       }
-
-      const fields = {
-        merchant_id: PAYFAST_CONFIG.merchant_id,
-        merchant_key: PAYFAST_CONFIG.merchant_key,
-        return_url: PAYFAST_CONFIG.return_url,
-        cancel_url: PAYFAST_CONFIG.cancel_url,
-        notify_url: PAYFAST_CONFIG.notify_url,
-        name_first: document.getElementById('firstName').value.trim(),
-        name_last: document.getElementById('lastName').value.trim(),
-        email_address: document.getElementById('email').value.trim(),
-        m_payment_id: mPaymentId,
-        amount: total,
-        item_name: PRODUCT_NAME,
-        item_description: PRODUCT_SKU ? `SKU ${PRODUCT_SKU} x${qty}` : `Qty ${qty}`,
-        custom_str1: document.getElementById('phone').value.trim(),
-        custom_str2: document.getElementById('address').value.trim(),
-        custom_str3: document.getElementById('city').value.trim(),
-        custom_str4: document.getElementById('postalCode').value.trim(),
-        custom_str5: document.getElementById('country').value
-      };
-
-      const actionUrl = PAYFAST_CONFIG.sandbox
-        ? 'https://sandbox.payfast.co.za/eng/process'
-        : 'https://www.payfast.co.za/eng/process';
-
-      const payfastForm = document.createElement('form');
-      payfastForm.method = 'POST';
-      payfastForm.action = actionUrl;
-
-      for (const key in fields) {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = fields[key];
-        payfastForm.appendChild(input);
-      }
-
-      document.body.appendChild(payfastForm);
-      payfastForm.submit();
     });
-
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
-    const supabase = createClient(
-      'https://gtotwzfjjlptsqiwnwfq.supabase.co',
-      'sb_publishable_LAenRCIUAeQjtaj0O5qXrQ_zckCspwK'
-    );
   </script>
 
 </body>
