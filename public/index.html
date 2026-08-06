@@ -3,25 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Payment Not Completed — PetPawHaven</title>
+<title>PetPawHaven — Feeding & Care Tools Your Pet Actually Needs</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<style>
-  .result-box{
-    min-height:80vh; display:flex; align-items:center; justify-content:center;
-    text-align:center; padding:40px 20px;
-  }
-  .result-box .inner{max-width:480px;}
-  .result-box h1{font-size:2.4rem; margin-bottom:16px;}
-  .result-box p{color:rgba(241,243,242,0.68); margin-bottom:8px;}
-  .result-box a.back{color:var(--teal-light); font-weight:600; display:inline-block; margin-top:28px;}
-  .x-icon{
-    width:56px; height:56px; border-radius:50%; background:rgba(241,243,242,0.08);
-    display:flex; align-items:center; justify-content:center; margin:0 auto 24px;
-    color:rgba(241,243,242,0.6); font-size:1.5rem;
-  }
-</style>
 </head>
 <body>
 
@@ -34,18 +19,50 @@
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="home.html">Home</a>
+  <a href="home.html" class="active">Home</a>
+  <a href="products.html">Products</a>
   <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
 </div>
 
-<div class="result-box">
-  <div class="inner">
-    <div class="x-icon">✕</div>
-    <h1>Payment wasn't completed</h1>
-    <p>Nothing has been charged. You can try again anytime.</p>
-    <a class="back" href="home.html">Back to PetPawHaven</a>
+<section class="hero">
+  <span class="eyebrow">Trusted by pet owners across South Africa</span>
+  <h1>Care tools your pet will actually <span>use</span>.</h1>
+  <p>PetPawHaven picks feeders, fountains and grooming tools that solve a real problem — not just another thing gathering dust. Simple, tested, built to last.</p>
+  <a href="#shop" class="hero-cta">Shop the Range</a>
+</section>
+
+<section class="shelf" id="shop">
+  <div class="shelf-head">
+    <h2>Featured Products</h2>
+    <a href="products.html" class="view-link">View All Products →</a>
   </div>
+
+  <div class="grid">
+    <!-- ============================================
+         FEATURED CARD — copy this whole block to feature a new product.
+         data-id must match the id used in products-data.js and the real
+         id in your database (schema.sql).
+         ============================================ -->
+    <div class="p-card" data-id="1" data-name="The Slow Feeder — Stoneware Bowl" data-price="449.00" onclick="openQuickView('1')" style="cursor:pointer;">
+      <div class="p-image">Product photo here</div>
+      <div class="p-body">
+        <span class="p-tag">Feeding</span>
+        <h3>The Slow Feeder — Stoneware Bowl</h3>
+        <p>A weighted stoneware bowl that slows fast eaters naturally.</p>
+        <div class="p-footer">
+          <span class="price">R 449.00</span>
+          <span class="view-link">Quick view</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="trust-strip">
+  <div class="trust-item"><span class="mono">Local</span><p>Ships from South Africa, not an overseas warehouse.</p></div>
+  <div class="trust-item"><span class="mono">Secure</span><p>Checkout is handled safely through PayFast.</p></div>
+  <div class="trust-item"><span class="mono">Fair</span><p>7-day return window on every order.</p></div>
 </div>
 
 <footer>
@@ -93,8 +110,27 @@
   </div>
 </div>
 
+<!-- QUICK VIEW MODAL -->
+<div class="overlay" id="quickViewOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Quick View</h3><button class="modal-close" onclick="closeModal('quickViewOverlay')">&times;</button></div>
+    <div class="qv-image" id="qvImage">Product photo here</div>
+    <div class="modal-body">
+      <span class="qv-tag" id="qvTag"></span>
+      <h3 class="qv-name" id="qvName"></h3>
+      <p class="qv-desc" id="qvDesc"></p>
+      <span class="qv-price" id="qvPrice"></span>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" id="qvAddBtn">Add to Cart</button>
+      <a class="qv-view-link" id="qvViewLink" href="#">View full details →</a>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
+<script src="products-data.js"></script>
 <script src="cart.js"></script>
 </body>
 </html>

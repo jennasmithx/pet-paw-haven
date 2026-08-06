@@ -238,6 +238,19 @@ footer a:hover{color:var(--teal-light);}
 .checkout-summary .row{display:flex; justify-content:space-between; padding:4px 0;}
 .checkout-summary .row.total{border-top:1px solid var(--line); margin-top:8px; padding-top:10px; color:var(--teal-light); font-weight:700;}
 .payfast-note{font-size:0.75rem; color:rgba(241,243,242,0.4); margin-top:14px; text-align:center; line-height:1.5;}
+.qv-image{
+  aspect-ratio:1/1; border-radius:12px; margin:0 26px 0;
+  background:repeating-linear-gradient(45deg, rgba(241,243,242,0.03) 0 2px, transparent 2px 14px), var(--panel-light);
+  display:flex; align-items:center; justify-content:center; text-align:center;
+  color:rgba(241,243,242,0.4); font-size:0.8rem;
+  width:calc(100% - 52px);
+}
+.qv-tag{font-size:0.75rem; color:var(--teal-light); font-weight:600; text-transform:uppercase; letter-spacing:0.06em; display:block; margin:20px 0 8px;}
+.qv-name{font-size:1.25rem; margin-bottom:10px;}
+.qv-desc{color:rgba(241,243,242,0.65); font-size:0.9rem; margin-bottom:16px;}
+.qv-price{font-size:1.3rem; font-weight:700; display:block; margin-bottom:18px;}
+.qv-view-link{display:block; text-align:center; font-size:0.82rem; color:var(--teal-light); font-weight:600; margin-top:12px;}
+
 .toast{
   position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px);
   background:var(--teal); color:var(--ink); padding:12px 22px; border-radius:24px;

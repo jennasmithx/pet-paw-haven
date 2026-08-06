@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payment Not Completed — PetPawHaven</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .result-box{
+    min-height:80vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:40px 20px;
+  }
+  .result-box .inner{max-width:480px;}
+  .result-box h1{font-size:2.4rem; margin-bottom:16px;}
+  .result-box p{color:rgba(241,243,242,0.68); margin-bottom:8px;}
+  .result-box a.back{color:var(--teal-light); font-weight:600; display:inline-block; margin-top:28px;}
+  .x-icon{
+    width:56px; height:56px; border-radius:50%; background:rgba(241,243,242,0.08);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 24px;
+    color:rgba(241,243,242,0.6); font-size:1.5rem;
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <button class="burger-btn" id="burgerBtn" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+  <a href="home.html" class="wordmark">Pet<span>Paw</span>Haven</a>
+  <button class="cart-btn" onclick="openCart()">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="home.html">Home</a>
+  <a href="products.html">Products</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<div class="result-box">
+  <div class="inner">
+    <div class="x-icon">✕</div>
+    <h1>Payment wasn't completed</h1>
+    <p>Nothing has been charged. You can try again anytime.</p>
+    <a class="back" href="home.html">Back to PetPawHaven</a>
+  </div>
+</div>
+
+<footer>
+  <span>© 2026 PetPawHaven. All rights reserved.</span>
+  <div class="f-links">
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+</footer>
+
+<!-- CART MODAL -->
+<div class="overlay" id="cartOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Your Cart</h3><button class="modal-close" onclick="closeModal('cartOverlay')">&times;</button></div>
+    <div class="modal-body" id="cartBody"><p class="cart-empty">Your cart is empty.</p></div>
+    <div class="cart-total" id="cartTotalRow" style="display:none;"><span class="mono">Total</span><span class="amount" id="cartTotalAmount">R 0.00</span></div>
+    <div class="modal-actions"><button class="btn-primary" id="checkoutBtn" onclick="openCheckout()" disabled>Checkout</button></div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="overlay" id="checkoutOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Checkout</h3><button class="modal-close" onclick="closeModal('checkoutOverlay')">&times;</button></div>
+    <div class="modal-body">
+      <div class="checkout-summary" id="checkoutSummary"></div>
+      <form id="checkoutForm">
+        <div class="field-row">
+          <div class="field"><label>First name</label><input type="text" required></div>
+          <div class="field"><label>Last name</label><input type="text" required></div>
+        </div>
+        <div class="field"><label>Email</label><input type="email" required></div>
+        <div class="field"><label>Phone</label><input type="tel" required></div>
+        <div class="field"><label>Delivery address</label><textarea rows="2" required></textarea></div>
+        <div class="field-row">
+          <div class="field"><label>City</label><input type="text" required></div>
+          <div class="field"><label>Postal code</label><input type="text" required></div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="submitToPayFast()">Pay Now with PayFast</button>
+      <p class="payfast-note">You'll be redirected to PayFast's secure page to complete payment. Order details are saved before you leave this site.</p>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="cart.js"></script>
+</body>
+</html>

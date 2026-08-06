@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Product — PetPawHaven</title>
+<title>Contact — PetPawHaven</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -20,19 +20,39 @@
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="home.html">Home</a>
+  <a href="products.html">Products</a>
   <a href="about.html">About</a>
-  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="active">Contact</a>
 </div>
-<div class="search-row"><input type="text" placeholder="Search products..."></div>
 
-<div class="breadcrumb"><a href="home.html">Home</a> / <span id="breadcrumbName">Product</span></div>
+<section class="contact-grid">
+  <div class="contact-info">
+    <h1>Get in touch</h1>
+    <p>Questions about an order, a product, or shipping — reach out and we'll get back to you as soon as we can.</p>
+    <div class="detail">
+      <span class="mono">Email</span>
+      <p>hello@petpawhaven.co.za</p>
+    </div>
+    <div class="detail">
+      <span class="mono">Based in</span>
+      <p>South Africa</p>
+    </div>
+    <div class="detail">
+      <span class="mono">Response time</span>
+      <p>Usually within 24 hours</p>
+    </div>
+  </div>
 
-<!-- ============================================
-     PRODUCT CATALOG — add a new product here as its own entry.
-     The key (e.g. "1") must match the id used in home.html's
-     data-id and the real id in your database (schema.sql).
-     ============================================ -->
-<div id="productRoot"></div>
+  <div class="contact-form">
+    <h3>Send a message</h3>
+    <form id="contactForm">
+      <div class="field"><label>Your name</label><input type="text" name="name" required></div>
+      <div class="field"><label>Email</label><input type="email" name="email" required></div>
+      <div class="field"><label>Message</label><textarea rows="5" name="message" required></textarea></div>
+      <button type="submit" class="btn-primary" id="contactSubmitBtn">Send Message</button>
+    </form>
+  </div>
+</section>
 
 <footer>
   <span>© 2026 PetPawHaven. All rights reserved.</span>
@@ -82,55 +102,35 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  // Product catalog for standalone product pages.
-  // Add a new product here (key = its database id) when you add one to home.html.
-  const PRODUCTS = {
-    "1": {
-      name: "The Slow Feeder — Stoneware Bowl",
-      price: 449.00,
-      tag: "Feeding",
-      description: "A weighted stoneware bowl with a raised ridge pattern that slows fast eaters naturally — no plastic inserts, dishwasher safe, finished in matte charcoal.",
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xoeavjek';
+
+  document.getElementById('contactForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const btn = document.getElementById('contactSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      });
+
+      if (res.ok) {
+        window.location.href = 'contact-success.html';
+      } else {
+        showToast("Couldn't send — please try again");
+        btn.disabled = false;
+        btn.textContent = 'Send Message';
+      }
+    } catch (err) {
+      showToast('Network error — please try again');
+      btn.disabled = false;
+      btn.textContent = 'Send Message';
     }
-  };
-
-  const id = new URLSearchParams(window.location.search).get('id') || "1";
-  const product = PRODUCTS[id];
-  const root = document.getElementById('productRoot');
-
-  if (!product) {
-    root.innerHTML = `<div class="page-content"><h1>Product not found</h1><p>That item isn't in our current range. <a href="home.html" style="color:var(--teal-light)">Back to the shop</a>.</p></div>`;
-  } else {
-    document.title = `${product.name} — PetPawHaven`;
-    document.getElementById('breadcrumbName').textContent = product.name;
-
-    root.innerHTML = `
-      <div class="product-detail">
-        <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
-          <div class="p-image">Product photo here</div>
-        </div>
-        <div>
-          <span class="p-tag">${product.tag}</span>
-          <h1>${product.name}</h1>
-          <p class="desc">${product.description}</p>
-          <div class="price-row">
-            <span class="price">R ${product.price.toFixed(2)}</span>
-            <span class="stock-badge">In stock</span>
-          </div>
-          <button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
-          <div class="trust-row">
-            <span><i class="dot"></i>Ships from South Africa</span>
-            <span><i class="dot"></i>Secure checkout via PayFast</span>
-            <span><i class="dot"></i>7-day return window</span>
-          </div>
-        </div>
-      </div>
-    `;
-
-    // Wire up Add to Cart now that the product markup exists
-    const card = root.querySelector('.product-data');
-    const btn = root.querySelector('.add-to-cart-btn');
-    btn.addEventListener('click', () => addToCart(getProductFromCard(card)));
-  }
+  });
 </script>
 <script src="cart.js"></script>
 </body>

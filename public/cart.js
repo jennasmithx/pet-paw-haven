@@ -109,6 +109,44 @@ function renderCart(){
 function openCart(){ document.getElementById('cartOverlay')?.classList.add('open'); }
 function closeModal(id){ document.getElementById(id)?.classList.remove('open'); }
 
+function filterProducts(query){
+  const q = query.trim().toLowerCase();
+  const cards = document.querySelectorAll('.p-card');
+  let visibleCount = 0;
+
+  cards.forEach(card => {
+    const name = (card.dataset.name || '').toLowerCase();
+    const tag = card.querySelector('.p-tag')?.textContent.toLowerCase() || '';
+    const matches = name.includes(q) || tag.includes(q);
+    card.style.display = matches ? '' : 'none';
+    if (matches) visibleCount++;
+  });
+
+  const noResultsEl = document.getElementById('noResults');
+  if (noResultsEl) noResultsEl.style.display = (visibleCount === 0 && q !== '') ? 'block' : 'none';
+}
+
+function openQuickView(id){
+  const product = (typeof PRODUCTS !== 'undefined') ? PRODUCTS[id] : null;
+  if (!product) return;
+
+  document.getElementById('qvImage').textContent = 'Product photo here';
+  document.getElementById('qvTag').textContent = product.tag;
+  document.getElementById('qvName').textContent = product.name;
+  document.getElementById('qvDesc').textContent = product.description;
+  document.getElementById('qvPrice').textContent = `R ${product.price.toFixed(2)}`;
+
+  const addBtn = document.getElementById('qvAddBtn');
+  addBtn.onclick = () => {
+    addToCart({ id, name: product.name, price: product.price });
+  };
+
+  const viewLink = document.getElementById('qvViewLink');
+  if (viewLink) viewLink.href = `product.html?id=${id}`;
+
+  document.getElementById('quickViewOverlay').classList.add('open');
+}
+
 function toggleMobileMenu(){
   document.getElementById('mobileMenu')?.classList.toggle('open');
   document.getElementById('burgerBtn')?.classList.toggle('open');
@@ -182,4 +220,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderCart(); // reflect any cart saved from a previous page
 });
-
