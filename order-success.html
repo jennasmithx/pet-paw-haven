@@ -3,10 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetPawHaven — Feeding & Care Tools Your Pet Actually Needs</title>
+<title>Order Confirmed — PetPawHaven</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<style>
+  .result-box{
+    min-height:80vh; display:flex; align-items:center; justify-content:center;
+    text-align:center; padding:40px 20px;
+  }
+  .result-box .inner{max-width:480px;}
+  .result-box h1{font-size:2.4rem; margin-bottom:16px;}
+  .result-box p{color:rgba(241,243,242,0.68); margin-bottom:8px;}
+  .order-id{color:var(--teal-light); font-weight:700;}
+  .result-box a.back{color:var(--teal-light); font-weight:600; display:inline-block; margin-top:28px;}
+  .check-icon{
+    width:56px; height:56px; border-radius:50%; background:rgba(47,167,158,0.14);
+    display:flex; align-items:center; justify-content:center; margin:0 auto 24px;
+    color:var(--teal-light); font-size:1.6rem;
+  }
+</style>
 </head>
 <body>
 
@@ -19,50 +35,19 @@
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="home.html" class="active">Home</a>
+  <a href="home.html">Home</a>
   <a href="about.html">About</a>
   <a href="contact.html">Contact</a>
 </div>
-<div class="search-row"><input type="text" placeholder="Search products..."></div>
 
-<section class="hero">
-  <span class="eyebrow">Trusted by pet owners across South Africa</span>
-  <h1>Care tools your pet will actually <span>use</span>.</h1>
-  <p>PetPawHaven picks feeders, fountains and grooming tools that solve a real problem — not just another thing gathering dust. Simple, tested, built to last.</p>
-  <a href="#shop" class="hero-cta">Shop the Range</a>
-</section>
-
-<section class="shelf" id="shop">
-  <div class="shelf-head">
-    <h2>Featured Products</h2>
-    <span class="mono" id="itemCount">1 item available</span>
+<div class="result-box">
+  <div class="inner">
+    <div class="check-icon">✓</div>
+    <h1>Payment received</h1>
+    <p>Your order is confirmed — a confirmation email is on its way.</p>
+    <p>Order reference: <span class="order-id">#<span id="orderId">—</span></span></p>
+    <a class="back" href="home.html">Back to PetPawHaven</a>
   </div>
-
-  <div class="grid">
-    <!-- ============================================
-         FEATURED CARD — copy this whole block to add a new product.
-         data-id must match the product's real id in your database (schema.sql).
-         Link href should point to product.html?id=<that same id>
-         ============================================ -->
-    <div class="p-card" data-id="1" data-name="The Slow Feeder — Stoneware Bowl" data-price="449.00">
-      <a href="product.html?id=1" class="p-image">Product photo here</a>
-      <div class="p-body">
-        <span class="p-tag">Feeding</span>
-        <a href="product.html?id=1"><h3>The Slow Feeder — Stoneware Bowl</h3></a>
-        <p>A weighted stoneware bowl that slows fast eaters naturally.</p>
-        <div class="p-footer">
-          <span class="price">R 449.00</span>
-          <a href="product.html?id=1" class="view-link">View →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div class="trust-strip">
-  <div class="trust-item"><span class="mono">Local</span><p>Ships from South Africa, not an overseas warehouse.</p></div>
-  <div class="trust-item"><span class="mono">Secure</span><p>Checkout is handled safely through PayFast.</p></div>
-  <div class="trust-item"><span class="mono">Fair</span><p>7-day return window on every order.</p></div>
 </div>
 
 <footer>
@@ -112,6 +97,12 @@
 
 <div class="toast" id="toast"></div>
 
+<script>
+  const orderId = new URLSearchParams(window.location.search).get('order');
+  if (orderId) {
+    document.getElementById('orderId').textContent = String(orderId).padStart(3, '0');
+  }
+</script>
 <script src="cart.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PetPawHaven — Feeding & Care Tools Your Pet Actually Needs</title>
+<title>Contact — PetPawHaven</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -19,51 +19,40 @@
   </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-  <a href="home.html" class="active">Home</a>
+  <a href="home.html">Home</a>
   <a href="about.html">About</a>
-  <a href="contact.html">Contact</a>
+  <a href="contact.html" class="active">Contact</a>
 </div>
 <div class="search-row"><input type="text" placeholder="Search products..."></div>
 
-<section class="hero">
-  <span class="eyebrow">Trusted by pet owners across South Africa</span>
-  <h1>Care tools your pet will actually <span>use</span>.</h1>
-  <p>PetPawHaven picks feeders, fountains and grooming tools that solve a real problem — not just another thing gathering dust. Simple, tested, built to last.</p>
-  <a href="#shop" class="hero-cta">Shop the Range</a>
-</section>
-
-<section class="shelf" id="shop">
-  <div class="shelf-head">
-    <h2>Featured Products</h2>
-    <span class="mono" id="itemCount">1 item available</span>
-  </div>
-
-  <div class="grid">
-    <!-- ============================================
-         FEATURED CARD — copy this whole block to add a new product.
-         data-id must match the product's real id in your database (schema.sql).
-         Link href should point to product.html?id=<that same id>
-         ============================================ -->
-    <div class="p-card" data-id="1" data-name="The Slow Feeder — Stoneware Bowl" data-price="449.00">
-      <a href="product.html?id=1" class="p-image">Product photo here</a>
-      <div class="p-body">
-        <span class="p-tag">Feeding</span>
-        <a href="product.html?id=1"><h3>The Slow Feeder — Stoneware Bowl</h3></a>
-        <p>A weighted stoneware bowl that slows fast eaters naturally.</p>
-        <div class="p-footer">
-          <span class="price">R 449.00</span>
-          <a href="product.html?id=1" class="view-link">View →</a>
-        </div>
-      </div>
+<section class="contact-grid">
+  <div class="contact-info">
+    <h1>Get in touch</h1>
+    <p>Questions about an order, a product, or shipping — reach out and we'll get back to you as soon as we can.</p>
+    <div class="detail">
+      <span class="mono">Email</span>
+      <p>hello@petpawhaven.co.za</p>
+    </div>
+    <div class="detail">
+      <span class="mono">Based in</span>
+      <p>South Africa</p>
+    </div>
+    <div class="detail">
+      <span class="mono">Response time</span>
+      <p>Usually within 24 hours</p>
     </div>
   </div>
-</section>
 
-<div class="trust-strip">
-  <div class="trust-item"><span class="mono">Local</span><p>Ships from South Africa, not an overseas warehouse.</p></div>
-  <div class="trust-item"><span class="mono">Secure</span><p>Checkout is handled safely through PayFast.</p></div>
-  <div class="trust-item"><span class="mono">Fair</span><p>7-day return window on every order.</p></div>
-</div>
+  <div class="contact-form">
+    <h3>Send a message</h3>
+    <form id="contactForm">
+      <div class="field"><label>Your name</label><input type="text" required></div>
+      <div class="field"><label>Email</label><input type="email" required></div>
+      <div class="field"><label>Message</label><textarea rows="5" required></textarea></div>
+      <button type="submit" class="btn-primary">Send Message</button>
+    </form>
+  </div>
+</section>
 
 <footer>
   <span>© 2026 PetPawHaven. All rights reserved.</span>
@@ -112,6 +101,19 @@
 
 <div class="toast" id="toast"></div>
 
+<script>
+  // Simple mailto fallback — replace with a real backend endpoint (like
+  // /api/contact) once you want messages to land somewhere other than
+  // the visitor's own email client.
+  document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const inputs = e.target.querySelectorAll('input, textarea');
+    const [name, email, message] = Array.from(inputs).map(i => i.value);
+    const subject = encodeURIComponent(`Message from ${name} via PetPawHaven`);
+    const body = encodeURIComponent(`${message}\n\nFrom: ${name} (${email})`);
+    window.location.href = `mailto:hello@petpawhaven.co.za?subject=${subject}&body=${body}`;
+  });
+</script>
 <script src="cart.js"></script>
 </body>
 </html>
