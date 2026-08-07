@@ -8,7 +8,13 @@
 
 const PRODUCTS = {
   "1": {
-    name: "The Slow Feeder — Stoneware Bowl",
+    name: "Premium Pet Water Fountain",
+    price: 449.00,
+    tag: "Feeding",
+    description: "A weighted stoneware bowl with a raised ridge pattern that slows fast eaters naturally — no plastic inserts, dishwasher safe, finished in matte charcoal.",
+  },
+  "2": {
+    name: "Automatic Pet Feeder",
     price: 449.00,
     tag: "Feeding",
     description: "A weighted stoneware bowl with a raised ridge pattern that slows fast eaters naturally — no plastic inserts, dishwasher safe, finished in matte charcoal.",

@@ -86,19 +86,22 @@ function renderCart(){
     return;
   }
 
-  body.innerHTML = cart.map(i => `
-    <div class="cart-line">
-      <div>
-        <div class="cart-line-name">${i.name}</div>
-        <div class="qty-control">
-          <button class="qty-btn" onclick="changeQty('${i.id}', -1)">−</button>
-          <span class="mono">${i.qty}</span>
-          <button class="qty-btn" onclick="changeQty('${i.id}', 1)">+</button>
-        </div>
+body.innerHTML = cart.map(i => `
+  <div class="cart-line">
+    <div>
+      <div class="cart-line-name">${i.name}</div>
+      <div class="qty-control">
+        <button class="qty-btn" onclick="changeQty('${i.id}', -1)">−</button>
+        <span class="mono">${i.qty}</span>
+        <button class="qty-btn" onclick="changeQty('${i.id}', 1)">+</button>
       </div>
-      <div class="cart-line-price">R ${(i.price * i.qty).toFixed(2)}</div>
     </div>
-  `).join('');
+    <div class="cart-line-right">
+      <div class="cart-line-price">R ${(i.price * i.qty).toFixed(2)}</div>
+      <button class="cart-remove-btn" onclick="removeFromCart('${i.id}')" aria-label="Remove ${i.name}">🗑</button>
+    </div>
+  </div>
+`).join('');
 
   if(totalRow) totalRow.style.display = 'flex';
   const totalAmountEl = document.getElementById('cartTotalAmount');
@@ -150,6 +153,12 @@ function openQuickView(id){
 function toggleMobileMenu(){
   document.getElementById('mobileMenu')?.classList.toggle('open');
   document.getElementById('burgerBtn')?.classList.toggle('open');
+}
+
+function removeFromCart(id){
+  cart = cart.filter(i => String(i.id) !== String(id));
+  saveCart();
+  renderCart();
 }
 
 function openCheckout(){
