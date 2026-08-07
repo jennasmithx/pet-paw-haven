@@ -1,5 +1,5 @@
 // products-data.js — the single source of truth for product details
-// (name, price, tag, description) used across home.html, products.html,
+// (name, price, tag, description) used across index.html, products.html,
 // product.html, and the quick-view modal. Add a new product here once;
 // every page that references its id picks it up automatically.
 //
