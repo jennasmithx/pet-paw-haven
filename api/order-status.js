@@ -1,18 +1,16 @@
 // api/order-status.js
-// GET /api/order-status?ref=ORD-xxxxxxx
-// Returns { status: 'Paid' | 'Pending' | 'Failed' | null }
+// GET /api/order-status?ref=123   (ref = orders.id)
+// Returns { status: 'pending_payment' | 'paid' | 'failed' | 'shipped' | null }
 //
-// Used by thank-you.html (and optionally checkout-cancelled.html) to verify
-// an order's real payment_status before showing a success/failure message —
-// since PayFast redirects the browser to return_url/cancel_url regardless of
-// whether payment actually succeeded. The webhook (payfast-notify.js) is the
-// only thing that should ever set payment_status to 'Paid'; this endpoint
-// just reads that value, it never writes it.
+// Used by thank-you.html to verify an order's real status before showing a
+// success message — PayFast redirects the browser to return_url regardless
+// of whether payment actually succeeded, so the redirect alone proves nothing.
+// The webhook (payfast-notify.js) is the only thing that sets status to
+// 'paid'; this endpoint only reads it.
 //
-// Uses the service role key since this needs to read orders without an
-// RLS policy exposing the whole orders table to anon reads. Only returns
-// the status field — never the customer's name, address, etc — so it's
-// safe to call from a public page even if someone guesses/enumerates refs.
+// Uses the service role key so this works without an RLS policy exposing
+// the whole orders table to anon reads. Only returns the status field —
+// never customer details — so it's safe even if someone guesses/enumerates ids.
 
 import { createClient } from '@supabase/supabase-js';
 
@@ -27,21 +25,21 @@ export default async function handler(req, res) {
   }
 
   const { ref } = req.query;
+  const orderId = parseInt(ref, 10);
 
-  if (!ref || typeof ref !== 'string') {
-    return res.status(400).json({ error: 'Missing order reference' });
+  if (!ref || !Number.isInteger(orderId)) {
+    return res.status(400).json({ error: 'Missing or invalid order reference' });
   }
 
   const { data: order, error } = await supabase
     .from('orders')
-    .select('payment_status')
-    .eq('payment_id', ref)
+    .select('status')
+    .eq('id', orderId)
     .single();
 
   if (error || !order) {
-    // Don't leak whether the ref format is "close" to valid — just say not found
     return res.status(404).json({ status: null });
   }
 
-  return res.status(200).json({ status: order.payment_status });
+  return res.status(200).json({ status: order.status });
 }

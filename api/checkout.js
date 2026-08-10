@@ -1,32 +1,30 @@
-// api/create-order.js
+// api/checkout.js
 // POST { items: [{ productId, quantity }], customer: { firstName, lastName, email, phone, address, city, postal, country } }
 // Returns { actionUrl, fields } — the browser builds a hidden form from these and submits it to PayFast.
 //
-// Required environment variables (set these in your Vercel project settings, never in client code):
+// Required environment variables (Vercel project settings):
 //   SUPABASE_URL
-//   SUPABASE_SERVICE_ROLE_KEY      <- service role key, NOT the publishable/anon key
-//   PAYFAST_SANDBOX                <- "true" or "false"
+//   SUPABASE_SERVICE_ROLE_KEY
+//   PAYFAST_SANDBOX          <- "true" or "false"
 //   PAYFAST_MERCHANT_ID
 //   PAYFAST_MERCHANT_KEY
-//   PAYFAST_PASSPHRASE              <- set this in your PayFast dashboard too (Settings > Integration)
-//   SITE_URL                        <- e.g. https://pet-paw-haven.vercel.app
+//   PAYFAST_PASSPHRASE
+//   SITE_URL
 //
-// NOTE: This version accepts a cart (multiple products + quantities) instead of a
-// single productSku/qty pair. It assumes:
-//   - PRODUCTS (from ./_payfast.js) is an object keyed by product id/sku, each with
-//     at least { name, price, sku }
-//   - Your Supabase `orders` table has a jsonb column called `items` to hold the
-//     line items array. If it doesn't yet, run:
-//       ALTER TABLE orders ADD COLUMN items jsonb;
-//     If you're already storing line items in a separate order_items table instead,
-//     let me know and I'll swap this to insert there instead.
+// Matches schema.sql: orders(id, customer_first_name, customer_last_name, email,
+// phone, address, city, postal_code, total, status, payfast_payment_id) and a
+// separate order_items(order_id, product_id, quantity, price_at_purchase) table.
+// There's no dedicated "payment reference" column, so — same as the original
+// payfast-backend.js — the order's own serial id doubles as PayFast's
+// m_payment_id. order_id is what return_url/order-status.js use to look the
+// order back up.
 
 import { createClient } from '@supabase/supabase-js';
 import { generateSignature, PRODUCTS } from './_payfast.js';
 
 const supabase = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY // server-only, full write access, RLS bypassed intentionally here
+  process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -40,7 +38,6 @@ export default async function handler(req, res) {
   const body = req.body || {};
   const { items, customer } = body;
 
-  // --- Validate the cart ---
   if (!Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ error: 'Cart is empty' });
   }
@@ -48,11 +45,7 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Too many items in cart' });
   }
 
-  // --- Validate customer details server-side. Never trust the browser. ---
-  const {
-    firstName, lastName, email, phone,
-    address, city, postal, country
-  } = customer || {};
+  const { firstName, lastName, email, phone, address, city, postal, country } = customer || {};
 
   if (!firstName || !lastName) return res.status(400).json({ error: 'Name required' });
   if (!emailRe.test(String(email || '').trim())) return res.status(400).json({ error: 'Invalid email' });
@@ -61,9 +54,8 @@ export default async function handler(req, res) {
   if (!city) return res.status(400).json({ error: 'City required' });
   if (!postal || String(postal).trim().length <= 2) return res.status(400).json({ error: 'Invalid postal code' });
 
-  // --- Look up and validate every line item against the server-side catalogue.
-  //     The browser can send whatever it wants here — price and existence are
-  //     always re-derived from PRODUCTS, never trusted from the request. ---
+  // --- Validate every line item against the server-side catalogue.
+  //     Price/existence always re-derived here — never trusted from the request. ---
   let total = 0;
   const lineItems = [];
 
@@ -78,69 +70,62 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: `Invalid quantity for ${product.name}` });
     }
 
-    const lineTotal = product.price * quantity;
-    total += lineTotal;
-
+    total += product.price * quantity;
     lineItems.push({
-      productId: item.productId,
-      sku: product.sku,
-      name: product.name,
+      product_id: parseInt(item.productId, 10),
       quantity,
-      priceAtPurchase: product.price,
-      lineTotal
+      price_at_purchase: product.price
     });
   }
 
-  const amount = total.toFixed(2);
-  const mPaymentId = 'ORD-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-
-  // --- Create the order as Pending. payment_status can only move to Paid via the notify webhook. ---
+  // --- Create the order (status defaults to 'pending_payment' per schema.sql) ---
   const { data: order, error: insertError } = await supabase
     .from('orders')
     .insert({
-      first_name: firstName.trim(),
-      last_name: lastName.trim(),
+      customer_first_name: firstName.trim(),
+      customer_last_name: lastName.trim(),
       email: email.trim(),
       phone: phone.trim(),
       address: address.trim(),
       city: city.trim(),
       postal_code: String(postal).trim(),
-      country: country || 'ZA',
-      items: lineItems,        // jsonb column — full cart snapshot at time of purchase
-      amount,
-      payment_status: 'Pending',
-      payment_id: mPaymentId
+      total: total.toFixed(2)
     })
     .select()
     .single();
 
   if (insertError) {
-    console.error(insertError);
+    console.error('Order insert failed:', insertError);
     return res.status(500).json({ error: 'Could not create order' });
+  }
+
+  // --- Insert line items into order_items, now that we have the order's id ---
+  const itemsToInsert = lineItems.map(li => ({ ...li, order_id: order.id }));
+  const { error: itemsError } = await supabase.from('order_items').insert(itemsToInsert);
+
+  if (itemsError) {
+    console.error('Order items insert failed:', itemsError);
+    // Clean up the now-orphaned order rather than leaving a broken record behind
+    await supabase.from('orders').delete().eq('id', order.id);
+    return res.status(500).json({ error: 'Could not save order items' });
   }
 
   const sandbox = process.env.PAYFAST_SANDBOX === 'true';
   const siteUrl = process.env.SITE_URL;
 
-  // item_name/item_description have PayFast length limits, so summarise rather
-  // than dumping every line item into the field.
-  const itemSummary = lineItems.length === 1
-    ? lineItems[0].name
-    : `${lineItems.length} items`;
-
   const fields = {
     merchant_id: process.env.PAYFAST_MERCHANT_ID,
     merchant_key: process.env.PAYFAST_MERCHANT_KEY,
-    return_url: `${siteUrl}/thank-you.html?ref=${mPaymentId}`,
-    cancel_url: `${siteUrl}/checkout-cancelled.html`,
+    url: `${siteUrl}/thank-you.html?ref=${order.id}`,
+    cancel_url: `${siteUrl}/checkout-cancelled.html?ref=${order.id}`,
     notify_url: `${siteUrl}/api/payfast-notify`,
     name_first: firstName.trim(),
     name_last: lastName.trim(),
     email_address: email.trim(),
-    m_payment_id: mPaymentId,
-    amount,
-    item_name: `PetPawHaven Order ${mPaymentId}`,
-    item_description: itemSummary
+    m_payment_id: order.id.toString(),
+    amount: total.toFixed(2),
+    item_name: `PetPawHaven Order #${order.id}`,
+    item_description: lineItems.length === 1 ? PRODUCTS[items[0].productId].name : `${lineItems.length} items`
   };
 
   fields.signature = generateSignature(fields, process.env.PAYFAST_PASSPHRASE);
