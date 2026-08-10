@@ -14,6 +14,18 @@
 import { createClient } from '@supabase/supabase-js';
 import { generateSignature, PRODUCTS } from './_payfast.js';
 
+// TEMPORARY DEBUG — remove once the key issue is confirmed fixed.
+// Logs enough to identify the problem WITHOUT exposing the actual key.
+const keyVal = process.env.SUPABASE_SERVICE_ROLE_KEY;
+console.log('SUPABASE_SERVICE_ROLE_KEY debug:', {
+  exists: !!keyVal,
+  length: keyVal ? keyVal.length : 0,
+  startsWith: keyVal ? keyVal.slice(0, 8) : null,
+  endsWith: keyVal ? keyVal.slice(-8) : null,
+  hasWhitespace: keyVal ? /\s/.test(keyVal) : null,
+  hasQuotes: keyVal ? /['"]/.test(keyVal) : null,
+});
+
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_ROLE_KEY
