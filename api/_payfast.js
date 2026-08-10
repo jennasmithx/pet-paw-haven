@@ -40,3 +40,25 @@ export function generateSignature(data, passphrase) {
   }
   return crypto.createHash('md5').update(pfOutput).digest('hex');
 }
+
+// Asks PayFast's own servers to confirm an ITN post is genuine (not spoofed).
+// rawBody is the exact x-www-form-urlencoded body PayFast posted to the
+// webhook — forwarded as-is to PayFast's validate endpoint.
+export async function validateWithPayFast(rawBody, sandbox) {
+  const validateUrl = sandbox
+    ? 'https://sandbox.payfast.co.za/eng/query/validate'
+    : 'https://www.payfast.co.za/eng/query/validate';
+
+  try {
+    const response = await fetch(validateUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: rawBody
+    });
+    const text = await response.text();
+    return text.trim() === 'VALID';
+  } catch (err) {
+    console.error('PayFast validate request failed:', err);
+    return false;
+  }
+}
