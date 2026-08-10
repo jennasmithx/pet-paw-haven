@@ -145,5 +145,38 @@ const timer = setInterval(() => {
 },1000);
 </script>
 
+<script>
+(async function checkOrderStatus() {
+  const params = new URLSearchParams(window.location.search);
+  const ref = params.get('ref');
+  const messageEl = document.getElementById('orderStatusMessage');
+
+  if (!ref) {
+    if (messageEl) messageEl.textContent = "We couldn't find that order.";
+    return;
+  }
+
+  try {
+    const res = await fetch(`/api/order-status?ref=${encodeURIComponent(ref)}`);
+    const data = await res.json();
+
+    if (!messageEl) return;
+
+    if (data.status === 'Paid') {
+      messageEl.textContent = 'Your order is confirmed! Thank you for shopping with PetPawHaven.';
+    } else if (data.status === 'Pending') {
+      // PayFast can take a few seconds to send the webhook after redirecting
+      // the browser here, so poll briefly before giving up.
+      messageEl.textContent = 'Confirming your payment…';
+      setTimeout(checkOrderStatus, 3000);
+    } else {
+      messageEl.textContent = "We couldn't confirm this payment. If you were charged, please contact us with your order reference: " + ref;
+    }
+  } catch (err) {
+    if (messageEl) messageEl.textContent = "We couldn't confirm this order right now. Please contact us with your order reference: " + ref;
+  }
+})();
+</script>
+
 </body>
 </html>

@@ -103,7 +103,7 @@ router.post('/api/checkout', async (req, res) => {
     const pfData = {
       merchant_id: PAYFAST_MERCHANT_ID,
       merchant_key: PAYFAST_MERCHANT_KEY,
-      return_url: `${SITE_URL}/order-success?order=${orderId}`,
+      return_url: `${siteUrl}/thank-you.html?ref=${mPaymentId}`,
       cancel_url: `${SITE_URL}/order-cancelled?order=${orderId}`,
       notify_url: `${SITE_URL}/api/payfast/itn`,
       name_first: customer.firstName,

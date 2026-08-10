@@ -181,7 +181,7 @@ async function submitToPayFast(){
 
   const payload = {
     items: cart.map(i => ({ productId: i.id, quantity: i.qty })),
-    customer: { firstName, lastName, email, phone, address, city, postal }
+    customer: { firstName, lastName, email, phone, address, city, postal, country: 'ZA' }
   };
 
   const payBtn = document.querySelector('#checkoutOverlay .btn-primary');
@@ -203,9 +203,25 @@ async function submitToPayFast(){
       return;
     }
 
+    // Build a hidden form from actionUrl + fields and auto-submit it to PayFast.
+    const payfastForm = document.createElement('form');
+    payfastForm.method = 'POST';
+    payfastForm.action = data.actionUrl;
+    payfastForm.style.display = 'none';
+
+    Object.entries(data.fields).forEach(([key, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      payfastForm.appendChild(input);
+    });
+
+    document.body.appendChild(payfastForm);
+
     cart = [];
     saveCart();
-    window.location.href = data.redirectUrl;
+    payfastForm.submit();
 
   } catch (err) {
     showToast('Network error — please try again');

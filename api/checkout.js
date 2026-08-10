@@ -131,7 +131,7 @@ export default async function handler(req, res) {
   const fields = {
     merchant_id: process.env.PAYFAST_MERCHANT_ID,
     merchant_key: process.env.PAYFAST_MERCHANT_KEY,
-    return_url: `${siteUrl}/thank-you.html`,
+    return_url: `${siteUrl}/thank-you.html?ref=${mPaymentId}`,
     cancel_url: `${siteUrl}/checkout-cancelled.html`,
     notify_url: `${siteUrl}/api/payfast-notify`,
     name_first: firstName.trim(),
