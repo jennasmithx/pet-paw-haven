@@ -44,21 +44,44 @@ export function generateSignature(data, passphrase) {
 // Asks PayFast's own servers to confirm an ITN post is genuine (not spoofed).
 // rawBody is the exact x-www-form-urlencoded body PayFast posted to the
 // webhook — forwarded as-is to PayFast's validate endpoint.
-export async function validateWithPayFast(rawBody, sandbox) {
-  const validateUrl = sandbox
-    ? 'https://sandbox.payfast.co.za/eng/query/validate'
-    : 'https://www.payfast.co.za/eng/query/validate';
 
-  try {
-    const response = await fetch(validateUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: rawBody
-    });
-    const text = await response.text();
-    return text.trim() === 'VALID';
-  } catch (err) {
-    console.error('PayFast validate request failed:', err);
-    return false;
+export function generateSignature(data, passphrase = null) {
+  let pfOutput = '';
+
+  // IMPORTANT: Do NOT sort these alphabetically.
+  // Keep them in the order PayFast expects.
+  Object.keys(data).forEach(key => {
+    if (data[key] !== '' && data[key] !== undefined && key !== 'signature') {
+      const value = String(data[key]).trim();
+
+      const encoded = encodeURIComponent(value)
+        .replace(/%20/g, '+')
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A');
+
+      pfOutput += `${key}=${encoded}&`;
+    }
+  });
+
+  pfOutput = pfOutput.slice(0, -1);
+
+  if (passphrase) {
+    const encodedPassphrase = encodeURIComponent(String(passphrase).trim())
+      .replace(/%20/g, '+')
+      .replace(/!/g, '%21')
+      .replace(/'/g, '%27')
+      .replace(/\(/g, '%28')
+      .replace(/\)/g, '%29')
+      .replace(/\*/g, '%2A');
+
+    pfOutput += `&passphrase=${encodedPassphrase}`;
   }
+
+  return crypto
+    .createHash('md5')
+    .update(pfOutput)
+    .digest('hex');
 }
