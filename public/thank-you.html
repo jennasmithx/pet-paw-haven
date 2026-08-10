@@ -162,18 +162,16 @@ const timer = setInterval(() => {
 
     if (!messageEl) return;
 
-    if (data.status === 'paid') {
+    if (data.status === 'Paid') {
       messageEl.textContent = 'Your order is confirmed! Thank you for shopping with PetPawHaven.';
-    } else if (data.status === 'pending_payment') {
-      // PayFast can take a few seconds to send the webhook after redirecting
-      // the browser here, so poll briefly before giving up.
+    } else if (data.status === 'Pending') {
       messageEl.textContent = 'Confirming your payment…';
       setTimeout(checkOrderStatus, 3000);
     } else {
-      messageEl.textContent = "We couldn't confirm this payment. If you were charged, please contact us with your order reference: #" + ref;
+      messageEl.textContent = "We couldn't confirm this payment. If you were charged, please contact us with your order reference: " + ref;
     }
   } catch (err) {
-    if (messageEl) messageEl.textContent = "We couldn't confirm this order right now. Please contact us with your order reference: #" + ref;
+    if (messageEl) messageEl.textContent = "We couldn't confirm this order right now. Please contact us with your order reference: " + ref;
   }
 })();
 </script>
