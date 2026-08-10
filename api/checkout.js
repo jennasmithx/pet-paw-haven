@@ -110,14 +110,14 @@ export default async function handler(req, res) {
     .insert(rowsToInsert)
     .select();
 
-  if (insertError) {
-    console.error('Order insert failed:', insertError);
-    return res.status(500).json({
-  error: 'Could not create order',
-  details: insertError.message
-});
-    
-  }
+if (insertError) {
+  console.error("SUPABASE INSERT ERROR:", insertError);
+
+  return res.status(500).json({
+    error: "SUPABASE INSERT FAILED",
+    details: JSON.stringify(insertError)
+  });
+}
 
   const sandbox = process.env.PAYFAST_SANDBOX === 'true';
   const siteUrl = process.env.SITE_URL;
