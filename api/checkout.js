@@ -112,7 +112,11 @@ export default async function handler(req, res) {
 
   if (insertError) {
     console.error('Order insert failed:', insertError);
-    return res.status(500).json({ error: 'Could not create order' });
+    return res.status(500).json({
+  error: 'Could not create order',
+  details: insertError.message
+});
+    
   }
 
   const sandbox = process.env.PAYFAST_SANDBOX === 'true';
