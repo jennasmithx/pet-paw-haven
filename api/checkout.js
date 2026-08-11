@@ -23,9 +23,9 @@ import { generateSignature, PRODUCTS } from './_payfast.js';
 const SUPABASE_URL_HARDCODED = 'https://gtotwzfjjlptsqiwnwfq.supabase.co';
 const SUPABASE_KEY_HARDCODED = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b3R3emZqamxwdHNxaXdud2ZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTMyNjczNSwiZXhwIjoyMTAwOTAyNzM1fQ.UgGYBWk1ghB2D2k9W_nPcMmL3PzPD3iMkR23guJghFk'; // paste fresh from Supabase
 
-const PAYFAST_MERCHANT_ID_HARDCODED = '10000100';   // PayFast public sandbox id
-const PAYFAST_MERCHANT_KEY_HARDCODED = '46f0cd694581a'; // PayFast public sandbox key
-const PAYFAST_PASSPHRASE_HARDCODED = ''; // leave blank for sandbox
+const PAYFAST_MERCHANT_ID_HARDCODED = '10052855';   // your own registered sandbox id
+const PAYFAST_MERCHANT_KEY_HARDCODED = 'owoqgv6hwaczo'; // your own registered sandbox key
+const PAYFAST_PASSPHRASE_HARDCODED = 'jennasmithxx'; // set this on sandbox.payfast.co.za, then paste it here yourself
 // ============================================================
 
 const supabase = createClient(SUPABASE_URL_HARDCODED, SUPABASE_KEY_HARDCODED);
