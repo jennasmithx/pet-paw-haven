@@ -14,21 +14,10 @@
 import { createClient } from '@supabase/supabase-js';
 import { generateSignature, PRODUCTS } from './_payfast.js';
 
-// ============================================================
-// TEMPORARY — hardcoded for testing, so we can rule out Vercel's
-// env var system as the problem. DO NOT leave these here once
-// things work — move back to process.env.* before going live,
-// since this file gets committed to git (visible in history forever).
-// ============================================================
-const SUPABASE_URL_HARDCODED = 'https://gtotwzfjjlptsqiwnwfq.supabase.co';
-const SUPABASE_KEY_HARDCODED = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b3R3emZqamxwdHNxaXdud2ZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTMyNjczNSwiZXhwIjoyMTAwOTAyNzM1fQ.UgGYBWk1ghB2D2k9W_nPcMmL3PzPD3iMkR23guJghFk'; // paste fresh from Supabase
-
-const PAYFAST_MERCHANT_ID_HARDCODED = '10052855';   // your own registered sandbox id
-const PAYFAST_MERCHANT_KEY_HARDCODED = 'owoqgv6hwaczo'; // your own registered sandbox key
-const PAYFAST_PASSPHRASE_HARDCODED = 'jennasmithxx'; // set this on sandbox.payfast.co.za, then paste it here yourself
-// ============================================================
-
-const supabase = createClient(SUPABASE_URL_HARDCODED, SUPABASE_KEY_HARDCODED);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRe = /^[0-9+ ()-]{7,}$/;
@@ -114,16 +103,16 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: 'Could not create order' });
   }
 
-  const sandbox = true; // hardcoded — sandbox testing only
-  const siteUrl = process.env.SITE_URL; // this one is fine to keep — not secret, just your domain
+  const sandbox = process.env.PAYFAST_SANDBOX === 'true';
+  const siteUrl = process.env.SITE_URL;
 
   const itemSummary = lineItems.length === 1
     ? lineItems[0].product_name
     : `${lineItems.length} items`;
 
   const fields = {
-    merchant_id: PAYFAST_MERCHANT_ID_HARDCODED,
-    merchant_key: PAYFAST_MERCHANT_KEY_HARDCODED,
+    merchant_id: process.env.PAYFAST_MERCHANT_ID,
+    merchant_key: process.env.PAYFAST_MERCHANT_KEY,
     return_url: `${siteUrl}/thank-you.html?ref=${paymentId}`,
     cancel_url: `${siteUrl}/order-cancelled.html?ref=${paymentId}`,
     notify_url: `${siteUrl}/api/payfast-notify`,
@@ -136,7 +125,7 @@ export default async function handler(req, res) {
     item_description: itemSummary
   };
 
-  fields.signature = generateSignature(fields, PAYFAST_PASSPHRASE_HARDCODED);
+  fields.signature = generateSignature(fields, process.env.PAYFAST_PASSPHRASE);
 
   const actionUrl = sandbox
     ? 'https://sandbox.payfast.co.za/eng/process'

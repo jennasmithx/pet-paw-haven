@@ -58,12 +58,7 @@ export function generateSignature(data, passphrase) {
   if (passphrase) {
     pfOutput += `&passphrase=${pfEncode(passphrase.trim())}`;
   }
-  // TEMPORARY DEBUG — shows the exact string being hashed, so we can
-  // compare it directly against PayFast's own signature debug tool.
-  console.error('>>> PAYFAST RAW SIGNATURE STRING >>>', pfOutput);
-  const sig = crypto.createHash('md5').update(pfOutput).digest('hex');
-  console.error('>>> PAYFAST GENERATED SIGNATURE >>>', sig);
-  return sig;
+  return crypto.createHash('md5').update(pfOutput).digest('hex');
 }
 
 // Asks PayFast's own servers to confirm an ITN post is genuine (not spoofed).
