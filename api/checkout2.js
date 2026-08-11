@@ -14,21 +14,22 @@
 import { createClient } from '@supabase/supabase-js';
 import { generateSignature, PRODUCTS } from './_payfast.js';
 
-// ============================================================
-// TEMPORARY — hardcoded for testing, so we can rule out Vercel's
-// env var system as the problem. DO NOT leave these here once
-// things work — move back to process.env.* before going live,
-// since this file gets committed to git (visible in history forever).
-// ============================================================
-const SUPABASE_URL_HARDCODED = 'https://gtotwzfjjlptsqiwnwfq.supabase.co';
-const SUPABASE_KEY_HARDCODED = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd0b3R3emZqamxwdHNxaXdud2ZxIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTMyNjczNSwiZXhwIjoyMTAwOTAyNzM1fQ.UgGYBWk1ghB2D2k9W_nPcMmL3PzPD3iMkR23guJghFk'; // paste fresh from Supabase
+// TEMPORARY DEBUG — remove once the key issue is confirmed fixed.
+// Logs enough to identify the problem WITHOUT exposing the actual key.
+const keyVal = process.env.SUPABASE_SERVICE_ROLE_KEY;
+console.log('SUPABASE_SERVICE_ROLE_KEY debug:', {
+  exists: !!keyVal,
+  length: keyVal ? keyVal.length : 0,
+  startsWith: keyVal ? keyVal.slice(0, 8) : null,
+  endsWith: keyVal ? keyVal.slice(-8) : null,
+  hasWhitespace: keyVal ? /\s/.test(keyVal) : null,
+  hasQuotes: keyVal ? /['"]/.test(keyVal) : null,
+});
 
-const PAYFAST_MERCHANT_ID_HARDCODED = '10000100';   // PayFast public sandbox id
-const PAYFAST_MERCHANT_KEY_HARDCODED = '46f0cd694581a'; // PayFast public sandbox key
-const PAYFAST_PASSPHRASE_HARDCODED = ''; // leave blank for sandbox
-// ============================================================
-
-const supabase = createClient(SUPABASE_URL_HARDCODED, SUPABASE_KEY_HARDCODED);
+const supabase = createClient(
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_SERVICE_ROLE_KEY
+);
 
 const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const phoneRe = /^[0-9+ ()-]{7,}$/;
@@ -109,21 +110,25 @@ export default async function handler(req, res) {
     .insert(rowsToInsert)
     .select();
 
-  if (insertError) {
-    console.error('Order insert failed:', insertError);
-    return res.status(500).json({ error: 'Could not create order' });
-  }
+if (insertError) {
+  console.error("SUPABASE INSERT ERROR:", insertError);
 
-  const sandbox = true; // hardcoded — sandbox testing only
-  const siteUrl = process.env.SITE_URL; // this one is fine to keep — not secret, just your domain
+  return res.status(500).json({
+    error: "SUPABASE INSERT FAILED",
+    details: JSON.stringify(insertError)
+  });
+}
+
+  const sandbox = process.env.PAYFAST_SANDBOX === 'true';
+  const siteUrl = process.env.SITE_URL;
 
   const itemSummary = lineItems.length === 1
     ? lineItems[0].product_name
     : `${lineItems.length} items`;
 
   const fields = {
-    merchant_id: PAYFAST_MERCHANT_ID_HARDCODED,
-    merchant_key: PAYFAST_MERCHANT_KEY_HARDCODED,
+    merchant_id: process.env.PAYFAST_MERCHANT_ID,
+    merchant_key: process.env.PAYFAST_MERCHANT_KEY,
     return_url: `${siteUrl}/thank-you.html?ref=${paymentId}`,
     cancel_url: `${siteUrl}/checkout-cancelled.html?ref=${paymentId}`,
     notify_url: `${siteUrl}/api/payfast-notify`,
@@ -136,7 +141,7 @@ export default async function handler(req, res) {
     item_description: itemSummary
   };
 
-  fields.signature = generateSignature(fields, PAYFAST_PASSPHRASE_HARDCODED);
+  fields.signature = generateSignature(fields, process.env.PAYFAST_PASSPHRASE);
 
   const actionUrl = sandbox
     ? 'https://sandbox.payfast.co.za/eng/process'
