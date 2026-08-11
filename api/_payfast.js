@@ -22,21 +22,35 @@ export const PRODUCTS = {
 };
 
 // Generates the MD5 signature PayFast requires on every request.
-// Same algorithm PayFast expects on both the outgoing payment request
-// and the incoming ITN webhook — alphabetical key order, URL-encoded,
-// spaces as '+', optional passphrase appended at the end.
+// PayFast's own examples are written in PHP, using urlencode() — which
+// encodes punctuation like ! ' ( ) * differently than JavaScript's
+// encodeURIComponent() does. encodeURIComponent leaves those 5 characters
+// unescaped (they're valid per RFC3986), but PayFast's signature check
+// expects them percent-encoded PHP-style. Without this extra step, any
+// name/address/item text containing one of these characters produces a
+// signature mismatch even though the rest of the logic is correct.
+function pfEncode(str) {
+  return encodeURIComponent(str)
+    .replace(/%20/g, '+')
+    .replace(/!/g, '%21')
+    .replace(/'/g, '%27')
+    .replace(/\(/g, '%28')
+    .replace(/\)/g, '%29')
+    .replace(/\*/g, '%2A');
+}
+
 export function generateSignature(data, passphrase) {
   let pfOutput = '';
   Object.keys(data)
     .sort()
     .forEach(key => {
       if (data[key] !== '' && data[key] !== undefined && key !== 'signature') {
-        pfOutput += `${key}=${encodeURIComponent(data[key].toString().trim()).replace(/%20/g, '+')}&`;
+        pfOutput += `${key}=${pfEncode(data[key].toString().trim())}&`;
       }
     });
   pfOutput = pfOutput.slice(0, -1);
   if (passphrase) {
-    pfOutput += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
+    pfOutput += `&passphrase=${pfEncode(passphrase.trim())}`;
   }
   return crypto.createHash('md5').update(pfOutput).digest('hex');
 }
