@@ -125,7 +125,7 @@ export default async function handler(req, res) {
     merchant_id: PAYFAST_MERCHANT_ID_HARDCODED,
     merchant_key: PAYFAST_MERCHANT_KEY_HARDCODED,
     return_url: `${siteUrl}/thank-you.html?ref=${paymentId}`,
-    cancel_url: `${siteUrl}/checkout-cancelled.html?ref=${paymentId}`,
+    cancel_url: `${siteUrl}/order-cancelled.html?ref=${paymentId}`,
     notify_url: `${siteUrl}/api/payfast-notify`,
     name_first: firstName.trim(),
     name_last: lastName.trim(),
