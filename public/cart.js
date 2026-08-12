@@ -133,7 +133,12 @@ function openQuickView(id){
   const product = (typeof PRODUCTS !== 'undefined') ? PRODUCTS[id] : null;
   if (!product) return;
 
-  document.getElementById('qvImage').textContent = 'Product photo here';
+  const qvImage = document.getElementById('qvImage');
+
+if (qvImage) {
+  qvImage.innerHTML = `<img src="${product.image}" alt="${product.name}">`;
+}
+
   document.getElementById('qvTag').textContent = product.tag;
   document.getElementById('qvName').textContent = product.name;
   document.getElementById('qvDesc').textContent = product.description;
@@ -167,7 +172,18 @@ function openCheckout(){
   if(summary){
     summary.innerHTML = cart.map(i => `
       <div class="row"><span>${i.name} × ${i.qty}</span><span>R ${(i.price*i.qty).toFixed(2)}</span></div>
-    `).join('') + `<div class="row total"><span>Total</span><span>R ${cartTotal().toFixed(2)}</span></div>`;
+    `).join('') + `<div class="row">
+  <span>Shipping</span>
+  <span>FREE</span>
+</div>
+<div class="row">
+  <span>Delivery</span>
+  <span>3–7 business days</span>
+</div>
+<div class="row total">
+  <span>Total</span>
+  <span>R ${cartTotal().toFixed(2)}</span>
+</div>`;
   }
   document.getElementById('checkoutOverlay')?.classList.add('open');
 }

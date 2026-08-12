@@ -1,11 +1,13 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Product — PetPawHaven</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+<link href="[https://fonts.googleapis.com/css2?family=Bricolage+Grotesque\:wght@500;600;700&family=Plus+Jakarta+Sans\:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Bricolage+Grotesque\:wght@500;600;700\&family=Plus+Jakarta+Sans\:wght@400;500;600;700\&display=swap)" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -31,7 +33,7 @@
      PRODUCT CATALOG — add a new product here as its own entry.
      The key (e.g. "1") must match the id used in index.html's
      data-id and the real id in your database (schema.sql).
-     ============================================ -->
+     \============================================ -->
 <div id="productRoot"></div>
 
 <footer>
@@ -96,7 +98,7 @@
     root.innerHTML = `
       <div class="product-detail">
         <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
-          <div class="p-image">Product photo here</div>
+          <div class="p-image"><img src="${product.image}" alt="${product.name}"></div>
         </div>
         <div>
           <span class="p-tag">${product.tag}</span>

@@ -1,3 +1,5 @@
+
+
 // products-data.js — the single source of truth for product details
 // (name, price, tag, description) used across index.html, products.html,
 // product.html, and the quick-view modal. Add a new product here once;
@@ -11,12 +13,14 @@ const PRODUCTS = {
     name: "Premium Pet Water Fountain",
     price: 449.00,
     tag: "Feeding",
-    description: "A weighted stoneware bowl with a raised ridge pattern that slows fast eaters naturally — no plastic inserts, dishwasher safe, finished in matte charcoal.",
+    description: "Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages your pet to drink more.",
+  image: "images/petfountain.jpg"
   },
   "2": {
     name: "Automatic Pet Feeder",
     price: 449.00,
     tag: "Feeding",
-    description: "A weighted stoneware bowl with a raised ridge pattern that slows fast eaters naturally — no plastic inserts, dishwasher safe, finished in matte charcoal.",
+    description: "No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest, even when you're busy.",
+image: "images/petfeeder.jpg"
   }
 };

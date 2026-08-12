@@ -1,11 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>All Products — PetPawHaven</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+<link href="[https://fonts.googleapis.com/css2?family=Bricolage+Grotesque\:wght@500;600;700&family=Plus+Jakarta+Sans\:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Bricolage+Grotesque\:wght@500;600;700\&family=Plus+Jakarta+Sans\:wght@400;500;600;700\&display=swap)" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -37,12 +38,12 @@
   <div class="grid">
     <!-- ============================================
          PRODUCT CARD — copy this whole block to add a new product.
-         1. Add the product's data to products-data.js first
-         2. data-id here must match that same id
-         3. Change data-name, data-price, and the visible text below
-         ============================================ -->
+         1\. Add the product's data to products-data.js first
+         2\. data-id here must match that same id
+         3\. Change data-name, data-price, and the visible text below
+         \============================================ -->
     <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="449.00" onclick="openQuickView('1')" style="cursor:pointer;">
-      <div class="p-image">Product photo here</div>
+      <div class="p-image"><img src="${product.image}" alt="${product.name}"></div>
       <div class="p-body">
         <span class="p-tag">Feeding</span>
         <h3>Premium Pet Water Fountain</h3>
@@ -53,8 +54,8 @@
         </div>
       </div>
     </div>
-    <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="449.00" onclick="openQuickView('1')" style="cursor:pointer;">
-      <div class="p-image">Product photo here</div>
+    <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="449.00" onclick="openQuickView('2')" style="cursor:pointer;">
+      <div class="p-image"><img src="${product.image}" alt="${product.name}"></div>
       <div class="p-body">
         <span class="p-tag">Feeding</span>
         <h3>Automatic Pet Feeder</h3>
@@ -117,7 +118,7 @@
 <div class="overlay" id="quickViewOverlay">
   <div class="modal">
     <div class="modal-head"><h3>Quick View</h3><button class="modal-close" onclick="closeModal('quickViewOverlay')">&times;</button></div>
-    <div class="qv-image" id="qvImage">Product photo here</div>
+    <div class="qv-image" id="qvImage"></div>
     <div class="modal-body">
       <span class="qv-tag" id="qvTag"></span>
       <h3 class="qv-name" id="qvName"></h3>
