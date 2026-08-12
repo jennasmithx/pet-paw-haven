@@ -112,6 +112,12 @@ export default async function handler(req, res) {
   delete dataForSig.signature;
   const expectedSignature = generateSignature(dataForSig, process.env.PAYFAST_PASSPHRASE);
 
+  // TEMPORARY DEBUG — remove once ITN signature matching is confirmed working
+  console.error('>>> ITN DEBUG — fields PayFast posted >>>', JSON.stringify(dataForSig));
+  console.error('>>> ITN DEBUG — received signature >>>', receivedSignature);
+  console.error('>>> ITN DEBUG — expected (our) signature >>>', expectedSignature);
+  console.error('>>> ITN DEBUG — passphrase length used >>>', process.env.PAYFAST_PASSPHRASE ? process.env.PAYFAST_PASSPHRASE.length : 0);
+
   if (!receivedSignature || receivedSignature !== expectedSignature) {
     console.error('PayFast ITN: signature mismatch');
     return res.status(400).send('invalid signature');
