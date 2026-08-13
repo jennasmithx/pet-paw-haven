@@ -99,9 +99,9 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  const orderId = new URLSearchParams(window.location.search).get('order');
+  const orderId = new URLSearchParams(window.location.search).get('ref');
   if (orderId) {
-    document.getElementById('orderId').textContent = String(orderId).padStart(3, '0');
+    document.getElementById('orderId').textContent = orderId;
   }
 </script>
 <script src="cart.js"></script>
