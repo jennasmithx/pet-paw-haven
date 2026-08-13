@@ -39,8 +39,6 @@ function pfEncode(str) {
     .replace(/\*/g, '%2A');
 }
 
-export function generateSignature(data, passphrase) {
-  let pfOutput = '';
   // IMPORTANT: PayFast's own documentation explicitly warns NOT to sort
   // alphabetically here — "Do not use the API signature format, which uses
   // alphabetical ordering!" Fields must stay in the order they were added
@@ -48,18 +46,35 @@ export function generateSignature(data, passphrase) {
   // preserve insertion order for string keys, so Object.keys(data) without
   // .sort() gives the correct order — as long as checkout.js/payfast-notify.js
   // build their field objects in PayFast's documented order to begin with.
-  Object.keys(data)
-    .forEach(key => {
-      if (data[key] !== '' && data[key] !== undefined && key !== 'signature') {
-        pfOutput += `${key}=${pfEncode(data[key].toString().trim())}&`;
-      }
-    });
-  pfOutput = pfOutput.slice(0, -1);
-  if (passphrase) {
-    pfOutput += `&passphrase=${pfEncode(passphrase.trim())}`;
+  export function generateSignature(data, passphrase) {
+  let pfOutput = '';
+
+  Object.keys(data).forEach(key => {
+    if (
+      data[key] !== '' &&
+      data[key] !== undefined &&
+      key !== 'signature'
+    ) {
+      pfOutput += `${key}=${pfEncode(data[key].toString())}&`;
+    }
+  });
+
+  // Remove final &
+  if (pfOutput.endsWith('&')) {
+    pfOutput = pfOutput.slice(0, -1);
   }
-  return crypto.createHash('md5').update(pfOutput).digest('hex');
+
+  // Add passphrase if configured
+  if (passphrase) {
+    pfOutput += `&passphrase=${pfEncode(passphrase)}`;
+  }
+
+  return crypto
+    .createHash('md5')
+    .update(pfOutput)
+    .digest('hex');
 }
+
 
 // Asks PayFast's own servers to confirm an ITN post is genuine (not spoofed).
 // rawBody is the exact x-www-form-urlencoded body PayFast posted to the
