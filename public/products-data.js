@@ -21,6 +21,6 @@ const PRODUCTS = {
     price: 449.00,
     tag: "Feeding",
     description: "No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest, even when you're busy.",
-image: "images/petfeeder.jpg"
+image: "images/petfeeder.jpeg"
   }
 };
