@@ -74,7 +74,7 @@ export default async function handler(req, res) {
   }
 
   // One shared reference across every row from this checkout
-  const paymentId = 'ORD-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+  const paymentId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
 
   const rowsToInsert = lineItems.map(li => ({
     first_name: firstName.trim(),
