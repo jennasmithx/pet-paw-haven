@@ -16,7 +16,8 @@
 // nodemailer — add it to package.json: npm install nodemailer
 
 import { createClient } from '@supabase/supabase-js';
-import { generateSignature, validateWithPayFast } from './_payfast.js';
+import { validateWithPayFast } from './_payfast.js';
+import crypto from 'crypto';
 import dns from 'dns/promises';
 import nodemailer from 'nodemailer';
 
@@ -106,20 +107,46 @@ export default async function handler(req, res) {
   const params = new URLSearchParams(rawBody);
   const pfData = Object.fromEntries(params.entries());
 
-  // 1) Recompute the signature ourselves and compare.
+  // 1) Recompute the signature using the RAW original text PayFast sent,
+  //    not a decode-then-re-encode reconstruction. Re-encoding risks subtle
+  //    mismatches (e.g. how spaces or special characters get encoded), so
+  //    we just strip out "signature=...' from the untouched raw body and
+  //    hash that directly — this is what PayFast's own signature actually
+  //    reflects, since it's byte-for-byte what they sent.
   const receivedSignature = pfData.signature;
-  const dataForSig = { ...pfData };
-  delete dataForSig.signature;
-  const expectedSignature = generateSignature(dataForSig, process.env.PAYFAST_PASSPHRASE);
 
-  // TEMPORARY DEBUG — remove once ITN signature matching is confirmed working
-  console.error('>>> ITN DEBUG — fields PayFast posted >>>', JSON.stringify(dataForSig));
-  console.error('>>> ITN DEBUG — received signature >>>', receivedSignature);
-  console.error('>>> ITN DEBUG — expected (our) signature >>>', expectedSignature);
-  console.error('>>> ITN DEBUG — passphrase length used >>>', process.env.PAYFAST_PASSPHRASE ? process.env.PAYFAST_PASSPHRASE.length : 0);
+  if (!receivedSignature) {
+    console.error('PayFast ITN: no signature received');
+    return res.status(400).send('invalid signature');
+  }
 
-  if (!receivedSignature || receivedSignature !== expectedSignature) {
+  const passphrase = process.env.PAYFAST_PASSPHRASE;
+  if (!passphrase) {
+    console.error('PayFast ITN: PAYFAST_PASSPHRASE is missing');
+    return res.status(500).send('server configuration error');
+  }
+
+  const signaturePayload = rawBody
+    .split('&')
+    .filter(part => !part.startsWith('signature='))
+    .join('&')
+    .trim();
+
+  const encodedPassphrase = encodeURIComponent(passphrase)
+    .replace(/%20/g, '+')
+    .replace(/!/g, '%21')
+    .replace(/'/g, '%27')
+    .replace(/\(/g, '%28')
+    .replace(/\)/g, '%29')
+    .replace(/\*/g, '%2A');
+
+  const signatureString = `${signaturePayload}&passphrase=${encodedPassphrase}`;
+  const expectedSignature = crypto.createHash('md5').update(signatureString).digest('hex');
+
+  if (receivedSignature !== expectedSignature) {
     console.error('PayFast ITN: signature mismatch');
+    console.error('>>> ITN DEBUG — received >>>', receivedSignature);
+    console.error('>>> ITN DEBUG — expected >>>', expectedSignature);
     return res.status(400).send('invalid signature');
   }
 
