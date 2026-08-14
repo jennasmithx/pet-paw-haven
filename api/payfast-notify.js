@@ -476,33 +476,45 @@ export default async function handler(req, res) {
   }
 
   const paidAmount = parseFloat(pfData.amount_gross ?? pfData.amount);
-  const expectedAmount = orderRows.reduce((sum, row) => sum + parseFloat(row.amount), 0);
+const expectedAmount = orderRows.reduce(
+  (sum, row) => sum + parseFloat(row.amount),
+  0
+);
 
-  if (Math.abs(paidAmount - expectedAmount) > 0.01) {
-    console.error('PayFast ITN: amount mismatch', paidAmount, expectedAmount);
-    await supabase
-      .from('orders')
-      .update({ payment_status: 'Amount Mismatch' })
-      .eq('payment_id', pfData.m_payment_id);
-    return res.status(400).send('amount mismatch');
-  }
+if (Math.abs(paidAmount - expectedAmount) > 0.01) {
+  console.error('PayFast ITN: amount mismatch', paidAmount, expectedAmount);
 
-  // 5) All checks passed — update every row from this checkout together.
+  await supabase
+    .from('orders')
+    .update({ payment_status: 'Amount Mismatch' })
+    .eq('payment_id', pfData.m_payment_id);
 
-  if (pfData.payment_status !== 'COMPLETE') {
+  return res.status(400).send('amount mismatch');
+}
+
+if (pfData.payment_status !== 'COMPLETE') {
   console.log(
     `PayFast ITN: payment status is ${pfData.payment_status}, not COMPLETE`
   );
 
   return res.status(200).send('Payment not complete');
 }
-  
-  const status = 'Paid';
-  
-  await supabase
-    .from('orders')
-    .update({ payment_status: status })
-    .eq('payment_id', pfData.m_payment_id);
+
+const alreadyPaid = orderRows.every(
+  row => row.payment_status === 'Paid'
+);
+
+if (alreadyPaid) {
+  console.log('PayFast ITN: order already processed');
+  return res.status(200).send('Already processed');
+}
+
+const status = 'Paid';
+
+await supabase
+  .from('orders')
+  .update({ payment_status: status })
+  .eq('payment_id', pfData.m_payment_id);
 
   // 6) Send emails. Don't let an email failure break the webhook response —
   //    PayFast just needs the 200 OK; log and move on if mail fails.
