@@ -59,41 +59,325 @@ function getRawBody(req) {
 }
 
 // orderRows = every row sharing this checkout's payment_id (one per cart item)
+
 async function sendOrderEmails(orderRows, outcome) {
-  const first = orderRows[0]; // customer/shipping details are identical across every row
+  const first = orderRows[0];
   const customerName = `${first.first_name} ${first.last_name}`;
-  const total = orderRows.reduce((sum, row) => sum + parseFloat(row.amount), 0).toFixed(2);
+  const total = orderRows
+    .reduce((sum, row) => sum + parseFloat(row.amount), 0)
+    .toFixed(2);
+
+  const itemRows = orderRows
+    .map(row => `
+      <tr>
+        <td style="padding:12px 8px;border-bottom:1px solid #eee;">
+          ${row.product_name}
+        </td>
+        <td style="padding:12px 8px;border-bottom:1px solid #eee;text-align:center;">
+          ${row.quantity}
+        </td>
+        <td style="padding:12px 8px;border-bottom:1px solid #eee;text-align:right;">
+          R${parseFloat(row.amount).toFixed(2)}
+        </td>
+      </tr>
+    `)
+    .join('');
 
   const itemLines = orderRows
-    .map(row => `  - ${row.product_name} x${row.quantity} — R${parseFloat(row.amount).toFixed(2)}`)
+    .map(row =>
+      `- ${row.product_name} x${row.quantity} — R${parseFloat(row.amount).toFixed(2)}`
+    )
     .join('\n');
 
   if (outcome === 'paid') {
-    // Customer receipt — kept simple, no full internal details needed
+
+    // =========================
+    // CUSTOMER EMAIL
+    // =========================
     await mailer.sendMail({
       to: first.email,
       from: STORE_OWNER_EMAIL,
       subject: `Order confirmed — PetPawHaven`,
-      text: `Hi ${first.first_name},\n\nYour order (R${total}) is confirmed and being prepared for shipping to:\n${first.address}, ${first.city}, ${first.postal_code}\n\nItems:\n${itemLines}\n\nThanks for shopping with PetPawHaven.`,
+
+      text:
+`Hi ${first.first_name},
+
+Thank you for your order!
+
+Your payment of R${total} has been received and your order is being prepared for shipping.
+
+Items:
+${itemLines}
+
+Shipping to:
+${first.address}
+${first.city}, ${first.postal_code}
+
+Thanks for shopping with PetPawHaven!`,
+
+      html: `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#f7f7f7;font-family:Arial,sans-serif;color:#333;">
+
+  <div style="max-width:600px;margin:30px auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #eee;">
+
+    <div style="padding:28px 30px;text-align:center;border-bottom:1px solid #eee;">
+      <h1 style="margin:0;font-size:26px;color:#222;">
+        PetPawHaven 🐾
+      </h1>
+      <p style="margin:8px 0 0;color:#777;font-size:14px;">
+        Order Confirmation
+      </p>
+    </div>
+
+    <div style="padding:30px;">
+
+      <h2 style="margin:0 0 10px;font-size:22px;color:#222;">
+        Order Confirmed! 🎉
+      </h2>
+
+      <p style="font-size:16px;line-height:1.6;">
+        Hi ${first.first_name},
+      </p>
+
+      <p style="font-size:15px;line-height:1.6;color:#555;">
+        Thank you for your order! Your payment of
+        <strong>R${total}</strong> has been received and your order is being prepared for shipping.
+      </p>
+
+      <h3 style="margin-top:28px;font-size:17px;color:#222;">
+        Order Summary
+      </h3>
+
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead>
+          <tr style="background:#f7f7f7;">
+            <th style="padding:12px 8px;text-align:left;">Item</th>
+            <th style="padding:12px 8px;text-align:center;">Qty</th>
+            <th style="padding:12px 8px;text-align:right;">Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${itemRows}
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="2" style="padding:16px 8px;font-weight:bold;font-size:16px;">
+              Total
+            </td>
+            <td style="padding:16px 8px;text-align:right;font-weight:bold;font-size:16px;">
+              R${total}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div style="margin-top:25px;padding:18px;background:#f7f7f7;border-radius:8px;">
+        <h3 style="margin:0 0 10px;font-size:16px;">
+          Shipping To
+        </h3>
+
+        <p style="margin:0;font-size:14px;line-height:1.6;color:#555;">
+          ${first.address}<br>
+          ${first.city}, ${first.postal_code}
+        </p>
+      </div>
+
+      <p style="margin-top:28px;font-size:14px;line-height:1.6;color:#666;">
+        We'll keep you updated as your order moves through the shipping process.
+      </p>
+
+      <p style="margin-top:25px;font-size:15px;">
+        Thanks for shopping with <strong>PetPawHaven</strong> 🐾
+      </p>
+
+    </div>
+
+    <div style="padding:18px 30px;background:#fafafa;text-align:center;color:#999;font-size:12px;">
+      © PetPawHaven
+    </div>
+
+  </div>
+
+</body>
+</html>
+`
     });
 
-    // Store owner notification — full form info for fulfillment
+
+    // =========================
+    // STORE OWNER EMAIL
+    // =========================
     await mailer.sendMail({
       to: STORE_OWNER_EMAIL,
       from: STORE_OWNER_EMAIL,
       subject: `New paid order — R${total} — ${customerName}`,
-      text: `${customerName} just paid R${total}.\n\n` +
-            `Items:\n${itemLines}\n\n` +
-            `Ship to:\n${first.address}, ${first.city}, ${first.postal_code}, ${first.country || 'ZA'}\n\n` +
-            `Contact:\nEmail: ${first.email}\nPhone: ${first.phone}\n\n` +
-            `Payment reference: ${first.payment_id}`,
+
+      text:
+`${customerName} just paid R${total}.
+
+Items:
+${itemLines}
+
+Ship to:
+${first.address}
+${first.city}, ${first.postal_code}, ${first.country || 'ZA'}
+
+Contact:
+Email: ${first.email}
+Phone: ${first.phone}
+
+Payment reference:
+${first.payment_id}`,
+
+      html: `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#f7f7f7;font-family:Arial,sans-serif;color:#333;">
+
+  <div style="max-width:600px;margin:30px auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #eee;">
+
+    <div style="padding:25px 30px;background:#222;color:#fff;">
+      <h2 style="margin:0;">
+        New Paid Order 🐾
+      </h2>
+      <p style="margin:8px 0 0;color:#ddd;">
+        PetPawHaven
+      </p>
+    </div>
+
+    <div style="padding:30px;">
+
+      <h3 style="margin-top:0;">
+        Customer
+      </h3>
+
+      <p style="line-height:1.6;">
+        <strong>${customerName}</strong><br>
+        Email: ${first.email}<br>
+        Phone: ${first.phone}
+      </p>
+
+      <h3 style="margin-top:25px;">
+        Items
+      </h3>
+
+      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+        <thead>
+          <tr style="background:#f7f7f7;">
+            <th style="padding:12px 8px;text-align:left;">Item</th>
+            <th style="padding:12px 8px;text-align:center;">Qty</th>
+            <th style="padding:12px 8px;text-align:right;">Price</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          ${itemRows}
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="2" style="padding:16px 8px;font-weight:bold;">
+              Total Paid
+            </td>
+            <td style="padding:16px 8px;text-align:right;font-weight:bold;">
+              R${total}
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+
+      <div style="margin-top:25px;padding:18px;background:#f7f7f7;border-radius:8px;">
+        <h3 style="margin:0 0 10px;">
+          Shipping Address
+        </h3>
+
+        <p style="margin:0;line-height:1.6;color:#555;">
+          ${first.address}<br>
+          ${first.city}, ${first.postal_code}<br>
+          ${first.country || 'ZA'}
+        </p>
+      </div>
+
+      <div style="margin-top:25px;padding:15px;background:#f7f7f7;border-radius:8px;">
+        <strong>Payment Reference</strong><br>
+        <span style="font-size:13px;color:#666;">
+          ${first.payment_id}
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
+`
     });
+
   } else {
+
+    // =========================
+    // FAILED PAYMENT EMAIL
+    // =========================
     await mailer.sendMail({
       to: first.email,
       from: STORE_OWNER_EMAIL,
       subject: `Payment unsuccessful — PetPawHaven`,
-      text: `Hi ${first.first_name},\n\nYour payment didn't go through. You can try again anytime on our site — nothing has been charged.`,
+
+      text:
+`Hi ${first.first_name},
+
+Unfortunately, your payment didn't go through.
+
+You can try again anytime on our website.
+
+Nothing has been charged.
+
+PetPawHaven`,
+
+      html: `
+<!DOCTYPE html>
+<html>
+<body style="margin:0;padding:0;background:#f7f7f7;font-family:Arial,sans-serif;color:#333;">
+
+  <div style="max-width:600px;margin:30px auto;background:#fff;border-radius:12px;border:1px solid #eee;">
+
+    <div style="padding:28px;text-align:center;border-bottom:1px solid #eee;">
+      <h1 style="margin:0;">PetPawHaven 🐾</h1>
+    </div>
+
+    <div style="padding:30px;">
+
+      <h2>Payment Unsuccessful</h2>
+
+      <p>
+        Hi ${first.first_name},
+      </p>
+
+      <p style="line-height:1.6;color:#555;">
+        Unfortunately, your payment didn't go through.
+        You can try again anytime on our website.
+      </p>
+
+      <p style="font-weight:bold;">
+        Nothing has been charged.
+      </p>
+
+      <p style="margin-top:30px;">
+        PetPawHaven 🐾
+      </p>
+
+    </div>
+
+  </div>
+
+</body>
+</html>
+`
     });
   }
 }
