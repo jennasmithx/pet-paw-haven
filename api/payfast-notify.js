@@ -403,6 +403,11 @@ export default async function handler(req, res) {
   //    reflects, since it's byte-for-byte what they sent.
   const receivedSignature = pfData.signature;
 
+  if (pfData.merchant_id !== process.env.PAYFAST_MERCHANT_ID) {
+  console.error('PayFast ITN: merchant ID mismatch');
+  return res.status(400).send('merchant mismatch');
+}
+
   if (!receivedSignature) {
     console.error('PayFast ITN: no signature received');
     return res.status(400).send('invalid signature');
@@ -483,7 +488,17 @@ export default async function handler(req, res) {
   }
 
   // 5) All checks passed — update every row from this checkout together.
-  const status = pfData.payment_status === 'COMPLETE' ? 'Paid' : pfData.payment_status;
+
+  if (pfData.payment_status !== 'COMPLETE') {
+  console.log(
+    `PayFast ITN: payment status is ${pfData.payment_status}, not COMPLETE`
+  );
+
+  return res.status(200).send('Payment not complete');
+}
+  
+  const status = 'Paid';
+  
   await supabase
     .from('orders')
     .update({ payment_status: status })
