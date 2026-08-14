@@ -97,7 +97,7 @@ async function sendOrderEmails(orderRows, outcome) {
     await mailer.sendMail({
       to: first.email,
       from: STORE_OWNER_EMAIL,
-      subject: `Order confirmed — PetPawHaven`,
+      subject: `Order confirmed — PetPaw Haven`,
 
       text:
 `Hi ${first.first_name},
@@ -113,7 +113,7 @@ Shipping to:
 ${first.address}
 ${first.city}, ${first.postal_code}
 
-Thanks for shopping with PetPawHaven!`,
+Thanks for shopping with PetPaw Haven!`,
 
       html: `
 <!DOCTYPE html>
@@ -124,7 +124,7 @@ Thanks for shopping with PetPawHaven!`,
 
     <div style="padding:28px 30px;text-align:center;border-bottom:1px solid #eee;">
       <h1 style="margin:0;font-size:26px;color:#222;">
-        PetPawHaven 🐾
+        PetPaw Haven 🐾
       </h1>
       <p style="margin:8px 0 0;color:#777;font-size:14px;">
         Order Confirmation
@@ -195,13 +195,13 @@ Thanks for shopping with PetPawHaven!`,
       </p>
 
       <p style="margin-top:25px;font-size:15px;">
-        Thanks for shopping with <strong>PetPawHaven</strong> 🐾
+        Thanks for shopping with <strong>PetPaw Haven</strong> 🐾
       </p>
 
     </div>
 
     <div style="padding:18px 30px;background:#fafafa;text-align:center;color:#999;font-size:12px;">
-      © PetPawHaven
+      © PetPaw Haven
     </div>
 
   </div>
@@ -249,7 +249,7 @@ ${first.payment_id}`,
         New Paid Order 🐾
       </h2>
       <p style="margin:8px 0 0;color:#ddd;">
-        PetPawHaven
+        PetPaw Haven
       </p>
     </div>
 
@@ -330,7 +330,7 @@ ${first.payment_id}`,
     await mailer.sendMail({
       to: first.email,
       from: STORE_OWNER_EMAIL,
-      subject: `Payment unsuccessful — PetPawHaven`,
+      subject: `Payment unsuccessful — PetPaw Haven`,
 
       text:
 `Hi ${first.first_name},
@@ -341,7 +341,7 @@ You can try again anytime on our website.
 
 Nothing has been charged.
 
-PetPawHaven`,
+PetPaw Haven`,
 
       html: `
 <!DOCTYPE html>
@@ -351,7 +351,7 @@ PetPawHaven`,
   <div style="max-width:600px;margin:30px auto;background:#fff;border-radius:12px;border:1px solid #eee;">
 
     <div style="padding:28px;text-align:center;border-bottom:1px solid #eee;">
-      <h1 style="margin:0;">PetPawHaven 🐾</h1>
+      <h1 style="margin:0;">PetPaw Haven 🐾</h1>
     </div>
 
     <div style="padding:30px;">
@@ -372,7 +372,7 @@ PetPawHaven`,
       </p>
 
       <p style="margin-top:30px;">
-        PetPawHaven 🐾
+        PetPaw Haven 🐾
       </p>
 
     </div>

@@ -1,4 +1,4 @@
-// cart.js — shared cart + checkout logic for all PetPawHaven pages
+// cart.js — shared cart + checkout logic for all PetPaw Haven pages
 // Reads any element with class "p-card" or "product-card" that has
 // data-id / data-name / data-price attributes. Add products anywhere
 // on any page using that pattern and this file picks them up automatically.

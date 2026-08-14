@@ -125,7 +125,7 @@ export default async function handler(req, res) {
     email_address: email.trim(),
     m_payment_id: paymentId,
     amount: total.toFixed(2),
-    item_name: `PetPawHaven Order ${paymentId}`,
+    item_name: `PetPaw Haven Order ${paymentId}`,
     item_description: itemSummary
   };
 

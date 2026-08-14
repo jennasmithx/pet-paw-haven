@@ -1,4 +1,4 @@
--- PetPawHaven database schema
+-- PetPaw Haven database schema
 -- Paste this whole file into your SQL editor and run it once.
 
 CREATE TABLE products (

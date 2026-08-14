@@ -3,7 +3,7 @@
 // every row inserted for that checkout)
 // Returns { status: 'Pending' | 'Paid' | 'Failed' | null }
 //
-// Used by thank-you.html to verify the real payment_status before showing a
+// Used by order-success.html to verify the real payment_status before showing a
 // success message. Since a single checkout can insert multiple rows (one per
 // cart item, all sharing payment_id), this just checks the first matching
 // row — the webhook updates all rows with the same payment_id together, so
