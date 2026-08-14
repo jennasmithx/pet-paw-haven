@@ -1,141 +1,168 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Products — PetPaw Haven</title>
-<link rel="icon" type="image/jpeg" href="images/logo.jpeg">
-<link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-<link href="[https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700\&family=Plus+Jakarta+Sans:wght@400;500;600;700\&display=swap)" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Products — PetPaw Haven</title>
+  <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link
+    href="[https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700\&family=Plus+Jakarta+Sans:wght@400;500;600;700\&display=swap)"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<nav>
-  <button class="burger-btn" id="burgerBtn" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
-  <a href="index.html" class="wordmark">Pet<span>Paw</span>Haven</a>
-  <button class="cart-btn" onclick="openCart()">
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-    <span class="cart-count" id="cartCount">0</span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="products.html" class="active">Products</a>
-  <a href="about.html">About</a>
-  <a href="contact.html">Contact</a>
-</div>
-<div class="search-row"><input type="text" id="searchInput" placeholder="Search products..." oninput="filterProducts(this.value)"></div>
-
-<section class="shelf" style="padding-top:5vh;">
-  <div class="shelf-head" style="border-top:none; padding-top:0;">
-    <h2>All Products</h2>
-    <span class="mono" id="itemCount">1 item available</span>
+  <nav>
+    <button class="burger-btn" id="burgerBtn"
+      onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+    <a href="index.html" class="wordmark">Pet<span>Paw</span>Haven</a>
+    <button class="cart-btn" onclick="openCart()">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+        <path d="M3 6h18" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="products.html" class="active">Products</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
   </div>
+  <div class="search-row"><input type="text" id="searchInput" placeholder="Search products..."
+      oninput="filterProducts(this.value)"></div>
 
-  <p id="noResults" style="display:none; text-align:center; padding:20px 0; color:rgba(241,243,242,0.5); font-size:0.9rem;">No products match your search.</p>
+  <section class="shelf" style="padding-top:5vh;">
+    <div class="shelf-head" style="border-top:none; padding-top:0;">
+      <h2>All Products</h2>
+      <span class="mono" id="itemCount">1 item available</span>
+    </div>
 
-  <div class="grid">
-    <!-- ============================================
+    <p id="noResults"
+      style="display:none; text-align:center; padding:20px 0; color:rgba(241,243,242,0.5); font-size:0.9rem;">No
+      products match your search.</p>
+
+    <div class="grid">
+      <!-- ============================================
          PRODUCT CARD — copy this whole block to add a new product.
          1\. Add the product's data to products-data.js first
          2\. data-id here must match that same id
          3\. Change data-name, data-price, and the visible text below
          \============================================ -->
-    <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="449.00" onclick="openQuickView('1')" style="cursor:pointer;">
-      <div class="p-image"><img src="images/petfountain.jpg" alt="Premium Pet Water Fountain"></div>
-      <div class="p-body">
-        <span class="p-tag">Feeding</span>
-        <h3>Premium Pet Water Fountain</h3>
-        <p>Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages your pet to drink more.</p>
-        <div class="p-footer">
-          <span class="price">R 449.00</span>
-          <span class="view-link">Quick view</span>
+      <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="449.00"
+        onclick="openQuickView('1')" style="cursor:pointer;">
+        <div class="p-image"><img src="images/petfountain.jpg" alt="Premium Pet Water Fountain"></div>
+        <div class="p-body">
+          <span class="p-tag">Feeding</span>
+          <h3>Premium Pet Water Fountain</h3>
+          <p>Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages
+            your pet to drink more.</p>
+          <div class="p-footer">
+            <span class="price">R 449.00</span>
+            <span class="view-link">Quick view</span>
+          </div>
+        </div>
+      </div>
+      <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="449.00" onclick="openQuickView('2')"
+        style="cursor:pointer;">
+        <div class="p-image"><img src="images/petfeeder.jpeg" alt="Automatic Pet Feeder"></div>
+        <div class="p-body">
+          <span class="p-tag">Feeding</span>
+          <h3>Automatic Pet Feeder</h3>
+          <p>No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest,
+            even when you're busy.</p>
+          <div class="p-footer">
+            <span class="price">R 449.00</span>
+            <span class="view-link">Quick view</span>
+          </div>
         </div>
       </div>
     </div>
-    <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="449.00" onclick="openQuickView('2')" style="cursor:pointer;">
-      <div class="p-image"><img src="images/petfeeder.jpeg" alt="Automatic Pet Feeder"></div>
-      <div class="p-body">
-        <span class="p-tag">Feeding</span>
-        <h3>Automatic Pet Feeder</h3>
-        <p>No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest, even when you're busy.</p>
-        <div class="p-footer">
-          <span class="price">R 449.00</span>
-          <span class="view-link">Quick view</span>
-        </div>
+  </section>
+
+  <footer>
+    <span>© 2026 PetPaw Haven. All rights reserved.</span>
+    <div class="f-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <!-- CART MODAL -->
+  <div class="overlay" id="cartOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Your Cart</h3><button class="modal-close" onclick="closeModal('cartOverlay')">&times;</button>
+      </div>
+      <div class="modal-body" id="cartBody">
+        <p class="cart-empty">Your cart is empty.</p>
+      </div>
+      <div class="cart-total" id="cartTotalRow" style="display:none;"><span class="mono">Total</span><span
+          class="amount" id="cartTotalAmount">R 0.00</span></div>
+      <div class="modal-actions"><button class="btn-primary" id="checkoutBtn" onclick="openCheckout()"
+          disabled>Checkout</button></div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL -->
+  <div class="overlay" id="checkoutOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Checkout</h3><button class="modal-close" onclick="closeModal('checkoutOverlay')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="checkout-summary" id="checkoutSummary"></div>
+        <form id="checkoutForm">
+          <div class="field-row">
+            <div class="field"><label>First name</label><input type="text" required></div>
+            <div class="field"><label>Last name</label><input type="text" required></div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" required></div>
+          <div class="field"><label>Phone</label><input type="tel" required></div>
+          <div class="field"><label>Delivery address</label><textarea rows="2" required></textarea></div>
+          <div class="field-row">
+            <div class="field"><label>City</label><input type="text" required></div>
+            <div class="field"><label>Postal code</label><input type="text" required></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="submitToPayFast()">Pay Now with PayFast</button>
+        <p class="payfast-note">You'll be redirected to PayFast's secure page to complete payment. Order details are
+          saved before you leave this site.</p>
       </div>
     </div>
   </div>
-</section>
 
-<footer>
-  <span>© 2026 PetPaw Haven. All rights reserved.</span>
-  <div class="f-links">
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </div>
-</footer>
-
-<!-- CART MODAL -->
-<div class="overlay" id="cartOverlay">
-  <div class="modal">
-    <div class="modal-head"><h3>Your Cart</h3><button class="modal-close" onclick="closeModal('cartOverlay')">&times;</button></div>
-    <div class="modal-body" id="cartBody"><p class="cart-empty">Your cart is empty.</p></div>
-    <div class="cart-total" id="cartTotalRow" style="display:none;"><span class="mono">Total</span><span class="amount" id="cartTotalAmount">R 0.00</span></div>
-    <div class="modal-actions"><button class="btn-primary" id="checkoutBtn" onclick="openCheckout()" disabled>Checkout</button></div>
-  </div>
-</div>
-
-<!-- CHECKOUT MODAL -->
-<div class="overlay" id="checkoutOverlay">
-  <div class="modal">
-    <div class="modal-head"><h3>Checkout</h3><button class="modal-close" onclick="closeModal('checkoutOverlay')">&times;</button></div>
-    <div class="modal-body">
-      <div class="checkout-summary" id="checkoutSummary"></div>
-      <form id="checkoutForm">
-        <div class="field-row">
-          <div class="field"><label>First name</label><input type="text" required></div>
-          <div class="field"><label>Last name</label><input type="text" required></div>
-        </div>
-        <div class="field"><label>Email</label><input type="email" required></div>
-        <div class="field"><label>Phone</label><input type="tel" required></div>
-        <div class="field"><label>Delivery address</label><textarea rows="2" required></textarea></div>
-        <div class="field-row">
-          <div class="field"><label>City</label><input type="text" required></div>
-          <div class="field"><label>Postal code</label><input type="text" required></div>
-        </div>
-      </form>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-primary" onclick="submitToPayFast()">Pay Now with PayFast</button>
-      <p class="payfast-note">You'll be redirected to PayFast's secure page to complete payment. Order details are saved before you leave this site.</p>
+  <!-- QUICK VIEW MODAL -->
+  <div class="overlay" id="quickViewOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Quick View</h3><button class="modal-close" onclick="closeModal('quickViewOverlay')">&times;</button>
+      </div>
+      <div class="qv-image" id="qvImage"></div>
+      <div class="modal-body">
+        <span class="qv-tag" id="qvTag"></span>
+        <h3 class="qv-name" id="qvName"></h3>
+        <p class="qv-desc" id="qvDesc"></p>
+        <span class="qv-price" id="qvPrice"></span>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" id="qvAddBtn">Add to Cart</button>
+        <a class="qv-view-link" id="qvViewLink" href="#">View full details →</a>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- QUICK VIEW MODAL -->
-<div class="overlay" id="quickViewOverlay">
-  <div class="modal">
-    <div class="modal-head"><h3>Quick View</h3><button class="modal-close" onclick="closeModal('quickViewOverlay')">&times;</button></div>
-    <div class="qv-image" id="qvImage"></div>
-    <div class="modal-body">
-      <span class="qv-tag" id="qvTag"></span>
-      <h3 class="qv-name" id="qvName"></h3>
-      <p class="qv-desc" id="qvDesc"></p>
-      <span class="qv-price" id="qvPrice"></span>
-    </div>
-    <div class="modal-actions">
-      <button class="btn-primary" id="qvAddBtn">Add to Cart</button>
-      <a class="qv-view-link" id="qvViewLink" href="#">View full details →</a>
-    </div>
-  </div>
-</div>
+  <div class="toast" id="toast"></div>
 
-<div class="toast" id="toast"></div>
-
-<script src="products-data.js"></script>
-<script src="cart.js"></script>
+  <script src="products-data.js"></script>
+  <script src="cart.js"></script>
 </body>
+
 </html>

@@ -12,7 +12,7 @@
 
 const CART_STORAGE_KEY = 'petpawhaven_cart';
 
-function loadCart(){
+function loadCart() {
   try {
     const saved = localStorage.getItem(CART_STORAGE_KEY);
     return saved ? JSON.parse(saved) : [];
@@ -21,7 +21,7 @@ function loadCart(){
   }
 }
 
-function saveCart(){
+function saveCart() {
   try {
     localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
   } catch (e) {
@@ -32,15 +32,15 @@ function saveCart(){
 
 let cart = loadCart(); // [{ id, name, price, qty }]
 
-function showToast(msg){
+function showToast(msg) {
   const t = document.getElementById('toast');
-  if(!t) return;
+  if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(()=> t.classList.remove('show'), 1800);
+  setTimeout(() => t.classList.remove('show'), 1800);
 }
 
-function getProductFromCard(cardEl){
+function getProductFromCard(cardEl) {
   return {
     id: cardEl.dataset.id,
     name: cardEl.dataset.name,
@@ -48,45 +48,45 @@ function getProductFromCard(cardEl){
   };
 }
 
-function addToCart(product){
+function addToCart(product) {
   const existing = cart.find(i => String(i.id) === String(product.id));
-  if(existing){ existing.qty += 1; }
-  else { cart.push({...product, qty:1}); }
+  if (existing) { existing.qty += 1; }
+  else { cart.push({ ...product, qty: 1 }); }
   saveCart();
   renderCart();
   showToast('Added to cart');
 }
 
-function changeQty(id, delta){
+function changeQty(id, delta) {
   const item = cart.find(i => String(i.id) === String(id));
-  if(!item) return;
+  if (!item) return;
   item.qty += delta;
-  if(item.qty <= 0){ cart = cart.filter(i => String(i.id) !== String(id)); }
+  if (item.qty <= 0) { cart = cart.filter(i => String(i.id) !== String(id)); }
   saveCart();
   renderCart();
 }
 
-function cartTotal(){
+function cartTotal() {
   return cart.reduce((sum, i) => sum + i.price * i.qty, 0);
 }
 
-function renderCart(){
+function renderCart() {
   const body = document.getElementById('cartBody');
   const totalRow = document.getElementById('cartTotalRow');
   const checkoutBtn = document.getElementById('checkoutBtn');
   const countBadge = document.getElementById('cartCount');
-  if(!body) return;
+  if (!body) return;
 
-  if(countBadge) countBadge.textContent = cart.reduce((n,i)=> n + i.qty, 0);
+  if (countBadge) countBadge.textContent = cart.reduce((n, i) => n + i.qty, 0);
 
-  if(cart.length === 0){
+  if (cart.length === 0) {
     body.innerHTML = '<p class="cart-empty">Your cart is empty.</p>';
-    if(totalRow) totalRow.style.display = 'none';
-    if(checkoutBtn) checkoutBtn.disabled = true;
+    if (totalRow) totalRow.style.display = 'none';
+    if (checkoutBtn) checkoutBtn.disabled = true;
     return;
   }
 
-body.innerHTML = cart.map(i => `
+  body.innerHTML = cart.map(i => `
   <div class="cart-line">
     <div>
       <div class="cart-line-name">${i.name}</div>
@@ -103,16 +103,16 @@ body.innerHTML = cart.map(i => `
   </div>
 `).join('');
 
-  if(totalRow) totalRow.style.display = 'flex';
+  if (totalRow) totalRow.style.display = 'flex';
   const totalAmountEl = document.getElementById('cartTotalAmount');
-  if(totalAmountEl) totalAmountEl.textContent = `R ${cartTotal().toFixed(2)}`;
-  if(checkoutBtn) checkoutBtn.disabled = false;
+  if (totalAmountEl) totalAmountEl.textContent = `R ${cartTotal().toFixed(2)}`;
+  if (checkoutBtn) checkoutBtn.disabled = false;
 }
 
-function openCart(){ document.getElementById('cartOverlay')?.classList.add('open'); }
-function closeModal(id){ document.getElementById(id)?.classList.remove('open'); }
+function openCart() { document.getElementById('cartOverlay')?.classList.add('open'); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
 
-function filterProducts(query){
+function filterProducts(query) {
   const q = query.trim().toLowerCase();
   const cards = document.querySelectorAll('.p-card');
   let visibleCount = 0;
@@ -129,15 +129,15 @@ function filterProducts(query){
   if (noResultsEl) noResultsEl.style.display = (visibleCount === 0 && q !== '') ? 'block' : 'none';
 }
 
-function openQuickView(id){
+function openQuickView(id) {
   const product = (typeof PRODUCTS !== 'undefined') ? PRODUCTS[id] : null;
   if (!product) return;
 
   const qvImage = document.getElementById('qvImage');
 
-if (qvImage) {
-  qvImage.innerHTML = `<img src="${product.image}" alt="${product.name}">`;
-}
+  if (qvImage) {
+    qvImage.innerHTML = `<img src="${product.image}" alt="${product.name}">`;
+  }
 
   document.getElementById('qvTag').textContent = product.tag;
   document.getElementById('qvName').textContent = product.name;
@@ -155,23 +155,23 @@ if (qvImage) {
   document.getElementById('quickViewOverlay').classList.add('open');
 }
 
-function toggleMobileMenu(){
+function toggleMobileMenu() {
   document.getElementById('mobileMenu')?.classList.toggle('open');
   document.getElementById('burgerBtn')?.classList.toggle('open');
 }
 
-function removeFromCart(id){
+function removeFromCart(id) {
   cart = cart.filter(i => String(i.id) !== String(id));
   saveCart();
   renderCart();
 }
 
-function openCheckout(){
+function openCheckout() {
   closeModal('cartOverlay');
   const summary = document.getElementById('checkoutSummary');
-  if(summary){
+  if (summary) {
     summary.innerHTML = cart.map(i => `
-      <div class="row"><span>${i.name} × ${i.qty}</span><span>R ${(i.price*i.qty).toFixed(2)}</span></div>
+      <div class="row"><span>${i.name} × ${i.qty}</span><span>R ${(i.price * i.qty).toFixed(2)}</span></div>
     `).join('') + `<div class="row">
   <span>Shipping</span>
   <span>FREE</span>
@@ -188,9 +188,9 @@ function openCheckout(){
   document.getElementById('checkoutOverlay')?.classList.add('open');
 }
 
-async function submitToPayFast(){
+async function submitToPayFast() {
   const form = document.getElementById('checkoutForm');
-  if(!form.checkValidity()){ form.reportValidity(); return; }
+  if (!form.checkValidity()) { form.reportValidity(); return; }
 
   const inputs = form.querySelectorAll('input, textarea');
   const [firstName, lastName, email, phone, address, city, postal] = Array.from(inputs).map(i => i.value);
@@ -212,7 +212,7 @@ async function submitToPayFast(){
     });
     const data = await res.json();
 
-    if(!res.ok){
+    if (!res.ok) {
       showToast(data.error || 'Something went wrong — try again');
       payBtn.disabled = false;
       payBtn.textContent = 'Pay Now with PayFast';

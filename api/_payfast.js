@@ -39,14 +39,14 @@ function pfEncode(str) {
     .replace(/\*/g, '%2A');
 }
 
-  // IMPORTANT: PayFast's own documentation explicitly warns NOT to sort
-  // alphabetically here — "Do not use the API signature format, which uses
-  // alphabetical ordering!" Fields must stay in the order they were added
-  // to `data` (matching PayFast's documented attribute order). JS objects
-  // preserve insertion order for string keys, so Object.keys(data) without
-  // .sort() gives the correct order — as long as checkout.js/payfast-notify.js
-  // build their field objects in PayFast's documented order to begin with.
-  export function generateSignature(data, passphrase) {
+// IMPORTANT: PayFast's own documentation explicitly warns NOT to sort
+// alphabetically here — "Do not use the API signature format, which uses
+// alphabetical ordering!" Fields must stay in the order they were added
+// to `data` (matching PayFast's documented attribute order). JS objects
+// preserve insertion order for string keys, so Object.keys(data) without
+// .sort() gives the correct order — as long as checkout.js/payfast-notify.js
+// build their field objects in PayFast's documented order to begin with.
+export function generateSignature(data, passphrase) {
   let pfOutput = '';
 
   Object.keys(data).forEach(key => {

@@ -1,138 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — PetPaw Haven</title>
-<link rel="icon" type="image/jpeg" href="images/logo.jpeg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — PetPaw Haven</title>
+  <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<nav>
-  <button class="burger-btn" id="burgerBtn" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
-  <a href="index.html" class="wordmark">Pet<span>Paw</span>Haven</a>
-  <button class="cart-btn" onclick="openCart()">
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-    <span class="cart-count" id="cartCount">0</span>
-  </button>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="index.html">Home</a>
-  <a href="products.html">Products</a>
-  <a href="about.html">About</a>
-  <a href="contact.html" class="active">Contact</a>
-</div>
-
-<section class="contact-grid">
-  <div class="contact-info">
-    <h1>Get in touch</h1>
-    <p>Questions about an order, a product, or shipping — reach out and we'll get back to you as soon as we can.</p>
-    <div class="detail">
-      <span class="mono">Email</span>
-      <p>petpawhavenn@gmail.com</p>
-    </div>
-    <div class="detail">
-      <span class="mono">Based in</span>
-      <p>South Africa</p>
-    </div>
-    <div class="detail">
-      <span class="mono">Response time</span>
-      <p>Usually within 24 hours</p>
-    </div>
-  </div>
-
-  <div class="contact-form">
-    <h3>Send a message</h3>
-    <form id="contactForm">
-      <div class="field"><label>Your name</label><input type="text" name="name" required></div>
-      <div class="field"><label>Email</label><input type="email" name="email" required></div>
-      <div class="field"><label>Message</label><textarea rows="5" name="message" required></textarea></div>
-      <button type="submit" class="btn-primary" id="contactSubmitBtn">Send Message</button>
-    </form>
-  </div>
-</section>
-
-<footer>
-  <span>© 2026 PetPaw Haven. All rights reserved.</span>
-  <div class="f-links">
+  <nav>
+    <button class="burger-btn" id="burgerBtn"
+      onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+    <a href="index.html" class="wordmark">Pet<span>Paw</span>Haven</a>
+    <button class="cart-btn" onclick="openCart()">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+        <path d="M3 6h18" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
     <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="active">Contact</a>
   </div>
-</footer>
 
-<!-- CART MODAL -->
-<div class="overlay" id="cartOverlay">
-  <div class="modal">
-    <div class="modal-head"><h3>Your Cart</h3><button class="modal-close" onclick="closeModal('cartOverlay')">&times;</button></div>
-    <div class="modal-body" id="cartBody"><p class="cart-empty">Your cart is empty.</p></div>
-    <div class="cart-total" id="cartTotalRow" style="display:none;"><span class="mono">Total</span><span class="amount" id="cartTotalAmount">R 0.00</span></div>
-    <div class="modal-actions"><button class="btn-primary" id="checkoutBtn" onclick="openCheckout()" disabled>Checkout</button></div>
-  </div>
-</div>
+  <section class="contact-grid">
+    <div class="contact-info">
+      <h1>Get in touch</h1>
+      <p>Questions about an order, a product, or shipping — reach out and we'll get back to you as soon as we can.</p>
+      <div class="detail">
+        <span class="mono">Email</span>
+        <p>petpawhavenn@gmail.com</p>
+      </div>
+      <div class="detail">
+        <span class="mono">Based in</span>
+        <p>South Africa</p>
+      </div>
+      <div class="detail">
+        <span class="mono">Response time</span>
+        <p>Usually within 24 hours</p>
+      </div>
+    </div>
 
-<!-- CHECKOUT MODAL -->
-<div class="overlay" id="checkoutOverlay">
-  <div class="modal">
-    <div class="modal-head"><h3>Checkout</h3><button class="modal-close" onclick="closeModal('checkoutOverlay')">&times;</button></div>
-    <div class="modal-body">
-      <div class="checkout-summary" id="checkoutSummary"></div>
-      <form id="checkoutForm">
-        <div class="field-row">
-          <div class="field"><label>First name</label><input type="text" required></div>
-          <div class="field"><label>Last name</label><input type="text" required></div>
-        </div>
-        <div class="field"><label>Email</label><input type="email" required></div>
-        <div class="field"><label>Phone</label><input type="tel" required></div>
-        <div class="field"><label>Delivery address</label><textarea rows="2" required></textarea></div>
-        <div class="field-row">
-          <div class="field"><label>City</label><input type="text" required></div>
-          <div class="field"><label>Postal code</label><input type="text" required></div>
-        </div>
+    <div class="contact-form">
+      <h3>Send a message</h3>
+      <form id="contactForm">
+        <div class="field"><label>Your name</label><input type="text" name="name" required></div>
+        <div class="field"><label>Email</label><input type="email" name="email" required></div>
+        <div class="field"><label>Message</label><textarea rows="5" name="message" required></textarea></div>
+        <button type="submit" class="btn-primary" id="contactSubmitBtn">Send Message</button>
       </form>
     </div>
-    <div class="modal-actions">
-      <button class="btn-primary" onclick="submitToPayFast()">Pay Now with PayFast</button>
-      <p class="payfast-note">You'll be redirected to PayFast's secure page to complete payment. Order details are saved before you leave this site.</p>
+  </section>
+
+  <footer>
+    <span>© 2026 PetPaw Haven. All rights reserved.</span>
+    <div class="f-links">
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <!-- CART MODAL -->
+  <div class="overlay" id="cartOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Your Cart</h3><button class="modal-close" onclick="closeModal('cartOverlay')">&times;</button>
+      </div>
+      <div class="modal-body" id="cartBody">
+        <p class="cart-empty">Your cart is empty.</p>
+      </div>
+      <div class="cart-total" id="cartTotalRow" style="display:none;"><span class="mono">Total</span><span
+          class="amount" id="cartTotalAmount">R 0.00</span></div>
+      <div class="modal-actions"><button class="btn-primary" id="checkoutBtn" onclick="openCheckout()"
+          disabled>Checkout</button></div>
     </div>
   </div>
-</div>
 
-<div class="toast" id="toast"></div>
+  <!-- CHECKOUT MODAL -->
+  <div class="overlay" id="checkoutOverlay">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Checkout</h3><button class="modal-close" onclick="closeModal('checkoutOverlay')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="checkout-summary" id="checkoutSummary"></div>
+        <form id="checkoutForm">
+          <div class="field-row">
+            <div class="field"><label>First name</label><input type="text" required></div>
+            <div class="field"><label>Last name</label><input type="text" required></div>
+          </div>
+          <div class="field"><label>Email</label><input type="email" required></div>
+          <div class="field"><label>Phone</label><input type="tel" required></div>
+          <div class="field"><label>Delivery address</label><textarea rows="2" required></textarea></div>
+          <div class="field-row">
+            <div class="field"><label>City</label><input type="text" required></div>
+            <div class="field"><label>Postal code</label><input type="text" required></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-primary" onclick="submitToPayFast()">Pay Now with PayFast</button>
+        <p class="payfast-note">You'll be redirected to PayFast's secure page to complete payment. Order details are
+          saved before you leave this site.</p>
+      </div>
+    </div>
+  </div>
 
-<script>
-  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xoeavjek';
+  <div class="toast" id="toast"></div>
 
-  document.getElementById('contactForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const btn = document.getElementById('contactSubmitBtn');
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
+  <script>
+    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xoeavjek';
 
-    try {
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept': 'application/json' },
-        body: new FormData(form)
-      });
+    document.getElementById('contactForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const btn = document.getElementById('contactSubmitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
 
-      if (res.ok) {
-        window.location.href = 'contact-success.html';
-      } else {
-        showToast("Couldn't send — please try again");
+      try {
+        const res = await fetch(FORMSPREE_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Accept': 'application/json' },
+          body: new FormData(form)
+        });
+
+        if (res.ok) {
+          window.location.href = 'contact-success.html';
+        } else {
+          showToast("Couldn't send — please try again");
+          btn.disabled = false;
+          btn.textContent = 'Send Message';
+        }
+      } catch (err) {
+        showToast('Network error — please try again');
         btn.disabled = false;
         btn.textContent = 'Send Message';
       }
-    } catch (err) {
-      showToast('Network error — please try again');
-      btn.disabled = false;
-      btn.textContent = 'Send Message';
-    }
-  });
-</script>
-<script src="cart.js"></script>
+    });
+  </script>
+  <script src="cart.js"></script>
 </body>
+
 </html>
