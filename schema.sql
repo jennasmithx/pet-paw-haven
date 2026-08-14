@@ -39,9 +39,9 @@ CREATE TABLE order_items (
 -- Demo product to match the storefront
 INSERT INTO products (name, price, is_available, category, description)
 VALUES (
-  'The Slow Feeder — Stoneware Bowl',
+  'Automatic Pet Feeder',
   449.00,
   true,
   'Feeding',
-  'A weighted stoneware bowl with a raised ridge pattern that slows fast eaters naturally.'
+  "No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest, even when you're busy."
 );
