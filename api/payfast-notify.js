@@ -137,6 +137,10 @@ Thanks for shopping with PetPawHaven!`,
         Order Confirmed! 🎉
       </h2>
 
+      <p style="margin:0 0 20px;color:#777;font-size:14px;">
+  Order number: <strong>${first.payment_id}</strong>
+</p>
+
       <p style="font-size:16px;line-height:1.6;">
         Hi ${first.first_name},
       </p>
