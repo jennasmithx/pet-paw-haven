@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Policies — PetPawHaven</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --panel: #10152a;
+    --text: #f5f6fa;
+    --muted: #9aa1b8;
+    --accent: #7c9eff;
+    --border: #232a45;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.6;
+  }
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+  }
+  .sub {
+    color: var(--muted);
+    margin-bottom: 32px;
+    font-size: 0.95rem;
+  }
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .tab {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-family: inherit;
+  }
+  .tab.active {
+    color: var(--text);
+    border-bottom-color: var(--accent);
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+  h2 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 28px 0 8px;
+  }
+  h2:first-child { margin-top: 0; }
+  p { color: #d5d8e6; margin: 0 0 4px; }
+  .updated {
+    color: var(--muted);
+    font-size: 0.85rem;
+    margin-bottom: 24px;
+  }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Policies</h1>
+  <p class="sub">Everything you need to know about ordering, shipping, and returns.</p>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="shipping">Shipping</button>
+    <button class="tab" data-tab="returns">Returns &amp; Refunds</button>
+    <button class="tab" data-tab="privacy">Privacy</button>
+  </div>
+
+  <!-- SHIPPING -->
+  <section class="panel active" id="shipping">
+    <h2>Where we ship</h2>
+    <p>We currently ship within South Africa only.</p>
+
+    <h2>Processing time</h2>
+    <p>Orders are processed within [1–2] business days of payment confirmation. You'll receive an email once your order has shipped.</p>
+
+    <h2>Delivery time</h2>
+    <p>Standard delivery typically takes [3–7] business days depending on your location. Delivery times may be longer for remote areas.</p>
+
+    <h2>Shipping costs</h2>
+    <p>Shipping cost is calculated at checkout based on [your location / order weight / flat rate]. Free shipping on orders over R[XXX].</p>
+
+    <h2>Order tracking</h2>
+    <p>Once your order ships, you'll receive a tracking number via email so you can follow your delivery.</p>
+
+    <h2>Delays</h2>
+    <p>While we do our best to meet estimated delivery times, delays can occasionally happen due to courier issues, weather, or high order volumes. We'll notify you if there's a significant delay with your order.</p>
+
+    <h2>Questions?</h2>
+    <p>Contact us at <a href="mailto:[support email]">[support email]</a> for any shipping questions.</p>
+  </section>
+
+  <!-- RETURNS -->
+  <section class="panel" id="returns">
+    <h2>Return window</h2>
+    <p>You may return unused, unopened items in their original packaging within [7/14/30] days of delivery for a refund or exchange.</p>
+
+    <h2>Non-returnable items</h2>
+    <p>For hygiene reasons, opened pet food, treats, and grooming products cannot be returned unless defective.</p>
+
+    <h2>How to start a return</h2>
+    <p>Email <a href="mailto:[support email]">[support email]</a> with your order number and reason for return. We'll provide instructions on how to send the item back.</p>
+
+    <h2>Refunds</h2>
+    <p>Once we receive and inspect your returned item, we'll notify you of approval status. Approved refunds are processed to your original payment method within [5–10] business days.</p>
+
+    <h2>Damaged or incorrect items</h2>
+    <p>If your order arrives damaged or incorrect, contact us within [48 hours/7 days] of delivery with photos, and we'll arrange a replacement or refund at no cost to you.</p>
+
+    <h2>Return shipping costs</h2>
+    <p>Customers are responsible for return shipping costs unless the item was defective or incorrect.</p>
+  </section>
+
+  <!-- PRIVACY -->
+  <section class="panel" id="privacy">
+    <p class="updated">Last updated: [date]</p>
+    <p>PetPawHaven ("we," "us," "our") respects your privacy. This policy explains what information we collect and how we use it.</p>
+
+    <h2>Information we collect</h2>
+    <p>Contact details: name, email, phone number, shipping address (collected at checkout).<br>
+    Order information: items purchased, order history.<br>
+    Payment information: processed securely by PayFast — we do not store your card details.</p>
+
+    <h2>How we use your information</h2>
+    <p>To process and fulfill your orders, send order confirmations and shipping updates, respond to support inquiries, and improve our store and products.</p>
+
+    <h2>Sharing your information</h2>
+    <p>We share your information only with PayFast (to process payments) and our courier partners (to deliver your order). We do not sell your personal information to third parties.</p>
+
+    <h2>Data storage</h2>
+    <p>Your data is stored securely using Supabase. We retain order information as required for accounting and legal purposes.</p>
+
+    <h2>Your rights</h2>
+    <p>You may request access to, correction of, or deletion of your personal information by contacting us at <a href="mailto:[support email]">[support email]</a>.</p>
+
+    <h2>Cookies</h2>
+    <p>Our site may use cookies to improve your browsing experience and remember your cart.</p>
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
