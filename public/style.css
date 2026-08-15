@@ -5,9 +5,21 @@
   --panel: #171C1E;
   --panel-light: #1F2528;
   --foam: #F1F3F2;
+  --foam-rgb: 241, 243, 242;
   --teal: #2FA79E;
   --teal-light: #6FCFC6;
   --line: rgba(241, 243, 242, 0.1);
+}
+
+[data-theme="light"] {
+  --ink: #F7F3EA;
+  --panel: #FFFFFF;
+  --panel-light: #F1ECE0;
+  --foam: #221E17;
+  --foam-rgb: 34, 30, 23;
+  --teal: #1F8F86;
+  --teal-light: #17726B;
+  --line: rgba(34, 30, 23, 0.12);
 }
 
 * {
@@ -25,6 +37,7 @@ body {
   color: var(--foam);
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.6;
+  transition: background .2s ease, color .2s ease;
 }
 
 h1,
@@ -57,11 +70,12 @@ nav {
   top: 0;
   z-index: 50;
   display: grid;
-  grid-template-columns: 44px 1fr 44px;
+  grid-template-columns: 44px 1fr 44px 44px;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   padding: 16px 6vw;
-  background: rgba(16, 19, 20, 0.96);
+  background: rgba(var(--foam-rgb), 0.02);
+  background-color: var(--ink);
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
@@ -82,7 +96,8 @@ nav {
   display: none;
 }
 
-.cart-btn {
+.cart-btn,
+.theme-toggle-btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -99,7 +114,8 @@ nav {
   justify-self: end;
 }
 
-.cart-btn:hover {
+.cart-btn:hover,
+.theme-toggle-btn:hover {
   border-color: var(--teal);
   background: rgba(47, 167, 158, 0.08);
 }
@@ -144,7 +160,7 @@ nav {
 }
 
 .search-row input::placeholder {
-  color: rgba(241, 243, 242, 0.4);
+  color: rgba(var(--foam-rgb), 0.4);
 }
 
 .search-row input:focus {
@@ -160,7 +176,7 @@ nav {
   background: var(--ink);
   border-bottom: 1px solid var(--line);
   font-size: 0.78rem;
-  color: rgba(241, 243, 242, 0.6);
+  color: rgba(var(--foam-rgb), 0.6);
   text-align: center;
 }
 
@@ -226,7 +242,7 @@ nav {
 .mobile-menu a {
   padding: 14px 0;
   font-size: 1rem;
-  color: rgba(241, 243, 242, 0.8);
+  color: rgba(var(--foam-rgb), 0.8);
   border-bottom: 1px solid var(--line);
 }
 
@@ -265,7 +281,7 @@ nav {
 
 .hero p {
   max-width: 520px;
-  color: rgba(241, 243, 242, 0.68);
+  color: rgba(var(--foam-rgb), 0.68);
   font-size: 1.05rem;
   margin-bottom: 34px;
 }
@@ -307,7 +323,7 @@ nav {
 
 .shelf-head .mono {
   font-size: 0.8rem;
-  color: rgba(241, 243, 242, 0.5);
+  color: rgba(var(--foam-rgb), 0.5);
   font-weight: 500;
 }
 
@@ -332,12 +348,12 @@ nav {
 
 .p-card .p-image {
   aspect-ratio: 1/1;
-  background: repeating-linear-gradient(45deg, rgba(241, 243, 242, 0.03) 0 2px, transparent 2px 14px), var(--panel-light);
+  background: repeating-linear-gradient(45deg, rgba(var(--foam-rgb), 0.03) 0 2px, transparent 2px 14px), var(--panel-light);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: rgba(241, 243, 242, 0.4);
+  color: rgba(var(--foam-rgb), 0.4);
   font-size: 0.82rem;
   padding: 20px;
 }
@@ -362,7 +378,7 @@ nav {
 }
 
 .p-card p {
-  color: rgba(241, 243, 242, 0.6);
+  color: rgba(var(--foam-rgb), 0.6);
   font-size: 0.9rem;
   margin-bottom: 18px;
 }
@@ -406,7 +422,7 @@ nav {
 
 .trust-item p {
   font-size: 0.9rem;
-  color: rgba(241, 243, 242, 0.65);
+  color: rgba(var(--foam-rgb), 0.65);
   max-width: 220px;
 }
 
@@ -417,7 +433,7 @@ footer {
   flex-wrap: wrap;
   gap: 16px;
   font-size: 0.82rem;
-  color: rgba(241, 243, 242, 0.4);
+  color: rgba(var(--foam-rgb), 0.4);
   border-top: 1px solid var(--line);
 }
 
@@ -434,7 +450,7 @@ footer a:hover {
 .breadcrumb {
   padding: 24px 6vw 0;
   font-size: 0.85rem;
-  color: rgba(241, 243, 242, 0.5);
+  color: rgba(var(--foam-rgb), 0.5);
 }
 
 .breadcrumb a {
@@ -460,13 +476,13 @@ footer a:hover {
 .product-detail .p-image {
   aspect-ratio: 1/1;
   border-radius: 16px;
-  background: repeating-linear-gradient(45deg, rgba(241, 243, 242, 0.03) 0 2px, transparent 2px 14px), var(--panel);
+  background: repeating-linear-gradient(45deg, rgba(var(--foam-rgb), 0.03) 0 2px, transparent 2px 14px), var(--panel);
   border: 1px solid var(--line);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: rgba(241, 243, 242, 0.4);
+  color: rgba(var(--foam-rgb), 0.4);
   font-size: 0.85rem;
   padding: 20px;
 }
@@ -487,7 +503,7 @@ footer a:hover {
 }
 
 .product-detail .desc {
-  color: rgba(241, 243, 242, 0.68);
+  color: rgba(var(--foam-rgb), 0.68);
   margin-bottom: 28px;
   max-width: 440px;
 }
@@ -519,7 +535,7 @@ footer a:hover {
   margin-top: 30px;
   flex-wrap: wrap;
   font-size: 0.82rem;
-  color: rgba(241, 243, 242, 0.55);
+  color: rgba(var(--foam-rgb), 0.55);
 }
 
 .trust-row span {
@@ -548,7 +564,7 @@ footer a:hover {
 }
 
 .page-content p {
-  color: rgba(241, 243, 242, 0.7);
+  color: rgba(var(--foam-rgb), 0.7);
   margin-bottom: 20px;
   font-size: 1.02rem;
 }
@@ -574,7 +590,7 @@ footer a:hover {
 }
 
 .contact-info p {
-  color: rgba(241, 243, 242, 0.68);
+  color: rgba(var(--foam-rgb), 0.68);
   margin-bottom: 16px;
 }
 
@@ -658,7 +674,7 @@ footer a:hover {
 .modal-close {
   background: none;
   border: none;
-  color: rgba(241, 243, 242, 0.6);
+  color: rgba(var(--foam-rgb), 0.6);
   font-size: 1.3rem;
   cursor: pointer;
   line-height: 1;
@@ -690,7 +706,7 @@ footer a:hover {
 
 .cart-line-price {
   font-size: 0.88rem;
-  color: rgba(241, 243, 242, 0.7);
+  color: rgba(var(--foam-rgb), 0.7);
   font-weight: 600;
 }
 
@@ -718,7 +734,7 @@ footer a:hover {
 }
 
 .cart-empty {
-  color: rgba(241, 243, 242, 0.5);
+  color: rgba(var(--foam-rgb), 0.5);
   font-size: 0.9rem;
   text-align: center;
   padding: 20px 0;
@@ -773,7 +789,7 @@ footer a:hover {
   font-size: 0.78rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: rgba(241, 243, 242, 0.55);
+  color: rgba(var(--foam-rgb), 0.55);
   margin-bottom: 7px;
   font-weight: 600;
 }
@@ -826,7 +842,7 @@ footer a:hover {
 
 .payfast-note {
   font-size: 0.75rem;
-  color: rgba(241, 243, 242, 0.4);
+  color: rgba(var(--foam-rgb), 0.4);
   margin-top: 14px;
   text-align: center;
   line-height: 1.5;
@@ -836,12 +852,12 @@ footer a:hover {
   aspect-ratio: 1/1;
   border-radius: 12px;
   margin: 0 26px 0;
-  background: repeating-linear-gradient(45deg, rgba(241, 243, 242, 0.03) 0 2px, transparent 2px 14px), var(--panel-light);
+  background: repeating-linear-gradient(45deg, rgba(var(--foam-rgb), 0.03) 0 2px, transparent 2px 14px), var(--panel-light);
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: rgba(241, 243, 242, 0.4);
+  color: rgba(var(--foam-rgb), 0.4);
   font-size: 0.8rem;
   width: calc(100% - 52px);
 }
@@ -862,7 +878,7 @@ footer a:hover {
 }
 
 .qv-desc {
-  color: rgba(241, 243, 242, 0.65);
+  color: rgba(var(--foam-rgb), 0.65);
   font-size: 0.9rem;
   margin-bottom: 16px;
 }
@@ -917,7 +933,7 @@ footer a:hover {
   border: none;
   cursor: pointer;
   font-size: 25px;
-  color: white;
+  color: var(--foam);
   opacity: 0.9;
   line-height: 1;
 }
@@ -962,7 +978,7 @@ footer a:hover {
 }
 
 .related-price {
-  color: var(--teal-light, #0aa);
+  color: var(--teal-light);
 }
 
 .related-more {
