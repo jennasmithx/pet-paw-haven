@@ -4,7 +4,6 @@
   "type": "module",
 
   "description": "PetPawHaven storefront backend",
-  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
