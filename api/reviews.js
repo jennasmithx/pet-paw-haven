@@ -41,7 +41,7 @@ export default async function handler(req, res) {
       .select('id')
       .eq('email', email)
       .eq('product_sku', product_sku)
-      .eq('payment_status', 'completed')
+      .eq('payment_status', 'Paid')
       .limit(1)
       .maybeSingle();
 
