@@ -1,104 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Policies — PetPawHaven</title>
-<style>
-  :root {
-    --bg: #0a0e1a;
-    --panel: #10152a;
-    --text: #f5f6fa;
-    --muted: #9aa1b8;
-    --accent: #7c9eff;
-    --border: #232a45;
-  }
-  * { box-sizing: border-box; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    line-height: 1.6;
-  }
-  .wrap {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 48px 24px 80px;
-  }
-  h1 {
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 8px;
-  }
-  .sub {
-    color: var(--muted);
-    margin-bottom: 32px;
-    font-size: 0.95rem;
-  }
-  .tabs {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 32px;
-    border-bottom: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-  .tab {
-    background: none;
-    border: none;
-    color: var(--muted);
-    font-size: 0.95rem;
-    font-weight: 600;
-    padding: 10px 16px;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    font-family: inherit;
-  }
-  .tab.active {
-    color: var(--text);
-    border-bottom-color: var(--accent);
-  }
-  .panel { display: none; }
-  .panel.active { display: block; }
-  h2 {
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin: 28px 0 8px;
-  }
-  h2:first-child { margin-top: 0; }
-  p { color: #d5d8e6; margin: 0 0 4px; }
-  .updated {
-    color: var(--muted);
-    font-size: 0.85rem;
-    margin-bottom: 24px;
-  }
-  a { color: var(--accent); }
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>Policies</h1>
-  <p class="sub">Everything you need to know about ordering, shipping, and returns.</p>
 
-  <div class="tabs">
-    <button class="tab active" data-tab="shipping">Shipping</button>
-    <button class="tab" data-tab="returns">Returns &amp; Refunds</button>
-    <button class="tab" data-tab="privacy">Privacy</button>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Policies — PetPaw Haven</title>
+  <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Policies-page-specific layout, scoped so it doesn't clash with style.css */
+    .policies-hero {
+      padding: 64px 24px 32px;
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .policies-hero h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+    .policies-hero p {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--muted, #6b7280);
+    }
+    .policy-tabs {
+      display: flex;
+      gap: 8px;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 24px;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      flex-wrap: wrap;
+    }
+    .policy-tab {
+      background: none;
+      border: none;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 12px 16px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      opacity: 0.6;
+    }
+    .policy-tab.active {
+      opacity: 1;
+      border-bottom-color: currentColor;
+    }
+    .policy-panel {
+      display: none;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 24px 64px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .policy-panel.active { display: block; }
+    .policy-panel h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.1rem;
+      margin: 28px 0 8px;
+    }
+    .policy-panel h2:first-child { margin-top: 0; }
+    .policy-panel p { margin: 0 0 4px; line-height: 1.6; }
+    .policy-updated { color: var(--muted, #6b7280); font-size: 0.85rem; margin-bottom: 20px; }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <button class="burger-btn" id="burgerBtn"
+      onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
+    <a href="index.html" class="wordmark">Pet<span>Paw</span>Haven</a>
+    <button class="cart-btn" onclick="openCart()">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z" />
+        <path d="M3 6h18" />
+        <path d="M16 10a4 4 0 0 1-8 0" />
+      </svg>
+      <span class="cart-count" id="cartCount">0</span>
+    </button>
+  </nav>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">Home</a>
+    <a href="products.html">Products</a>
+    <a href="about.html">About</a>
+    <a href="policies.html" class="active">Policies</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <section class="policies-hero">
+    <h1>Policies</h1>
+    <p>Everything you need to know about shipping, returns, and how we handle your information.</p>
+  </section>
+
+  <div class="policy-tabs">
+    <button class="policy-tab active" data-tab="shipping">Shipping</button>
+    <button class="policy-tab" data-tab="returns">Returns &amp; Refunds</button>
+    <button class="policy-tab" data-tab="privacy">Privacy</button>
   </div>
 
   <!-- SHIPPING -->
-  <section class="panel active" id="shipping">
+  <section class="policy-panel active" id="shipping">
     <h2>Where we ship</h2>
     <p>We currently ship within South Africa only.</p>
 
     <h2>Processing time</h2>
-    <p>Orders are processed within [1–2] business days of payment confirmation. You'll receive an email once your order has shipped.</p>
+    <p>Orders are processed within 1–2 business days of payment confirmation. You'll receive an email once your order has shipped.</p>
 
     <h2>Delivery time</h2>
-    <p>Standard delivery typically takes [3–7] business days depending on your location. Delivery times may be longer for remote areas.</p>
+    <p>Standard delivery typically takes 3–7 business days depending on your location. Delivery times may be longer for remote areas.</p>
 
     <h2>Shipping costs</h2>
-    <p>Shipping cost is calculated at checkout based on [your location / order weight / flat rate]. Free shipping on orders over R[XXX].</p>
+    <p>Free delivery across South Africa on all orders.</p>
 
     <h2>Order tracking</h2>
     <p>Once your order ships, you'll receive a tracking number via email so you can follow your delivery.</p>
@@ -107,34 +126,34 @@
     <p>While we do our best to meet estimated delivery times, delays can occasionally happen due to courier issues, weather, or high order volumes. We'll notify you if there's a significant delay with your order.</p>
 
     <h2>Questions?</h2>
-    <p>Contact us at <a href="mailto:[support email]">[support email]</a> for any shipping questions.</p>
+    <p>Contact us at <a href="mailto:petpawhavenn@gmail.com">petpawhavenn@gmail.com</a> for any shipping questions.</p>
   </section>
 
   <!-- RETURNS -->
-  <section class="panel" id="returns">
+  <section class="policy-panel" id="returns">
     <h2>Return window</h2>
-    <p>You may return unused, unopened items in their original packaging within [7/14/30] days of delivery for a refund or exchange.</p>
+    <p>You may return unused, unopened items in their original packaging within 7 days of delivery for a refund or exchange.</p>
 
     <h2>Non-returnable items</h2>
     <p>For hygiene reasons, opened pet food, treats, and grooming products cannot be returned unless defective.</p>
 
     <h2>How to start a return</h2>
-    <p>Email <a href="mailto:[support email]">[support email]</a> with your order number and reason for return. We'll provide instructions on how to send the item back.</p>
+    <p>Email <a href="mailto:petpawhavenn@gmail.com">petpawhavenn@gmail.com</a> with your order number and reason for return. We'll provide instructions on how to send the item back.</p>
 
     <h2>Refunds</h2>
-    <p>Once we receive and inspect your returned item, we'll notify you of approval status. Approved refunds are processed to your original payment method within [5–10] business days.</p>
+    <p>Once we receive and inspect your returned item, we'll notify you of approval status. Approved refunds are processed to your original payment method within 5–10 business days.</p>
 
     <h2>Damaged or incorrect items</h2>
-    <p>If your order arrives damaged or incorrect, contact us within [48 hours/7 days] of delivery with photos, and we'll arrange a replacement or refund at no cost to you.</p>
+    <p>If your order arrives damaged or incorrect, contact us within 7 days of delivery with photos, and we'll arrange a replacement or refund at no cost to you.</p>
 
     <h2>Return shipping costs</h2>
     <p>Customers are responsible for return shipping costs unless the item was defective or incorrect.</p>
   </section>
 
   <!-- PRIVACY -->
-  <section class="panel" id="privacy">
-    <p class="updated">Last updated: [date]</p>
-    <p>PetPawHaven ("we," "us," "our") respects your privacy. This policy explains what information we collect and how we use it.</p>
+  <section class="policy-panel" id="privacy">
+    <p class="policy-updated">Last updated: [date]</p>
+    <p>PetPaw Haven ("we," "us," "our") respects your privacy. This policy explains what information we collect and how we use it.</p>
 
     <h2>Information we collect</h2>
     <p>Contact details: name, email, phone number, shipping address (collected at checkout).<br>
@@ -151,22 +170,33 @@
     <p>Your data is stored securely using Supabase. We retain order information as required for accounting and legal purposes.</p>
 
     <h2>Your rights</h2>
-    <p>You may request access to, correction of, or deletion of your personal information by contacting us at <a href="mailto:[support email]">[support email]</a>.</p>
+    <p>You may request access to, correction of, or deletion of your personal information by contacting us at <a href="mailto:petpawhavenn@gmail.com">petpawhavenn@gmail.com</a>.</p>
 
     <h2>Cookies</h2>
     <p>Our site may use cookies to improve your browsing experience and remember your cart.</p>
   </section>
-</div>
 
-<script>
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
+  <footer>
+    <span>© 2026 PetPaw Haven. All rights reserved.</span>
+    <div class="f-links">
+      <a href="about.html">About</a>
+      <a href="policies.html">Policies</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </footer>
+
+  <script src="cart.js"></script>
+  <script>
+    document.querySelectorAll('.policy-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.policy-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.policy-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
     });
-  });
-</script>
+  </script>
 </body>
+
 </html>
+
