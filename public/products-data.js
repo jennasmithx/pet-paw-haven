@@ -18,7 +18,7 @@ const PRODUCTS = {
   },
   "2": {
     name: "Automatic Pet Feeder",
-    price: 550.00,
+    price: 660.00,
     tag: "Feeding",
     description: "No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest, even when you're busy.",
     image: "images/petfeeder.jpeg"
