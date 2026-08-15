@@ -14,13 +14,14 @@
 [data-theme="light"] {
   --ink: #F5F6F7;
   --panel: #FFFFFF;
-  --panel-light: #F1ECE0;
-  --foam: #221E17;
-  --foam-rgb: 34, 30, 23;
+  --panel-light: #ECEEF0;
+  --foam: #1C1F21;
+  --foam-rgb: 28, 31, 33;
   --teal: #1F8F86;
   --teal-light: #17726B;
-  --line: rgba(34, 30, 23, 0.12);
+  --line: rgba(28, 31, 33, 0.1);
 }
+
 
 * {
   box-sizing: border-box;
