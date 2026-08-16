@@ -11,7 +11,7 @@
 const PRODUCTS = {
   "1": {
     name: "Premium Pet Water Fountain",
-    price: 550.00,
+    price: 420.00,
     tag: "Feeding",
     description: "Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages your pet to drink more.",
     image: "images/petfountain.jpeg"
