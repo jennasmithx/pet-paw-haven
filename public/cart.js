@@ -177,7 +177,7 @@ function openQuickView(id) {
   };
 
   const viewLink = document.getElementById('qvViewLink');
-  if (viewLink) viewLink.href = `product.html?id=${id}`;
+  if (viewLink) viewLink.href = `/product?id=${id}`;
 
   document.getElementById('quickViewOverlay').classList.add('open');
 }
