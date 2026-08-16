@@ -73,11 +73,11 @@ export default async function handler(req, res) {
     });
   }
 
-  // One shared reference across every row from this checkout
+  // One shared reference across every row from this checkout.
+  // Short random 6-char code — plenty of combinations (36^6 ≈ 2.1 billion)
+  // to keep collisions effectively impossible at this store's order volume.
   const paymentId =
-    'ORD-' +
-    Date.now() +
-    '-' +
+    'PPH-' +
     Math.random().toString(36).slice(2, 8).toUpperCase();
 
   const rowsToInsert = lineItems.map(li => ({
