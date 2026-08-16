@@ -18,7 +18,7 @@
   <nav>
     <button class="burger-btn" id="burgerBtn"
       onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
-    <a href="index.html" class="wordmark">Pet<span>Paw</span>Haven</a>
+    <a href="/home" class="wordmark">Pet<span>Paw</span>Haven</a>
     <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle light/dark mode">
     <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
       <circle cx="12" cy="12" r="5" />
@@ -36,11 +36,11 @@
     </button>
   </nav>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="index.html" class="active">Home</a>
-    <a href="products.html">Products</a>
-    <a href="about.html">About</a>
-    <a href="policies.html">Policies</a>
-    <a href="contact.html">Contact</a>
+    <a href="/home" class="active">Home</a>
+    <a href="/products">Products</a>
+    <a href="/about">About</a>
+    <a href="/policies">Policies</a>
+    <a href="/contact">Contact</a>
   </div>
 
   <section class="hero">
@@ -54,7 +54,7 @@
   <section class="shelf" id="shop">
     <div class="shelf-head">
       <h2>Featured Products</h2>
-      <a href="products.html" class="view-link">View All Products →</a>
+      <a href="/products" class="view-link">View All Products →</a>
     </div>
 
     <div class="grid">
@@ -64,7 +64,7 @@
          id in your database (schema.sql).
          ============================================ -->
       <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="449.00"
-        onclick="window.location.href='product.html?id=1'" style="cursor:pointer;">
+        onclick="window.location.href='/product?id=1'" style="cursor:pointer;">
         <div class="p-image"><img src="images/petfountain.jpeg" alt="Premium Pet Water Fountain"></div>
         <div class="p-body">
           <span class="p-tag">Feeding</span>
@@ -78,7 +78,7 @@
       </div>
 
       <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="449.00"
-        onclick="window.location.href='product.html?id=2'" style="cursor:pointer;">
+        onclick="window.location.href='/product?id=2'" style="cursor:pointer;">
         <div class="p-image"><img src="images/petfeeder.jpeg" alt="Automatic Pet Feeder"></div>
         <div class="p-body">
           <span class="p-tag">Feeding</span>
@@ -113,9 +113,9 @@
   <footer>
     <span>© 2026 PetPaw Haven. All rights reserved.</span>
     <div class="f-links">
-      <a href="about.html">About</a>
-      <a href="policies.html">Policies</a>
-      <a href="contact.html">Contact</a>
+      <a href="/about">About</a>
+      <a href="/policies">Policies</a>
+      <a href="/contact">Contact</a>
     </div>
   </footer>
 
