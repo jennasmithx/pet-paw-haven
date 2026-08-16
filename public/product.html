@@ -111,6 +111,7 @@
   <div class="toast" id="toast"></div>
 
   <script src="products-data.js"></script>
+  <script src="reviews-widget.js"></script>
   <script>
     const id = new URLSearchParams(window.location.search).get('id') || "1";
     const product = PRODUCTS[id];
@@ -143,6 +144,10 @@
           </div>
         </div>
       </div>
+      <div class="reviews-section">
+        <h2>Customer Reviews</h2>
+        <div id="reviewsContainer"></div>
+      </div>
       <div class="related-products">
         <h2>You may also like</h2>
         <div class="related-grid" id="relatedGrid"></div>
@@ -151,6 +156,9 @@
         </div>
       </div>
     `;
+
+      // Load and render reviews for this product (product id doubles as its sku)
+      initReviews(id, 'reviewsContainer');
 
       // Wire up Add to Cart now that the product markup exists
       const card = root.querySelector('.product-data');
