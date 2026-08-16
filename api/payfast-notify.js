@@ -11,15 +11,19 @@
 // to compare against what PayFast actually paid, and updates every matching
 // row together — not just one.
 //
-// Requires GMAIL_USER and GMAIL_APP_PASSWORD env vars (Google Account >
-// Security > 2-Step Verification > App Passwords). Also requires
-// nodemailer — add it to package.json: npm install nodemailer
+// Sends email via Resend's REST API (https://resend.com) instead of Gmail —
+// Gmail SMTP has no domain-level SPF/DKIM alignment, so mail sent through it
+// lands in spam far more often than mail sent from a verified domain.
+//
+// Requires RESEND_API_KEY env var (Resend dashboard > API Keys) and a
+// verified sending domain (petpawhaven.co.za) with its DNS records added.
+// No extra npm package needed — this calls Resend's REST API directly
+// with the built-in fetch(), which Vercel's Node runtime already supports.
 
 import { createClient } from '@supabase/supabase-js';
 import { validateWithPayFast } from './_payfast.js';
 import crypto from 'crypto';
 import dns from 'dns/promises';
-import nodemailer from 'nodemailer';
 
 export const config = {
   api: { bodyParser: false }
@@ -30,14 +34,38 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY
 );
 
-const mailer = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD,
-  },
-});
+// This is what customers see in their inbox as the sender — must be on the
+// verified domain (petpawhaven.co.za) or Resend will reject the send.
+const FROM_ADDRESS = 'PetPaw Haven <orders@petpawhaven.co.za>';
+
+// Where store-owner notifications land — this can still be a normal Gmail
+// inbox, only the SENDING now goes through Resend instead of Gmail.
 const STORE_OWNER_EMAIL = process.env.GMAIL_USER;
+
+// Sends one email via Resend's API. Throws on failure so callers can catch it.
+async function sendEmail({ to, subject, text, html }) {
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      from: FROM_ADDRESS,
+      to,
+      subject,
+      text,
+      html,
+    }),
+  });
+
+  if (!response.ok) {
+    const errText = await response.text();
+    throw new Error(`Resend send failed (${response.status}): ${errText}`);
+  }
+
+  return response.json();
+}
 
 // PayFast's documented check: the source IP's reverse DNS should resolve to a payfast.co.za host.
 async function isFromPayFast(ip) {
@@ -94,9 +122,8 @@ async function sendOrderEmails(orderRows, outcome) {
     // =========================
     // CUSTOMER EMAIL
     // =========================
-    await mailer.sendMail({
+    await sendEmail({
       to: first.email,
-      from: STORE_OWNER_EMAIL,
       subject: `Order confirmed — PetPaw Haven`,
 
       text:
@@ -215,9 +242,8 @@ Thanks for shopping with PetPaw Haven!`,
     // =========================
     // STORE OWNER EMAIL
     // =========================
-    await mailer.sendMail({
+    await sendEmail({
       to: STORE_OWNER_EMAIL,
-      from: STORE_OWNER_EMAIL,
       subject: `New paid order — R${total} — ${customerName}`,
 
       text:
@@ -327,9 +353,8 @@ ${first.payment_id}`,
     // =========================
     // FAILED PAYMENT EMAIL
     // =========================
-    await mailer.sendMail({
+    await sendEmail({
       to: first.email,
-      from: STORE_OWNER_EMAIL,
       subject: `Payment unsuccessful — PetPaw Haven`,
 
       text:
