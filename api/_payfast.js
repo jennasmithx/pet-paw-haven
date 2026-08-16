@@ -17,7 +17,7 @@ import crypto from 'crypto';
 // change a product, update BOTH files, or checkout will either reject the
 // item ("Unknown product") or charge the old price.
 export const PRODUCTS = {
-  "1": { name: "Premium Pet Water Fountain", price: 550.00, sku: "1" },
+  "1": { name: "Premium Pet Water Fountain", price: 420.00, sku: "1" },
   "2": { name: "Automatic Pet Feeder", price: 660.00, sku: "2" },
 };
 
