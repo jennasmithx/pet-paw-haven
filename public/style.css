@@ -1085,7 +1085,7 @@ footer a:hover {
   background: transparent;
   color: inherit;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 0.9rem;
+  font-size: 16px;
 }
 
 #review-form textarea {
