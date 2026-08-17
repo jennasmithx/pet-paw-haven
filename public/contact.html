@@ -130,8 +130,6 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xoeavjek';
-
     document.getElementById('contactForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const form = e.target;
@@ -140,14 +138,18 @@
       btn.textContent = 'Sending…';
 
       try {
-        const res = await fetch(FORMSPREE_ENDPOINT, {
+        const res = await fetch('/api/contact', {
           method: 'POST',
-          headers: { 'Accept': 'application/json' },
-          body: new FormData(form)
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: form.name.value,
+            email: form.email.value,
+            message: form.message.value
+          })
         });
 
         if (res.ok) {
-          window.location.href = 'contact-success.html';
+          window.location.href = '/contact-success';
         } else {
           showToast("Couldn't send — please try again");
           btn.disabled = false;
