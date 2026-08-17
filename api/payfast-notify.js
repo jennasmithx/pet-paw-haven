@@ -217,6 +217,8 @@ Thanks for shopping with PetPaw Haven!`,
         </p>
       </div>
 
+<p>You'll receive your shipping tracking number by email within 2-3 business days once your order has been dispatched.</p>
+
       <p style="margin-top:28px;font-size:14px;line-height:1.6;color:#666;">
         We'll keep you updated as your order moves through the shipping process.
       </p>
