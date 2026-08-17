@@ -115,6 +115,12 @@
   <script>
     const id = new URLSearchParams(window.location.search).get('id') || "1";
     const product = PRODUCTS[id];
+    document.title = `${product.name} | PetPawHaven`;
+
+document.querySelector('meta[name="description"]')?.setAttribute(
+  "content",
+  `${product.name} — free delivery across South Africa. Shop now at PetPawHaven.`
+);
     const root = document.getElementById('productRoot');
 
     if (!product) {
