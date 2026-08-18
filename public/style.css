@@ -1114,3 +1114,14 @@ footer a:hover {
   margin-top: 8px;
 }
 
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+.slider img {
+  scroll-snap-align: start;
+  flex: 0 0 100%;
+  width: 100%;
+}
+
