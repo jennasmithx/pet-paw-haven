@@ -1114,14 +1114,22 @@ footer a:hover {
   margin-top: 8px;
 }
 
-.slider {
+.p-image {
+  overflow: hidden;
+  position: relative;
+}
+.p-slider {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scrollbar-width: none;
 }
-.slider img {
-  scroll-snap-align: start;
+.p-slider::-webkit-scrollbar { display: none; }
+.p-slider img {
   flex: 0 0 100%;
+  scroll-snap-align: start;
   width: 100%;
+  object-fit: cover;
 }
+
 
