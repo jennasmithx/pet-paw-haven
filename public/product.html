@@ -132,7 +132,12 @@ document.querySelector('meta[name="description"]')?.setAttribute(
       root.innerHTML = `
       <div class="product-detail">
         <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
-          <div class="p-image"><img src="${product.image}" alt="${product.name}"></div>
+          <div class="p-image">
+  <div class="p-slider">
+    ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}">`).join('')}
+  </div>
+</div>
+
         </div>
         <div>
           <span class="p-tag">${product.tag}</span>
