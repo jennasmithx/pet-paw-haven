@@ -30,6 +30,7 @@ const PRODUCTS = {
   description: "A convenient flowing water fountain designed to keep your pet's water fresh and encourage healthy hydration throughout the day.",
 image: "images/petfountain01.jpeg",
   images: [
+     "images/petfountain01.jpeg",
     "images/petfountain02.jpeg"
   ]
 }
