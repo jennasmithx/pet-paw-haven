@@ -13,64 +13,210 @@
     href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Policies-page-specific layout, scoped so it doesn't clash with style.css */
-    .policies-hero {
-      padding: 64px 24px 32px;
-      max-width: 760px;
-      margin: 0 auto;
-      text-align: left;
+ <style>
+  /* =========================
+     PETPAWHAVEN POLICIES PAGE
+     ========================= */
+
+  .policies-hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 11vh 6vw 6vh;
+  }
+
+  .policies-hero::before {
+    content: "PETPAWHAVEN";
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--teal-light);
+    margin-bottom: 18px;
+  }
+
+  .policies-hero h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    line-height: 1.08;
+    letter-spacing: -0.025em;
+    margin-bottom: 18px;
+  }
+
+  .policies-hero p {
+    max-width: 600px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    color: rgba(var(--foam-rgb), 0.62);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  /* ---------- POLICY TABS ---------- */
+
+  .policy-tabs {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 6vw;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .policy-tab {
+    appearance: none;
+    background: transparent;
+    border: 1px solid transparent;
+    border-bottom: 2px solid transparent;
+    color: rgba(var(--foam-rgb), 0.48);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 13px 18px;
+    margin-bottom: -1px;
+    cursor: pointer;
+    transition:
+      color .2s ease,
+      background .2s ease,
+      border-color .2s ease;
+  }
+
+  .policy-tab:hover {
+    color: var(--teal-light);
+    background: rgba(47, 167, 158, 0.05);
+  }
+
+  .policy-tab.active {
+    color: var(--teal-light);
+    border-bottom-color: var(--teal);
+    background: rgba(47, 167, 158, 0.06);
+  }
+
+  /* ---------- POLICY CONTENT ---------- */
+
+  .policy-panel {
+    display: none;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 6vw 100px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .policy-panel.active {
+    display: block;
+    animation: policyFade .25s ease;
+  }
+
+  @keyframes policyFade {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
     }
-    .policies-hero h1 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 2rem;
-      margin-bottom: 8px;
-    }
-    .policies-hero p {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--muted, #6b7280);
-    }
-    .policy-tabs {
-      display: flex;
-      gap: 8px;
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 0 24px;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      flex-wrap: wrap;
-    }
-    .policy-tab {
-      background: none;
-      border: none;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 12px 16px;
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      opacity: 0.6;
-    }
-    .policy-tab.active {
+
+    to {
       opacity: 1;
-      border-bottom-color: currentColor;
+      transform: translateY(0);
     }
-    .policy-panel {
+  }
+
+  .policy-panel h2 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--foam);
+    margin: 34px 0 9px;
+  }
+
+  .policy-panel h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .policy-panel p {
+    max-width: 720px;
+    margin: 0 0 10px;
+    color: rgba(var(--foam-rgb), 0.62);
+    font-size: 0.92rem;
+    line-height: 1.75;
+  }
+
+  .policy-panel a {
+    color: var(--teal-light);
+    font-weight: 600;
+    transition: color .2s ease;
+  }
+
+  .policy-panel a:hover {
+    color: var(--teal);
+  }
+
+  .policy-updated {
+    display: inline-block;
+    color: rgba(var(--foam-rgb), 0.4) !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.03em;
+    margin-bottom: 24px !important;
+    padding: 6px 11px;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+  }
+
+  /* Subtle divider between sections */
+  .policy-panel h2:not(:first-of-type) {
+    padding-top: 25px;
+    border-top: 1px solid var(--line);
+  }
+
+  /* ---------- MOBILE ---------- */
+
+  @media (max-width: 600px) {
+
+    .policies-hero {
+      padding: 8vh 6vw 5vh;
+    }
+
+    .policies-hero h1 {
+      font-size: 2.45rem;
+    }
+
+    .policies-hero p {
+      font-size: 0.9rem;
+    }
+
+    .policy-tabs {
+      padding: 0 6vw;
+      gap: 4px;
+      overflow-x: auto;
+      flex-wrap: nowrap;
+      scrollbar-width: none;
+    }
+
+    .policy-tabs::-webkit-scrollbar {
       display: none;
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 32px 24px 64px;
-      font-family: 'Plus Jakarta Sans', sans-serif;
     }
-    .policy-panel.active { display: block; }
+
+    .policy-tab {
+      flex: 0 0 auto;
+      font-size: 0.76rem;
+      padding: 12px 13px;
+    }
+
+    .policy-panel {
+      padding: 36px 6vw 75px;
+    }
+
     .policy-panel h2 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 1.1rem;
-      margin: 28px 0 8px;
+      font-size: 1.05rem;
+      margin-top: 30px;
     }
-    .policy-panel h2:first-child { margin-top: 0; }
-    .policy-panel p { margin: 0 0 4px; line-height: 1.6; }
-    .policy-updated { color: var(--muted, #6b7280); font-size: 0.85rem; margin-bottom: 20px; }
-  </style>
+
+    .policy-panel p {
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+  }
+</style>
 </head>
 
 <body>
