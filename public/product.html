@@ -129,47 +129,43 @@ document.querySelector('meta[name="description"]')?.setAttribute(
       document.title = `${product.name} — PetPaw Haven`;
       document.getElementById('breadcrumbName').textContent = product.name;
 
-      root.innerHTML = `
-      <div class="product-detail">
-        <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
-          <div class="p-image">
-  <div class="p-slider">
-    ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}">`).join('')}
-  </div>
-</div>
-
-        </div>
-        <div>
-          <span class="p-tag">${product.tag}</span>
-          <h1>${product.name}</h1>
-          <p class="desc">${product.description}</p>
-          <div class="price-row">
-            <span class="price">R ${product.price.toFixed(2)}</span>
-            <span class="stock-badge">In stock</span>
-          </div>
-          <div class="price-row">
-  <span class="price">R ${product.price.toFixed(2)}</span>
-  <span class="stock-badge">In stock</span>
-</div>
-${product.colors ? `
-<div class="color-picker" id="colorPicker">
-  ${product.colors.map((c, i) => `
-    <button class="color-swatch ${i === 0 ? 'selected' : ''}" data-color="${c}" style="background:${
-      c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : '#ccc'
-    }" title="${c}"></button>
-  `).join('')}
-</div>
-` : ''}
-<button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
-
-          <button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
-          <div class="trust-row">
-            <span><i class="dot"></i>Ships from South Africa</span>
-            <span><i class="dot"></i>Secure checkout via PayFast</span>
-            <span><i class="dot"></i>7-day return window</span>
-          </div>
+root.innerHTML = `
+  <div class="product-detail">
+    <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
+      <div class="p-image">
+        <div class="p-slider">
+          ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}">`).join('')}
         </div>
       </div>
+    </div>
+    <div>
+      <span class="p-tag">${product.tag}</span>
+      <h1>${product.name}</h1>
+      <p class="desc">${product.description}</p>
+      <div class="price-row">
+        <span class="price">R ${product.price.toFixed(2)}</span>
+        <span class="stock-badge">In stock</span>
+      </div>
+      ${product.colors ? `
+      <div class="color-picker" id="colorPicker">
+        ${product.colors.map((c, i) => `
+          <button class="color-swatch ${i === 0 ? 'selected' : ''}" data-color="${c}" style="background:${
+            c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : '#ccc'
+          }" title="${c}"></button>
+        `).join('')}
+      </div>
+      ` : ''}
+      <button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
+      <div class="trust-row">
+        <span><i class="dot"></i>Ships from South Africa</span>
+        <span><i class="dot"></i>Secure checkout via PayFast</span>
+        <span><i class="dot"></i>7-day return window</span>
+      </div>
+    </div>
+  </div>
+`;
+
+      
       <div class="reviews-section">
         <h2>Customer Reviews</h2>
         <div id="reviewsContainer"></div>
