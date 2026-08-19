@@ -133,8 +133,8 @@ document.querySelector('meta[name="description"]')?.setAttribute(
         <div class="product-detail">
           <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
             <div class="p-image">
-              <div class="p-slider">
-                ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}">`).join('')}
+              <div class="p-slider" id="pSlider">
+                ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}" data-src="${src}">`).join('')}
               </div>
             </div>
           </div>
@@ -183,14 +183,21 @@ document.querySelector('meta[name="description"]')?.setAttribute(
       let selectedColor = product.colors ? product.colors[0] : null;
 
       if (product.colors) {
-        root.querySelectorAll('.color-swatch').forEach(sw => {
-          sw.addEventListener('click', () => {
-            root.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
-            sw.classList.add('selected');
-            selectedColor = sw.dataset.color;
-          });
-        });
+  const slider = document.getElementById('pSlider');
+  root.querySelectorAll('.color-swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      root.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+      sw.classList.add('selected');
+      selectedColor = sw.dataset.color;
+
+      const targetSrc = product.colorImages?.[selectedColor];
+      if (targetSrc) {
+        const targetImg = slider?.querySelector(`img[data-src="${targetSrc}"]`);
+        targetImg?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
       }
+    });
+  });
+}
 
       // Wire up Add to Cart now that the product markup exists
       const card = root.querySelector('.product-data');
