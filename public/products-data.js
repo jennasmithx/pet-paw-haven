@@ -43,4 +43,3 @@ const PRODUCTS = {
   }
 }
 };
-o
