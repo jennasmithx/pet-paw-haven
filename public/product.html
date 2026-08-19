@@ -147,6 +147,21 @@ document.querySelector('meta[name="description"]')?.setAttribute(
             <span class="price">R ${product.price.toFixed(2)}</span>
             <span class="stock-badge">In stock</span>
           </div>
+          <div class="price-row">
+  <span class="price">R ${product.price.toFixed(2)}</span>
+  <span class="stock-badge">In stock</span>
+</div>
+${product.colors ? `
+<div class="color-picker" id="colorPicker">
+  ${product.colors.map((c, i) => `
+    <button class="color-swatch ${i === 0 ? 'selected' : ''}" data-color="${c}" style="background:${
+      c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : '#ccc'
+    }" title="${c}"></button>
+  `).join('')}
+</div>
+` : ''}
+<button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
+
           <button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
           <div class="trust-row">
             <span><i class="dot"></i>Ships from South Africa</span>
