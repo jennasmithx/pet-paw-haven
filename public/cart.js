@@ -50,7 +50,7 @@ function saveCart() {
   }
 }
 
-let cart = loadCart(); // [{ id, name, price, qty }]
+let cart = loadCart(); // [{ id, name, price, qty, color, key }]
 
 function showToast(msg) {
   const t = document.getElementById('toast');
@@ -68,20 +68,22 @@ function getProductFromCard(cardEl) {
   };
 }
 
-function addToCart(product) {
-  const existing = cart.find(i => String(i.id) === String(product.id));
+// color is optional — pass it when the product has a color picker (see product.html)
+function addToCart(product, color) {
+  const key = color ? `${product.id}::${color}` : String(product.id);
+  const existing = cart.find(i => i.key === key);
   if (existing) { existing.qty += 1; }
-  else { cart.push({ ...product, qty: 1 }); }
+  else { cart.push({ ...product, color: color || null, key, qty: 1 }); }
   saveCart();
   renderCart();
   showToast('Added to cart');
 }
 
-function changeQty(id, delta) {
-  const item = cart.find(i => String(i.id) === String(id));
+function changeQty(key, delta) {
+  const item = cart.find(i => i.key === key);
   if (!item) return;
   item.qty += delta;
-  if (item.qty <= 0) { cart = cart.filter(i => String(i.id) !== String(id)); }
+  if (item.qty <= 0) { cart = cart.filter(i => i.key !== key); }
   saveCart();
   renderCart();
 }
@@ -110,15 +112,16 @@ function renderCart() {
   <div class="cart-line">
     <div>
       <div class="cart-line-name">${i.name}</div>
+      ${i.color ? `<div class="cart-line-color">Colour: ${i.color}</div>` : ''}
       <div class="qty-control">
-        <button class="qty-btn" onclick="changeQty('${i.id}', -1)">−</button>
+        <button class="qty-btn" onclick="changeQty('${i.key}', -1)">−</button>
         <span class="mono">${i.qty}</span>
-        <button class="qty-btn" onclick="changeQty('${i.id}', 1)">+</button>
+        <button class="qty-btn" onclick="changeQty('${i.key}', 1)">+</button>
       </div>
     </div>
     <div class="cart-line-right">
       <div class="cart-line-price">R ${(i.price * i.qty).toFixed(2)}</div>
-      <button class="cart-remove-btn" onclick="removeFromCart('${i.id}')" aria-label="Remove ${i.name}">
+      <button class="cart-remove-btn" onclick="removeFromCart('${i.key}')" aria-label="Remove ${i.name}">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M3 6h18" />
           <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
@@ -187,8 +190,8 @@ function toggleMobileMenu() {
   document.getElementById('burgerBtn')?.classList.toggle('open');
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(i => String(i.id) !== String(id));
+function removeFromCart(key) {
+  cart = cart.filter(i => i.key !== key);
   saveCart();
   renderCart();
 }
@@ -198,7 +201,7 @@ function openCheckout() {
   const summary = document.getElementById('checkoutSummary');
   if (summary) {
     summary.innerHTML = cart.map(i => `
-      <div class="row"><span>${i.name} × ${i.qty}</span><span>R ${(i.price * i.qty).toFixed(2)}</span></div>
+      <div class="row"><span>${i.name}${i.color ? ` (${i.color})` : ''} × ${i.qty}</span><span>R ${(i.price * i.qty).toFixed(2)}</span></div>
     `).join('') + `<div class="row">
   <span>Shipping</span>
   <span>FREE</span>
@@ -223,7 +226,7 @@ async function submitToPayFast() {
   const [firstName, lastName, email, phone, address, city, postal] = Array.from(inputs).map(i => i.value);
 
   const payload = {
-    items: cart.map(i => ({ productId: i.id, quantity: i.qty })),
+    items: cart.map(i => ({ productId: i.id, quantity: i.qty, color: i.color || null })),
     customer: { firstName, lastName, email, phone, address, city, postal, country: 'ZA' }
   };
 
