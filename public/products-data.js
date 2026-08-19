@@ -41,4 +41,5 @@ const PRODUCTS = {
     "Blue": "images/petfountain02.jpg",
     "Pink": "images/petfountain03.jpg"
   }
+}
 };
