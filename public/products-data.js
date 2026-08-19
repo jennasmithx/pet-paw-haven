@@ -28,18 +28,19 @@ const PRODUCTS = {
   price: 360.00,
   tag: "Hydration",
   description: "A convenient flowing water fountain designed to keep your pet's water fresh and encourage healthy hydration throughout the day.",
-  image: "images/petfountain01.jpg",
+  image: "images/petfountain01.jpeg",
   images: [
-    "images/petfountain01.jpg",
-    "images/petfountain02.jpg",
-    "images/petfountain03.jpg",
-    "images/petfountain04.jpg"
+    "images/petfountain01.jpeg",
+    "images/petfountain02.jpeg",
+    "images/petfountain03.jpeg",
+    "images/petfountain04.jpeg"
   ],
   colors: ["White", "Blue", "Pink"],
   colorImages: {
-    "White": "images/petfountain01.jpg",
-    "Blue": "images/petfountain02.jpg",
-    "Pink": "images/petfountain03.jpg"
+    "White": "images/petfountain01.jpeg",
+    "Blue": "images/petfountain02.jpeg",
+    "Pink": "images/petfountain03.jpeg"
   }
 }
 };
+o
