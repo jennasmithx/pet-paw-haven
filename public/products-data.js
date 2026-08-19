@@ -25,7 +25,7 @@ const PRODUCTS = {
   },
 "3": {
   name: "Pet Water Fountain",
-  price: 360.00,
+  price: 390.00,
   tag: "Hydration",
   description: "A convenient flowing water fountain designed to keep your pet's water fresh and encourage healthy hydration throughout the day.",
 image: "images/petfountain01.jpeg",
