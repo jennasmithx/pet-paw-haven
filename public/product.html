@@ -129,60 +129,73 @@ document.querySelector('meta[name="description"]')?.setAttribute(
       document.title = `${product.name} — PetPaw Haven`;
       document.getElementById('breadcrumbName').textContent = product.name;
 
-root.innerHTML = `
-  <div class="product-detail">
-    <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
-      <div class="p-image">
-        <div class="p-slider">
-          ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}">`).join('')}
+      root.innerHTML = `
+        <div class="product-detail">
+          <div class="product-data" data-id="${id}" data-name="${product.name}" data-price="${product.price}">
+            <div class="p-image">
+              <div class="p-slider">
+                ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}">`).join('')}
+              </div>
+            </div>
+          </div>
+          <div>
+            <span class="p-tag">${product.tag}</span>
+            <h1>${product.name}</h1>
+            <p class="desc">${product.description}</p>
+            <div class="price-row">
+              <span class="price">R ${product.price.toFixed(2)}</span>
+              <span class="stock-badge">In stock</span>
+            </div>
+            ${product.colors ? `
+            <div class="color-picker" id="colorPicker">
+              ${product.colors.map((c, i) => `
+                <button class="color-swatch ${i === 0 ? 'selected' : ''}" data-color="${c}" style="background:${
+                  c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : '#ccc'
+                }" title="${c}"></button>
+              `).join('')}
+            </div>
+            ` : ''}
+            <button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
+            <div class="trust-row">
+              <span><i class="dot"></i>Ships from South Africa</span>
+              <span><i class="dot"></i>Secure checkout via PayFast</span>
+              <span><i class="dot"></i>7-day return window</span>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div>
-      <span class="p-tag">${product.tag}</span>
-      <h1>${product.name}</h1>
-      <p class="desc">${product.description}</p>
-      <div class="price-row">
-        <span class="price">R ${product.price.toFixed(2)}</span>
-        <span class="stock-badge">In stock</span>
-      </div>
-      ${product.colors ? `
-      <div class="color-picker" id="colorPicker">
-        ${product.colors.map((c, i) => `
-          <button class="color-swatch ${i === 0 ? 'selected' : ''}" data-color="${c}" style="background:${
-            c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : '#ccc'
-          }" title="${c}"></button>
-        `).join('')}
-      </div>
-      ` : ''}
-      <button class="hero-cta add-to-cart-btn" style="border:none; cursor:pointer;">Add to Cart</button>
-      <div class="trust-row">
-        <span><i class="dot"></i>Ships from South Africa</span>
-        <span><i class="dot"></i>Secure checkout via PayFast</span>
-        <span><i class="dot"></i>7-day return window</span>
-      </div>
-    </div>
-  </div>
-  <div class="reviews-section">
-    <h2>Customer Reviews</h2>
-    <div id="reviewsContainer"></div>
-  </div>
-  <div class="related-products">
-    <h2>You may also like</h2>
-    <div class="related-grid" id="relatedGrid"></div>
-    <div class="related-more">
-      <a href="/products" class="btn-secondary">View all products</a>
-    </div>
-  </div>
-`;
+        <div class="reviews-section">
+          <h2>Customer Reviews</h2>
+          <div id="reviewsContainer"></div>
+        </div>
+        <div class="related-products">
+          <h2>You may also like</h2>
+          <div class="related-grid" id="relatedGrid"></div>
+          <div class="related-more">
+            <a href="/products" class="btn-secondary">View all products</a>
+          </div>
+        </div>
+      `;
 
       // Load and render reviews for this product (product id doubles as its sku)
       initReviews(id, 'reviewsContainer');
 
+      // Color selection (only present if this product has a colors array)
+      let selectedColor = product.colors ? product.colors[0] : null;
+
+      if (product.colors) {
+        root.querySelectorAll('.color-swatch').forEach(sw => {
+          sw.addEventListener('click', () => {
+            root.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+            sw.classList.add('selected');
+            selectedColor = sw.dataset.color;
+          });
+        });
+      }
+
       // Wire up Add to Cart now that the product markup exists
       const card = root.querySelector('.product-data');
       const btn = root.querySelector('.add-to-cart-btn');
-      btn.addEventListener('click', () => addToCart(getProductFromCard(card)));
+      btn.addEventListener('click', () => addToCart(getProductFromCard(card), selectedColor));
 
       // Related products: up to 3 others, excluding the current one
       const relatedGrid = document.getElementById('relatedGrid');
