@@ -8,9 +8,9 @@
 <meta name="description" content="Browse our full range of pet products — feeders, water fountains and more. Delivered across South Africa.">
 
   <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
-  <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="[https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap](https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700\&family=Plus+Jakarta+Sans:wght@400;500;600;700\&display=swap)"
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -50,7 +50,7 @@
   <section class="shelf" style="padding-top:5vh;">
     <div class="shelf-head" style="border-top:none; padding-top:0;">
       <h2>All Products</h2>
-      <span class="mono" id="itemCount">1 item available</span>
+      <span class="mono" id="itemCount">3 items available</span>
     </div>
 
     <p id="noResults"
@@ -60,10 +60,10 @@
     <div class="grid">
       <!-- ============================================
          PRODUCT CARD — copy this whole block to add a new product.
-         1\. Add the product's data to products-data.js first
-         2\. data-id here must match that same id
-         3\. Change data-name, data-price, and the visible text below
-         \============================================ -->
+         1. Add the product's data to products-data.js first
+         2. data-id here must match that same id
+         3. Change data-name, data-price, and the visible text below
+         ============================================ -->
       <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="449.00"
         onclick="window.location.href='/product?id=1'" style="cursor:pointer;">
         <div class="p-image"><img src="images/petfountain.jpeg" alt="Premium Pet Water Fountain"></div>
@@ -91,22 +91,17 @@
         </div>
       </div>
       <div class="p-card" data-id="3" data-name="Pet Water Fountain" data-price="360.00"
-     onclick="window.location.href='/product?id=3'" style="cursor:pointer;">
-  <div class="p-image">
-    <div class="p-slider">
-        <img src="images/petfountain01.jpeg" alt="Pet Water Fountain">
-        <img src="images/petfountain02.jpeg" alt="Pet Water Fountain">
+        onclick="window.location.href='/product?id=3'" style="cursor:pointer;">
+        <div class="p-image"><img src="images/petfountain01.jpeg" alt="Pet Water Fountain"></div>
+        <div class="p-body">
+          <span class="p-tag">Hydration</span>
+          <h3>Pet Water Fountain</h3>
+          <p>Keep your pet's water fresh and flowing while encouraging them to drink more throughout the day.</p>
+          <div class="p-footer">
+            <span class="price">R 360.00</span>
+          </div>
+        </div>
       </div>
-  </div>
-  <div class="p-body">
-    <span class="p-tag">Hydration</span>
-    <h3>Pet Water Fountain</h3>
-    <p>Keep your pet's water fresh and flowing while encouraging them to drink more throughout the day.</p>
-    <div class="p-footer">
-      <span class="price">R 360.00</span>
-    </div>
-  </div>
-</div>
     </div>
   </section>
 
