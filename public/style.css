@@ -1132,4 +1132,13 @@ footer a:hover {
   object-fit: cover;
 }
 
+.color-picker { display: flex; gap: 10px; margin: 14px 0; }
+.color-swatch {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid var(--border-color, #ccc);
+  cursor: pointer; padding: 0;
+}
+.color-swatch.selected { border-color: var(--teal-light, #2a9d8f); box-shadow: 0 0 0 2px var(--teal-light, #2a9d8f); }
+
+
 
