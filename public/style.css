@@ -29,6 +29,10 @@
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -392,6 +396,17 @@ nav {
 
 .p-card .p-body {
   padding: 24px;
+}
+
+.p-card .p-image img,
+.product-detail .p-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stock-pill {
+  white-space: nowrap;
 }
 
 .p-card .p-tag {
