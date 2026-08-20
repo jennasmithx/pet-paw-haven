@@ -255,6 +255,36 @@ nav {
   color: var(--teal-light);
 }
 
+.stock-pill {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(var(--foam-rgb), 0.9);
+  color: var(--ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.stock-pill.low {
+  background: #f5b400;
+}
+
+.stock-pill.out {
+  background: #888;
+}
+
+.compare-price {
+  text-decoration: line-through;
+  color: rgba(var(--foam-rgb), 0.4);
+  font-size: 0.85em;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
 /* ---------- HERO ---------- */
 .hero {
   padding: 14vh 6vw 8vh;
