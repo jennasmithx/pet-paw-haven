@@ -664,6 +664,12 @@ footer a:hover {
   max-width: 1000px;
 }
 
+@media (max-width: 640px) {
+  .page-content {
+    padding: 6vh 6vw 8vh;
+  }
+}
+
 @media (max-width:760px) {
   .contact-grid {
     grid-template-columns: 1fr;
