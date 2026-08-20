@@ -113,6 +113,7 @@
   <script src="products-data.js"></script>
   <script src="reviews-widget.js"></script>
   <script>
+    const COMPARE_PRICES = { "1": 520.00, "2": 750.00, "3": 440.00 };
     const id = new URLSearchParams(window.location.search).get('id') || "1";
     const product = PRODUCTS[id];
     document.title = `${product.name} | PetPawHaven`;
@@ -143,9 +144,10 @@ document.querySelector('meta[name="description"]')?.setAttribute(
             <h1>${product.name}</h1>
             <p class="desc">${product.description}</p>
             <div class="price-row">
-              <span class="price">R ${product.price.toFixed(2)}</span>
-              <span class="stock-badge">In stock</span>
-            </div>
+  ${COMPARE_PRICES[id] ? `<span class="compare-price">R ${COMPARE_PRICES[id].toFixed(2)}</span>` : ''}
+  <span class="price">R ${product.price.toFixed(2)}</span>
+  <span class="stock-badge">In stock</span>
+</div>
             ${product.colors ? `
             <div class="color-picker" id="colorPicker">
               ${product.colors.map((c, i) => `
