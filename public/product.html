@@ -117,6 +117,10 @@
     const id = new URLSearchParams(window.location.search).get('id') || "1";
     const product = PRODUCTS[id];
     document.title = `${product.name} | PetPawHaven`;
+document.querySelector('meta[property="og:title"]')?.setAttribute("content", `${product.name} | PetPawHaven`);
+document.querySelector('meta[property="og:description"]')?.setAttribute("content", product.description);
+document.querySelector('meta[property="og:image"]')?.setAttribute("content", product.image || (product.images && product.images[0]));
+document.querySelector('meta[property="og:url"]')?.setAttribute("content", `https://www.petpawhaven.co.za/product?id=${id}`);
 
 document.querySelector('meta[name="description"]')?.setAttribute(
   "content",
