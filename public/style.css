@@ -352,6 +352,27 @@ nav {
   }
 }
 
+.footer-social {
+  display: flex;
+  gap: 10px;
+}
+
+.footer-social a {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.footer-social a:hover {
+  border-color: var(--teal);
+  background: rgba(47, 167, 158, 0.08);
+}
+
 /* ---------- SECTIONS / SHELF ---------- */
 .shelf {
   padding: 2vh 6vw 14vh;
