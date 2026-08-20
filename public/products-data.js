@@ -1,5 +1,3 @@
-
-
 // products-data.js — the single source of truth for product details
 // (name, price, tag, description) used across index.html, products.html,
 // product.html, and the quick-view modal. Add a new product here once;
@@ -14,14 +12,16 @@ const PRODUCTS = {
     price: 420.00,
     tag: "Feeding",
     description: "Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages your pet to drink more.",
-    image: "images/petfountain.jpeg"
+    image: "images/petfountain.jpeg",
+    stock: "in"
   },
   "2": {
     name: "Automatic Pet Feeder",
     price: 660.00,
     tag: "Feeding",
     description: "No more worrying about missed meals. Set their feeding schedule and let the feeder take care of the rest, even when you're busy.",
-    image: "images/petfeeder.jpeg"
+    image: "images/petfeeder.jpeg",
+    stock: "in"
   },
 "3": {
   name: "Pet Water Fountain",
@@ -40,6 +40,7 @@ const PRODUCTS = {
     "White": "images/petfountain01.jpeg",
     "Blue": "images/petfountain02.jpeg",
     "Pink": "images/petfountain03.jpeg"
-  }
+  },
+  stock: "in"
 }
 };
