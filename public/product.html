@@ -146,7 +146,9 @@ document.querySelector('meta[name="description"]')?.setAttribute(
             <div class="price-row">
   ${COMPARE_PRICES[id] ? `<span class="compare-price">R ${COMPARE_PRICES[id].toFixed(2)}</span>` : ''}
   <span class="price">R ${product.price.toFixed(2)}</span>
-  <span class="stock-badge">In stock</span>
+  <span class="stock-badge stock-${product.stock || 'in'}">${
+  product.stock === 'out' ? 'Out of Stock' : product.stock === 'low' ? 'Low Stock' : 'In Stock'
+}</span>
 </div>
             ${product.colors ? `
             <div class="color-picker" id="colorPicker">
