@@ -346,6 +346,12 @@ nav {
   background: var(--teal-light);
 }
 
+@media (max-width: 640px) {
+  .hero {
+    padding: 6vh 6vw 5vh;
+  }
+}
+
 /* ---------- SECTIONS / SHELF ---------- */
 .shelf {
   padding: 2vh 6vw 14vh;
