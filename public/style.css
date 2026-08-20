@@ -373,6 +373,16 @@ nav {
   background: rgba(47, 167, 158, 0.08);
 }
 
+@media (max-width: 640px) {
+  footer {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+  }
+}
+
+
 /* ---------- SECTIONS / SHELF ---------- */
 .shelf {
   padding: 2vh 6vw 14vh;
