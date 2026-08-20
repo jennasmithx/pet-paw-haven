@@ -334,6 +334,7 @@ nav {
   gap: 26px;
 }
 
+
 .p-card {
   background: var(--panel);
   border: 1px solid var(--line);
@@ -399,6 +400,36 @@ nav {
   font-size: 0.85rem;
   color: var(--teal-light);
   font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .p-card .p-body {
+    padding: 12px;
+  }
+
+  .p-card .p-tag {
+    font-size: 0.65rem;
+    margin-bottom: 6px;
+  }
+
+  .p-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    line-height: 1.25;
+  }
+
+  .p-card p {
+    display: none;
+  }
+
+  .p-card .price {
+    font-size: 0.95rem;
+  }
 }
 
 /* ---------- TRUST STRIP ---------- */
