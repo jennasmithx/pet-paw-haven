@@ -259,6 +259,16 @@ nav {
   color: var(--teal-light);
 }
 
+.stock-badge.stock-low {
+  color: #f5b400;
+  background: rgba(245, 180, 0, 0.12);
+}
+
+.stock-badge.stock-out {
+  color: #d95555;
+  background: rgba(217, 85, 85, 0.12);
+}
+
 .stock-pill {
   position: absolute;
   top: 10px;
