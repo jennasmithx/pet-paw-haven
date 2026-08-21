@@ -80,8 +80,8 @@ const PRODUCTS = {
   ],
   colors: ["White", "Beige"],
   colorImages: {
-    "White": "images/steambrush01.jpeg",
-    "Beige": "images/steambrush02.jpeg"
+    "White": "images/steambrush02.jpeg",
+    "Beige": "images/steambrush03.jpeg"
   },
   stock: "in"
 }
