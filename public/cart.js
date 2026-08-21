@@ -155,6 +155,12 @@ function filterProducts(query) {
     if (matches) visibleCount++;
   });
 
+  // hide a category section entirely if none of its products match
+  document.querySelectorAll('.shelf[id]').forEach(section => {
+    const anyVisible = Array.from(section.querySelectorAll('.p-card')).some(c => c.style.display !== 'none');
+    section.style.display = (q === '' || anyVisible) ? '' : 'none';
+  });
+
   const noResultsEl = document.getElementById('noResults');
   if (noResultsEl) noResultsEl.style.display = (visibleCount === 0 && q !== '') ? 'block' : 'none';
 }
