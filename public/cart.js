@@ -289,11 +289,13 @@ document.addEventListener('DOMContentLoaded', () => {
     if (btn) btn.addEventListener('click', () => addToCart(getProductFromCard(card)));
   });
 
-  const itemCountEl = document.getElementById('itemCount');
-  if (itemCountEl) {
-    const count = document.querySelectorAll('.p-card, .product-card').length;
-    if (count > 0) itemCountEl.textContent = `${count} ITEM${count === 1 ? '' : 'S'} AVAILABLE`;
-  }
+  // Each category section gets its own live count (skip "coming soon" placeholders)
+  document.querySelectorAll('.shelf[id]').forEach(section => {
+    const countEl = section.querySelector('.item-count');
+    if (!countEl) return;
+    const count = section.querySelectorAll('.p-card').length;
+    countEl.textContent = `${count} ITEM${count === 1 ? '' : 'S'} AVAILABLE`;
+  });
 
   renderCart(); // reflect any cart saved from a previous page
 });
