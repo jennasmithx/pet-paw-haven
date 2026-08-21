@@ -127,7 +127,7 @@
   <script src="products-data.js"></script>
   <script src="reviews-widget.js"></script>
   <script>
-    const COMPARE_PRICES = { "1": 520.00, "2": 750.00, "3": 440.00, "4": 199.00 };
+    const COMPARE_PRICES = { "1": 520.00, "2": 750.00, "3": 440.00, "4": 199.00, "5": 220.00 };
     const id = new URLSearchParams(window.location.search).get('id') || "1";
     const product = PRODUCTS[id];
     document.title = `${product.name} | PetPawHaven`;
@@ -172,7 +172,7 @@ document.querySelector('meta[name="description"]')?.setAttribute(
             <div class="color-picker" id="colorPicker">
               ${product.colors.map((c, i) => `
                 <button class="color-swatch ${i === 0 ? 'selected' : ''}" data-color="${c}" style="background:${
-                  c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : '#ccc'
+                  c === 'White' ? '#fff' : c === 'Pink' ? '#f4a6c1' : c === 'Blue' ? '#7ec8e3' : c === 'Beige' ? '#e8dcc8' : '#ccc'
                 }" title="${c}"></button>
               `).join('')}
             </div>
