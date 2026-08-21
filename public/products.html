@@ -51,15 +51,22 @@
   <div class="search-row"><input type="text" id="searchInput" placeholder="Search products..."
       oninput="filterProducts(this.value)"></div>
 
-  <section class="shelf" style="padding-top:5vh;">
+  <div class="category-filters" id="categoryFilters">
+    <a href="#feeding-hydration" class="category-tab">💧 Feeding & Hydration</a>
+    <a href="#toys-play" class="category-tab">🧸 Toys & Play</a>
+    <a href="#grooming-care" class="category-tab">✨ Grooming & Care</a>
+    <a href="#comfort-accessories" class="category-tab">🛏️ Comfort & Accessories</a>
+  </div>
+
+  <p id="noResults"
+    style="display:none; text-align:center; padding:20px 6vw; color:rgba(241,243,242,0.5); font-size:0.9rem;">No
+    products match your search.</p>
+
+  <section class="shelf" id="feeding-hydration" style="padding-top:3vh;">
     <div class="shelf-head" style="border-top:none; padding-top:0;">
-      <h2>All Products</h2>
+      <h2>💧 Feeding & Hydration</h2>
       <span class="mono" id="itemCount">3 items available</span>
     </div>
-
-    <p id="noResults"
-      style="display:none; text-align:center; padding:20px 0; color:rgba(241,243,242,0.5); font-size:0.9rem;">No
-      products match your search.</p>
 
     <div class="grid">
       <!-- ============================================
@@ -68,7 +75,7 @@
          2. data-id here must match that same id
          3. Change data-name, data-price, and the visible text below
          ============================================ -->
-      <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="420.00"
+      <div class="p-card" data-id="1" data-name="Premium Pet Water Fountain" data-price="420.00" data-category="feeding-hydration"
         onclick="window.location.href='/product?id=1'" style="cursor:pointer;">
         <div class="p-image">
            <span class="stock-pill">In Stock</span>
@@ -84,7 +91,7 @@
           </div>
         </div>
       </div>
-      <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="660.00"
+      <div class="p-card" data-id="2" data-name="Automatic Pet Feeder" data-price="660.00" data-category="feeding-hydration"
         onclick="window.location.href='/product?id=2'" style="cursor:pointer;">
         <div class="p-image">
            <span class="stock-pill">In Stock</span>
@@ -100,7 +107,7 @@
           </div>
         </div>
       </div>
-      <div class="p-card" data-id="3" data-name="Pet Water Fountain" data-price="360.00"
+      <div class="p-card" data-id="3" data-name="Pet Water Fountain" data-price="360.00" data-category="feeding-hydration"
         onclick="window.location.href='/product?id=3'" style="cursor:pointer;">
         <div class="p-image">
            <span class="stock-pill">In Stock</span>
@@ -115,6 +122,53 @@
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section class="shelf" id="toys-play">
+    <div class="shelf-head">
+      <h2>🧸 Toys & Play</h2>
+    </div>
+
+    <div class="grid">
+      <div class="p-card" data-id="4" data-name="Interactive Vibrating Cat Ball" data-price="160.00" data-category="toys-play"
+        onclick="window.location.href='/product?id=4'" style="cursor:pointer;">
+        <div class="p-image">
+           <span class="stock-pill">In Stock</span>
+          <img src="images/catball01.jpeg" alt="Interactive Vibrating Cat Ball"></div>
+        <div class="p-body">
+          <span class="p-tag">Toys & Play</span>
+          <h3>Interactive Vibrating Cat Ball</h3>
+          <p>Motion-activated vibration and rolling get your cat's hunting instinct going — solo play that actually
+            holds their attention.</p>
+          <div class="p-footer">
+            <span class="compare-price">R 199.00</span>
+            <span class="price">R 160.00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shelf" id="grooming-care">
+    <div class="shelf-head">
+      <h2>✨ Grooming & Care</h2>
+    </div>
+
+    <div class="grid">
+      <!-- add grooming products here -->
+      <p class="mono" style="opacity:.5; padding:20px 0;">Coming soon.</p>
+    </div>
+  </section>
+
+  <section class="shelf" id="comfort-accessories">
+    <div class="shelf-head">
+      <h2>🛏️ Comfort & Accessories</h2>
+    </div>
+
+    <div class="grid">
+      <!-- add comfort/accessory products here -->
+      <p class="mono" style="opacity:.5; padding:20px 0;">Coming soon.</p>
     </div>
   </section>
 
