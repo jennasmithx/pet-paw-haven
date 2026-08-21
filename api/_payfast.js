@@ -20,6 +20,7 @@ export const PRODUCTS = {
   "1": { name: "Premium Pet Water Fountain", price: 420.00, sku: "1" },
   "2": { name: "Automatic Pet Feeder", price: 660.00, sku: "2" },
   "3": { name: "Pet Water Fountain", price: 360.00, sku: "3" },
+  "4": { name: "Interactive Vibrating Cat Ball", price: 160.00, sku: "4" },
 };
 
 // Generates the MD5 signature PayFast requires on every request.
@@ -49,7 +50,6 @@ function pfEncode(str) {
 // build their field objects in PayFast's documented order to begin with.
 export function generateSignature(data, passphrase) {
   let pfOutput = '';
-
   Object.keys(data).forEach(key => {
     if (
       data[key] !== '' &&
@@ -75,7 +75,6 @@ export function generateSignature(data, passphrase) {
     .update(pfOutput)
     .digest('hex');
 }
-
 
 // Asks PayFast's own servers to confirm an ITN post is genuine (not spoofed).
 // rawBody is the exact x-www-form-urlencoded body PayFast posted to the
