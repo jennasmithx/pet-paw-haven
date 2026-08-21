@@ -1325,4 +1325,3 @@ footer a:hover {
   cursor: pointer; padding: 0;
 }
 .color-swatch.selected { border-color: var(--teal-light, #2a9d8f); box-shadow: 0 0 0 2px var(--teal-light, #2a9d8f); }
-```
