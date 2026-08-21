@@ -64,4 +64,25 @@ const PRODUCTS = {
   },
   stock: "in"
 }
+,
+"5": {
+  name: "Pet Steam Brush",
+  price: 160.00,
+  tag: "Grooming & Care",
+  description: "Warm steam meets soft bristles to loosen tangles, lift loose fur, and gently massage your pet's coat as you brush — safe for both cats and dogs. The steam opens up the coat so grooming goes faster and feels better for them, with far less tugging than a dry brush and noticeably less fur left around the house.",
+  image: "images/steambrush01.jpeg",
+  images: [
+    "images/steambrush01.jpeg",
+    "images/steambrush02.jpeg",
+    "images/steambrush03.jpeg",
+    "images/steambrush04.jpeg",
+    "images/steambrush05.jpeg"
+  ],
+  colors: ["White", "Beige"],
+  colorImages: {
+    "White": "images/steambrush01.jpeg",
+    "Beige": "images/steambrush02.jpeg"
+  },
+  stock: "in"
+}
 };
