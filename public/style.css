@@ -1,3 +1,6 @@
+Here's the full `style.css` (1330 lines):
+
+```css
 /* PetPaw Haven — shared styles across all pages */
 
 :root {
@@ -170,6 +173,42 @@ nav {
 
 .search-row input:focus {
   outline: 1px solid var(--teal);
+}
+
+.category-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 18px 6vw 0;
+}
+
+.category-tab {
+  display: inline-block;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  color: rgba(var(--foam-rgb), 0.6);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease, border-color .2s ease;
+}
+
+.category-tab:hover {
+  color: var(--teal-light);
+  border-color: var(--teal-light);
+  background: rgba(47, 167, 158, 0.1);
+}
+
+.category-filters {
+  scroll-margin-top: 80px;
+}
+
+.shelf[id] {
+  scroll-margin-top: 80px;
 }
 
 .trust-bar {
@@ -1289,6 +1328,4 @@ footer a:hover {
   cursor: pointer; padding: 0;
 }
 .color-swatch.selected { border-color: var(--teal-light, #2a9d8f); box-shadow: 0 0 0 2px var(--teal-light, #2a9d8f); }
-
-
-
+```
