@@ -46,7 +46,7 @@ const PRODUCTS = {
 ,
 "4": {
   name: "Interactive Vibrating Cat Ball",
-  price: 2.00,
+  price: 5.00,
   tag: "Toys & Play",
   description: "Turn your cat's hunting instinct into playtime. This vibrating ball senses motion and reacts with gentle buzzing and rolling the moment your cat taps it, keeping them engaged solo or with you around. USB-rechargeable, quiet motor, and a tough outer shell built to survive enthusiastic pouncing and the odd fall off the couch.",
   image: "images/catball01.jpeg",
@@ -67,7 +67,7 @@ const PRODUCTS = {
 ,
 "5": {
   name: "Pet Steam Brush",
-  price: 2.00,
+  price: 5.00,
   tag: "Grooming & Care",
   description: "Warm steam meets soft bristles to loosen tangles, lift loose fur, and gently massage your pet's coat as you brush — safe for both cats and dogs. The steam opens up the coat so grooming goes faster and feels better for them, with far less tugging than a dry brush and noticeably less fur left around the house.",
   image: "images/steambrush01.jpeg",
