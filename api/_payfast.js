@@ -20,8 +20,8 @@ export const PRODUCTS = {
   "1": { name: "Premium Pet Water Fountain", price: 420.00, sku: "1" },
   "2": { name: "Automatic Pet Feeder", price: 660.00, sku: "2" },
   "3": { name: "Pet Water Fountain", price: 360.00, sku: "3" },
-  "4": { name: "Interactive Vibrating Cat Ball", price: 5.00, sku: "4" },
-  "5": { name: "Pet Steam Brush", price: 5.00, sku: "5" },
+  "4": { name: "Interactive Vibrating Cat Ball", price: 160.00, sku: "4" },
+  "5": { name: "Pet Steam Brush", price: 160.00, sku: "5" },
 };
 
 // Generates the MD5 signature PayFast requires on every request.
