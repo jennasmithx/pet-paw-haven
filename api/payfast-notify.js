@@ -67,13 +67,36 @@ async function sendEmail({ to, subject, text, html }) {
   return response.json();
 }
 
-// PayFast's documented check: the source IP's reverse DNS should resolve to a payfast.co.za host.
+// PayFast's own known ITN/notification hostnames — see PayFast's IP
+// validation guidance (mirrored by the official WooCommerce PayFast gateway).
+const PAYFAST_HOSTS = [
+  'www.payfast.co.za',
+  'sandbox.payfast.co.za',
+  'w1w.payfast.co.za',
+  'w2w.payfast.co.za',
+];
+
+// PayFast's documented check is a FORWARD lookup: resolve PayFast's own
+// hostnames to IPs and confirm the ITN's source IP is one of them.
+//
+// This used to do a REVERSE lookup instead (dns.reverse(ip) then check the
+// hostname ends with payfast.co.za) — that's backwards from what PayFast
+// documents, and it silently broke real payments: PayFast's servers aren't
+// guaranteed to have a PTR record pointing back to payfast.co.za, so the
+// reverse lookup could fail or come back empty for a perfectly genuine ITN,
+// which made this function return false, which made the whole webhook
+// 400 out before ever touching the database or sending an email — even
+// though the payment had gone through and PayFast's own /validate endpoint
+// (checked separately, below) would have confirmed it as genuine.
 async function isFromPayFast(ip) {
   try {
-    const hosts = await dns.reverse(ip);
-    return hosts.some(h => h.endsWith('payfast.co.za'));
+    const resolved = await Promise.all(
+      PAYFAST_HOSTS.map(host => dns.resolve4(host).catch(() => []))
+    );
+    const validIps = new Set(resolved.flat());
+    return validIps.has(ip);
   } catch {
-    return false; // reverse lookup failing is suspicious, treat as untrusted
+    return false;
   }
 }
 

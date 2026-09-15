@@ -94,9 +94,9 @@
 
   <div class="result-box">
     <div class="inner">
-      <div class="check-icon">✓</div>
-      <h1>Payment received</h1>
-      <p>Your order is confirmed — a confirmation email is on its way.</p>
+      <div class="check-icon" id="statusIcon">⏳</div>
+      <h1 id="statusTitle">Confirming your payment…</h1>
+      <p id="statusMessage">Hang tight, this usually only takes a few seconds.</p>
       <p>Order reference: <span class="order-id">#<span id="orderId">—</span></span></p>
       <a class="back" href="/home">Back to PetPaw Haven</a>
     </div>
@@ -172,6 +172,59 @@
     if (orderId) {
       document.getElementById('orderId').textContent = orderId;
     }
+
+    const iconEl = document.getElementById('statusIcon');
+    const titleEl = document.getElementById('statusTitle');
+    const messageEl = document.getElementById('statusMessage');
+
+    function showState(icon, title, message) {
+      iconEl.textContent = icon;
+      titleEl.textContent = title;
+      messageEl.textContent = message;
+    }
+
+    // PayFast's ITN webhook (the thing that actually confirms payment) fires
+    // asynchronously and can land a few seconds after this redirect — so we
+    // poll instead of trusting the redirect itself as proof of payment.
+    async function pollOrderStatus(attempt = 0) {
+      const MAX_ATTEMPTS = 10;
+      const POLL_INTERVAL_MS = 2000;
+
+      if (!orderId) {
+        showState('✓', 'Order received', 'Your order details are saved. You\'ll get a confirmation email shortly.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/order-status?ref=${encodeURIComponent(orderId)}`);
+        const data = await res.json();
+
+        if (data.status === 'Paid') {
+          showState('✓', 'Payment received', 'Your order is confirmed — a confirmation email is on its way.');
+          return;
+        }
+
+        if (data.status === 'Failed' || data.status === 'Amount Mismatch') {
+          showState('✕', 'There was a problem with your payment', 'Please contact us with your order reference so we can help sort it out.');
+          return;
+        }
+
+        // Still Pending (or not found yet) — keep polling for a while.
+        if (attempt < MAX_ATTEMPTS) {
+          setTimeout(() => pollOrderStatus(attempt + 1), POLL_INTERVAL_MS);
+        } else {
+          showState('⏳', 'Still confirming your payment', 'This is taking longer than usual. You\'ll receive an email as soon as it\'s confirmed — no need to stay on this page.');
+        }
+      } catch (err) {
+        if (attempt < MAX_ATTEMPTS) {
+          setTimeout(() => pollOrderStatus(attempt + 1), POLL_INTERVAL_MS);
+        } else {
+          showState('⏳', 'Still confirming your payment', 'This is taking longer than usual. You\'ll receive an email as soon as it\'s confirmed — no need to stay on this page.');
+        }
+      }
+    }
+
+    pollOrderStatus();
   </script>
    <a href="https://wa.me/27662531866" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Chat on WhatsApp">
     <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff">

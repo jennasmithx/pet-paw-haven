@@ -46,7 +46,7 @@ const PRODUCTS = {
 ,
 "4": {
   name: "Interactive Vibrating Cat Ball",
-  price: 160.00,
+  price: 3.00,
   tag: "Toys & Play",
   description: "Turn your cat's hunting instinct into playtime. This vibrating ball senses motion and reacts with gentle buzzing and rolling the moment your cat taps it, keeping them engaged solo or with you around. USB-rechargeable, quiet motor, and a tough outer shell built to survive enthusiastic pouncing and the odd fall off the couch.",
   image: "images/catball01.jpeg",
