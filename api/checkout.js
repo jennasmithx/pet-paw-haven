@@ -65,11 +65,15 @@ export default async function handler(req, res) {
     const lineAmount = product.price * quantity;
     total += lineAmount;
 
+    // color is optional — only products with a color picker (see product.html) send one
+    const color = typeof item.color === 'string' && item.color.trim() ? item.color.trim() : null;
+
     lineItems.push({
       product_name: product.name,
       product_sku: product.sku,
       quantity,
-      amount: lineAmount.toFixed(2)
+      amount: lineAmount.toFixed(2),
+      color
     });
   }
 
@@ -93,6 +97,7 @@ export default async function handler(req, res) {
     product_sku: li.product_sku,
     quantity: li.quantity,
     amount: li.amount,
+    color: li.color,
     payment_status: 'Pending',
     payment_id: paymentId
   }));

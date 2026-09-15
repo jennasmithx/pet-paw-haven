@@ -122,7 +122,7 @@ async function sendOrderEmails(orderRows, outcome) {
     .map(row => `
       <tr>
         <td style="padding:12px 8px;border-bottom:1px solid #eee;">
-          ${row.product_name}
+          ${row.product_name}${row.color ? `<br><span style="color:#888;font-size:12px;">Colour: ${row.color}</span>` : ''}
         </td>
         <td style="padding:12px 8px;border-bottom:1px solid #eee;text-align:center;">
           ${row.quantity}
@@ -136,7 +136,7 @@ async function sendOrderEmails(orderRows, outcome) {
 
   const itemLines = orderRows
     .map(row =>
-      `- ${row.product_name} x${row.quantity} — R${parseFloat(row.amount).toFixed(2)}`
+      `- ${row.product_name}${row.color ? ` (Colour: ${row.color})` : ''} x${row.quantity} — R${parseFloat(row.amount).toFixed(2)}`
     )
     .join('\n');
 
