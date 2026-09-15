@@ -92,9 +92,13 @@ export async function validateWithPayFast(rawBody, sandbox) {
       body: rawBody
     });
     const text = await response.text();
-    return text.trim() === 'VALID';
+    const trimmed = text.trim();
+    if (trimmed !== 'VALID') {
+      console.error('PayFast validate call returned non-VALID response:', response.status, JSON.stringify(trimmed));
+    }
+    return trimmed === 'VALID';
   } catch (err) {
-    console.error('PayFast validate request failed:', err);
+    console.error('PayFast validate request threw:', err);
     return false;
   }
 }

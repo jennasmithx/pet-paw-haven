@@ -489,7 +489,13 @@ export default async function handler(req, res) {
     return res.status(400).send('invalid signature');
   }
 
-  // 2) Confirm the source IP genuinely belongs to PayFast.
+  // 2) Log whether the source IP matches PayFast's known ranges — informational
+  //    only, NOT a gate. This check depends on DNS lookups that have already
+  //    caused two real payments to be silently rejected (see isFromPayFast's
+  //    comment above), so it no longer blocks the webhook. The signature
+  //    check above and PayFast's own /validate round-trip below are the
+  //    authoritative, PayFast-documented ways to confirm an ITN is genuine —
+  //    both are cryptographic/server-side checks with no DNS dependency.
   const forwardedFor = (req.headers['x-forwarded-for'] || '').split(',')[0].trim();
   const sourceIp = forwardedFor || req.socket.remoteAddress;
   const sandbox = process.env.PAYFAST_SANDBOX === 'true';
@@ -497,8 +503,7 @@ export default async function handler(req, res) {
   if (!sandbox) {
     const trusted = await isFromPayFast(sourceIp);
     if (!trusted) {
-      console.error('PayFast ITN: untrusted source IP', sourceIp);
-      return res.status(400).send('untrusted source');
+      console.warn('PayFast ITN: source IP not in known PayFast ranges (continuing — not blocking)', sourceIp);
     }
   }
 
