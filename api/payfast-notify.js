@@ -459,11 +459,13 @@ export default async function handler(req, res) {
     return res.status(400).send('invalid signature');
   }
 
-  const passphrase = process.env.PAYFAST_PASSPHRASE;
-  if (!passphrase) {
-    console.error('PayFast ITN: PAYFAST_PASSPHRASE is missing');
-    return res.status(500).send('server configuration error');
-  }
+  // Passphrase is OPTIONAL in PayFast's protocol — a merchant account only
+  // has one if you set it under Settings > Integration. checkout.js's
+  // generateSignature() already treats it as optional (only appends
+  // &passphrase=... when non-empty); this used to hard-require it here and
+  // 500 if unset, which would break any account (e.g. a sandbox test
+  // account) that genuinely has no passphrase configured.
+  const passphrase = process.env.PAYFAST_PASSPHRASE || '';
 
   const signaturePayload = rawBody
     .split('&')
@@ -471,15 +473,16 @@ export default async function handler(req, res) {
     .join('&')
     .trim();
 
-  const encodedPassphrase = encodeURIComponent(passphrase)
-    .replace(/%20/g, '+')
-    .replace(/!/g, '%21')
-    .replace(/'/g, '%27')
-    .replace(/\(/g, '%28')
-    .replace(/\)/g, '%29')
-    .replace(/\*/g, '%2A');
+  const signatureString = passphrase
+    ? `${signaturePayload}&passphrase=${encodeURIComponent(passphrase)
+        .replace(/%20/g, '+')
+        .replace(/!/g, '%21')
+        .replace(/'/g, '%27')
+        .replace(/\(/g, '%28')
+        .replace(/\)/g, '%29')
+        .replace(/\*/g, '%2A')}`
+    : signaturePayload;
 
-  const signatureString = `${signaturePayload}&passphrase=${encodedPassphrase}`;
   const expectedSignature = crypto.createHash('md5').update(signatureString).digest('hex');
 
   if (receivedSignature !== expectedSignature) {
