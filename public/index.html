@@ -57,7 +57,7 @@
   <section class="hero-product" id="topBuy">
     <div class="hero-product-image">
       <span class="sale-badge">20% Off</span>
-      <img src="images/petfountain.jpeg" alt="Cat drinking from The Purrflow Fountain">
+      <img src="images/petfountain.jpeg" alt="Cat drinking from The Purrflow Fountain" id="heroProductImg">
     </div>
     <div class="hero-product-copy">
       <span class="eyebrow">Trusted by pet owners across South Africa</span>
@@ -68,6 +68,10 @@
         <span class="compare-price">R 520.00</span>
         <span class="price">R 420.00</span>
         <span class="save-pill">Save R100</span>
+      </div>
+      <div class="color-picker" id="heroColorPicker">
+        <button class="color-swatch selected" data-color="Black" style="background:#1a1a1a" title="Black"></button>
+        <button class="color-swatch" data-color="White" style="background:#fff" title="White"></button>
       </div>
       <button class="hero-cta" id="heroAddToCart">Add to Cart — R 420.00</button>
       <div class="trust-row">
@@ -283,8 +287,22 @@
     document.addEventListener('DOMContentLoaded', () => {
       const HERO_PRODUCT = { id: '1', name: 'The Purrflow Fountain', price: 420.00 };
 
+      let selectedColor = 'Black';
+      const heroImg = document.getElementById('heroProductImg');
+      const colorImages = PRODUCTS['1']?.colorImages || {};
+
+      document.querySelectorAll('#heroColorPicker .color-swatch').forEach((sw) => {
+        sw.addEventListener('click', () => {
+          document.querySelectorAll('#heroColorPicker .color-swatch').forEach((s) => s.classList.remove('selected'));
+          sw.classList.add('selected');
+          selectedColor = sw.dataset.color;
+          const src = colorImages[selectedColor];
+          if (src && heroImg) heroImg.src = src;
+        });
+      });
+
       ['heroAddToCart', 'finalCtaAddToCart', 'stickyAddToCart'].forEach((btnId) => {
-        document.getElementById(btnId)?.addEventListener('click', () => addToCart(HERO_PRODUCT));
+        document.getElementById(btnId)?.addEventListener('click', () => addToCart(HERO_PRODUCT, selectedColor));
       });
 
       initReviews('1', 'homeReviews');
