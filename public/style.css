@@ -9,6 +9,7 @@
   --teal: #2FA79E;
   --teal-light: #6FCFC6;
   --line: rgba(241, 243, 242, 0.1);
+  --header-h: 90px;
 }
 
 [data-theme="light"] {
@@ -43,6 +44,16 @@ body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   line-height: 1.6;
   transition: background .2s ease, color .2s ease;
+  padding-top: var(--header-h);
+}
+
+/* ---------- SITE HEADER (promo bar + nav, permanently fixed) ---------- */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 90;
 }
 
 h1,
@@ -71,9 +82,6 @@ img {
 
 /* ---------- NAV ---------- */
 nav {
-  position: sticky;
-  top: 0;
-  z-index: 50;
   display: grid;
   grid-template-columns: 44px 1fr 44px 44px;
   align-items: center;
@@ -266,10 +274,10 @@ nav {
 .mobile-menu {
   display: none;
   position: fixed;
-  top: 65px;
+  top: var(--header-h);
   left: 0;
   right: 0;
-  z-index: 49;
+  z-index: 99;
   background: var(--panel);
   border-bottom: 1px solid var(--line);
   flex-direction: column;

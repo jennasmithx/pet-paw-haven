@@ -32,6 +32,27 @@ const CART_STORAGE_KEY = 'petpawhaven_cart';
   });
 })();
 
+// The header (promo bar + nav) is permanently fixed to the top so the cart
+// is always reachable. Its real height varies (the promo bar can wrap to
+// two lines on narrow screens), so measure it and push page content down
+// by exactly that amount instead of guessing a fixed pixel value.
+(function () {
+  function setHeaderHeight() {
+    const header = document.querySelector('.site-header');
+    if (!header) return;
+    document.documentElement.style.setProperty('--header-h', header.offsetHeight + 'px');
+  }
+
+  window.addEventListener('DOMContentLoaded', setHeaderHeight);
+
+  const header = document.querySelector('.site-header');
+  if (header && 'ResizeObserver' in window) {
+    new ResizeObserver(setHeaderHeight).observe(header);
+  } else {
+    window.addEventListener('resize', setHeaderHeight);
+  }
+})();
+
 function loadCart() {
   try {
     const saved = localStorage.getItem(CART_STORAGE_KEY);
