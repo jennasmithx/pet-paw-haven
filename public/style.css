@@ -580,6 +580,12 @@ nav {
   transform: scale(1.06);
 }
 
+@media (max-width: 760px) {
+  .whatsapp-float {
+    bottom: 108px;
+  }
+}
+
 
 /* ---------- TRUST STRIP ---------- */
 .trust-strip {
@@ -1325,3 +1331,253 @@ footer a:hover {
   cursor: pointer; padding: 0;
 }
 .color-swatch.selected { border-color: var(--teal-light, #2a9d8f); box-shadow: 0 0 0 2px var(--teal-light, #2a9d8f); }
+
+/* ---------- CAMPAIGN: promo bar ---------- */
+.promo-bar {
+  background: var(--teal);
+  color: var(--ink);
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.02em;
+  padding: 9px 6vw;
+}
+
+/* ---------- CAMPAIGN: product hero ---------- */
+.hero-product {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  padding: 8vh 6vw 9vh;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+@media (max-width: 760px) {
+  .hero-product {
+    grid-template-columns: 1fr;
+    padding: 4vh 6vw 5vh;
+    gap: 30px;
+  }
+}
+
+.hero-product-image {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+
+.hero-product-image img {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.sale-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background: var(--teal);
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 8px 16px;
+  border-radius: 20px;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 14px rgba(47, 167, 158, 0.35);
+}
+
+.hero-product-copy .eyebrow {
+  margin-bottom: 16px;
+}
+
+.hero-product-copy h1 {
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  line-height: 1.12;
+  margin-bottom: 18px;
+}
+
+.hero-product-copy > p {
+  color: rgba(var(--foam-rgb), 0.68);
+  font-size: 1.02rem;
+  max-width: 480px;
+  margin-bottom: 28px;
+}
+
+.hero-product-copy .price-row {
+  flex-wrap: wrap;
+}
+
+.hero-product-copy .price-row .price {
+  font-size: 2rem;
+}
+
+.save-pill {
+  background: rgba(47, 167, 158, 0.14);
+  color: var(--teal-light);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 12px;
+  border-radius: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.hero-product-copy .hero-cta {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 8px;
+}
+
+/* ---------- CAMPAIGN: feature grid ---------- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+}
+
+.feature-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 28px 24px;
+}
+
+.feature-card .feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background: rgba(47, 167, 158, 0.12);
+  color: var(--teal-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.feature-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 8px;
+}
+
+.feature-card p {
+  font-size: 0.88rem;
+  color: rgba(var(--foam-rgb), 0.62);
+}
+
+/* ---------- CAMPAIGN: FAQ ---------- */
+.faq-list {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-item {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px 22px;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.faq-item summary::-webkit-details-marker { display: none; }
+
+.faq-item summary::after {
+  content: '+';
+  font-size: 1.3rem;
+  color: var(--teal-light);
+  flex-shrink: 0;
+  transition: transform .2s ease;
+}
+
+.faq-item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq-item p {
+  margin-top: 14px;
+  color: rgba(var(--foam-rgb), 0.65);
+  font-size: 0.92rem;
+  max-width: 640px;
+}
+
+/* ---------- CAMPAIGN: final CTA ---------- */
+.final-cta {
+  text-align: center;
+  padding: 10vh 6vw;
+  border-top: 1px solid var(--line);
+}
+
+.final-cta h2 {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  margin-bottom: 14px;
+}
+
+.final-cta p {
+  color: rgba(var(--foam-rgb), 0.65);
+  margin-bottom: 30px;
+}
+
+.final-cta .hero-cta {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 17px 38px;
+}
+
+/* ---------- CAMPAIGN: sticky buy bar ---------- */
+.sticky-buy-bar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  background: var(--panel);
+  border-top: 1px solid var(--line);
+  padding: 14px 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transform: translateY(100%);
+  transition: transform .25s ease;
+}
+
+.sticky-buy-bar.visible {
+  transform: translateY(0);
+}
+
+.sticky-buy-info {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.sticky-buy-info .compare-price {
+  font-size: 0.75rem;
+}
+
+.sticky-buy-bar .btn-primary {
+  padding: 12px 26px;
+  white-space: nowrap;
+}
+
+@media (min-width: 761px) {
+  .sticky-buy-bar { display: none; }
+}
