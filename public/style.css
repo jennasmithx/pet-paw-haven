@@ -644,16 +644,10 @@ footer a:hover {
 
 .product-detail .p-image {
   aspect-ratio: 1/1;
-  border-radius: 16px;
-  background: repeating-linear-gradient(45deg, rgba(var(--foam-rgb), 0.03) 0 2px, transparent 2px 14px), var(--panel);
+  border-radius: 20px;
+  overflow: hidden;
   border: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  color: rgba(var(--foam-rgb), 0.4);
-  font-size: 0.85rem;
-  padding: 20px;
+  position: relative;
 }
 
 .product-detail .p-tag {
