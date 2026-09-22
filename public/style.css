@@ -1457,6 +1457,21 @@ footer a:hover {
   height: 16px;
 }
 
+/* Product detail page reuses .shelf for its "Why Cats Love It" section, but
+   that class's 14vh bottom padding is sized for the homepage's full-height
+   stacked sections — too much space next to the tighter reviews/related
+   blocks here, so it's scaled back down to match their 60px rhythm. */
+#productRoot .shelf {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px 20px;
+}
+#productRoot .shelf-head {
+  border-top: none;
+  padding-top: 0;
+  margin-bottom: 24px;
+}
+
 /* ---------- CAMPAIGN: feature grid ---------- */
 .feature-grid {
   display: grid;
