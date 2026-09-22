@@ -1406,6 +1406,24 @@ footer a:hover {
   margin-bottom: 8px;
 }
 
+/* ---------- CAMPAIGN: payment trust badges ---------- */
+.payment-badges {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.payment-badges img {
+  height: 20px;
+  width: auto;
+  opacity: 0.9;
+}
+
+.payment-badges img.payfast-badge {
+  height: 16px;
+}
+
 /* ---------- CAMPAIGN: feature grid ---------- */
 .feature-grid {
   display: grid;
