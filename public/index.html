@@ -57,7 +57,16 @@
   <section class="hero-product" id="topBuy">
     <div class="hero-product-image">
       <span class="sale-badge">20% Off</span>
-      <img src="images/petfountain.jpeg" alt="Cat drinking from The Purrflow Fountain" id="heroProductImg">
+      <div class="p-slider" id="heroSlider">
+        <img src="images/petfountain.jpeg" alt="Cat drinking from The Purrflow Fountain" data-src="images/petfountain.jpeg">
+        <img src="images/petfountain-white.jpeg" alt="The Purrflow Fountain in white" data-src="images/petfountain-white.jpeg">
+        <img src="images/petfountain-size.jpeg" alt="The Purrflow Fountain size and dimensions" data-src="images/petfountain-size.jpeg">
+      </div>
+      <div class="slider-dots" id="heroSliderDots">
+        <button class="slider-dot active" data-index="0" aria-label="Show image 1"></button>
+        <button class="slider-dot" data-index="1" aria-label="Show image 2"></button>
+        <button class="slider-dot" data-index="2" aria-label="Show image 3"></button>
+      </div>
     </div>
     <div class="hero-product-copy">
       <span class="eyebrow">Trusted by pet owners across South Africa</span>
@@ -288,8 +297,30 @@
       const HERO_PRODUCT = { id: '1', name: 'The Purrflow Fountain', price: 420.00 };
 
       let selectedColor = 'Black';
-      const heroImg = document.getElementById('heroProductImg');
+      const heroSlider = document.getElementById('heroSlider');
       const colorImages = PRODUCTS['1']?.colorImages || {};
+
+      // Gallery dots — track and jump to the active hero image
+      const heroDots = Array.from(document.querySelectorAll('#heroSliderDots .slider-dot'));
+      if (heroDots.length && heroSlider) {
+        const setActiveHeroDot = (index) => {
+          heroDots.forEach((d, i) => d.classList.toggle('active', i === index));
+        };
+        heroDots.forEach((dot) => {
+          dot.addEventListener('click', () => {
+            const img = heroSlider.children[Number(dot.dataset.index)];
+            img?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+          });
+        });
+        let heroScrollTimeout;
+        heroSlider.addEventListener('scroll', () => {
+          clearTimeout(heroScrollTimeout);
+          heroScrollTimeout = setTimeout(() => {
+            const index = Math.round(heroSlider.scrollLeft / heroSlider.clientWidth);
+            setActiveHeroDot(index);
+          }, 100);
+        });
+      }
 
       document.querySelectorAll('#heroColorPicker .color-swatch').forEach((sw) => {
         sw.addEventListener('click', () => {
@@ -297,7 +328,10 @@
           sw.classList.add('selected');
           selectedColor = sw.dataset.color;
           const src = colorImages[selectedColor];
-          if (src && heroImg) heroImg.src = src;
+          if (src && heroSlider) {
+            const targetImg = heroSlider.querySelector(`img[data-src="${src}"]`);
+            targetImg?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+          }
         });
       });
 
