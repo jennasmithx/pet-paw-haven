@@ -164,6 +164,11 @@
               <div class="p-slider" id="pSlider">
                 ${(product.images || [product.image]).map(src => `<img src="${src}" alt="${product.name}" data-src="${src}">`).join('')}
               </div>
+              ${(product.images || [product.image]).length > 1 ? `
+              <div class="slider-dots" id="sliderDots">
+                ${(product.images || [product.image]).map((src, i) => `<button class="slider-dot ${i === 0 ? 'active' : ''}" data-index="${i}" aria-label="Show image ${i + 1}"></button>`).join('')}
+              </div>
+              ` : ''}
             </div>
           </div>
           <div>
@@ -213,8 +218,33 @@
       // Color selection (only present if this product has a colors array)
       let selectedColor = product.colors ? product.colors[0] : null;
 
+      // Slider dots — track and jump to the active gallery image
+      const slider = document.getElementById('pSlider');
+      const dots = Array.from(root.querySelectorAll('.slider-dot'));
+
+      if (dots.length) {
+        const setActiveDot = (index) => {
+          dots.forEach((d, i) => d.classList.toggle('active', i === index));
+        };
+
+        dots.forEach((dot) => {
+          dot.addEventListener('click', () => {
+            const img = slider.children[Number(dot.dataset.index)];
+            img?.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+          });
+        });
+
+        let scrollTimeout;
+        slider.addEventListener('scroll', () => {
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            const index = Math.round(slider.scrollLeft / slider.clientWidth);
+            setActiveDot(index);
+          }, 100);
+        });
+      }
+
       if (product.colors) {
-  const slider = document.getElementById('pSlider');
   root.querySelectorAll('.color-swatch').forEach(sw => {
     sw.addEventListener('click', () => {
       root.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));

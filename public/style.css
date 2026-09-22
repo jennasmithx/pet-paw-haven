@@ -1306,6 +1306,31 @@ footer a:hover {
   object-fit: cover;
 }
 
+.slider-dots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s, transform 0.2s;
+}
+.slider-dot.active {
+  background: var(--teal-light, #2a9d8f);
+  transform: scale(1.2);
+}
+
 .color-picker { display: flex; gap: 10px; margin: 14px 0; }
 .color-swatch {
   width: 28px; height: 28px; border-radius: 50%;
