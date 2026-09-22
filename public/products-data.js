@@ -13,7 +13,7 @@ const PRODUCTS = {
     tag: "Feeding",
     description: "Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages your pet to drink more.",
     image: "images/petfountain.jpeg",
-    images: ["images/petfountain.jpeg", "images/petfountain-white.jpeg"],
+    images: ["images/petfountain.jpeg", "images/petfountain-white.jpeg", "images/petfountain-size.jpeg"],
     colors: ["Black", "White"],
     colorImages: {
       Black: "images/petfountain.jpeg",
