@@ -9,7 +9,7 @@
 const PRODUCTS = {
   "1": {
     name: "The Purrflow Fountain",
-    price: 420.00,
+    price: 430.00,
     tag: "Feeding",
     description: "Fresh water, whenever they want it. The flowing design keeps water moving throughout the day and encourages your pet to drink more.",
     image: "images/petfountain.jpeg",
